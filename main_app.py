@@ -34,7 +34,6 @@ class Main(tk.Tk):
         self.r_view = RegisterView(self.container)
         self.r_view.grid(row=2, column=0, padx=5, pady=5)
 
-
 if __name__ == '__main__':
     main = Main()
     main.mainloop()
