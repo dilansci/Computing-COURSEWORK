@@ -1,0 +1,2 @@
+& C:\Users\Dylan Branda\AppData\Local\Programs\Python\Python311-32/python3.11.exe "c:/Users/dylan/OneDrive/Shared Folder/Computing COURSEWORK/main_app.py"
+# Use command '.\run2.ps1' in powershell to run program
