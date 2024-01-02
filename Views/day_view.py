@@ -30,6 +30,7 @@ class DayView(ttk.Frame):
 
     def change_day(self, day):
         info = self.control.change_day_reg(day)
+        print(info) # this outputs all the swimmers on a given day: Firstname, Lastname
         # return(reg_view(info))
         
 
