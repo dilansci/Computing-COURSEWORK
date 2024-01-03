@@ -1,21 +1,21 @@
 import tkinter as tk
 from tkinter import ttk
-import sqlite3
-from Controllers.controller import SQLController
+from Controllers.reg_controller import RegController
 
 
 class RegisterView(ttk.Frame):
 
-    def __init__(self, master, **kargs):
+    def __init__(self, master, day, **kargs):
         super().__init__(master, **kargs)
-        self.control = SQLController(RegisterView)
+        self.control = RegController(RegisterView)
 
         # make a SQL query here which gets the number of classes and generates a button for each
-        self.cursor.execute('''SELECT COUNT(class_ID) as classCount FROM Class''')
-        classCount = self.cursor.fetchall()
+        classCount = self.control.reg_factory(day)
+        print("Len classCount",len(classCount))
+        print(classCount)
         for count in classCount:
             r, c = 1, 0
-            self.reg_button = tk.Button(self, text=f"Register(classCount)").grid(row=r, column=c)
+            self.reg_button = tk.Button(self, text=f"Register({classCount})").grid(row=r, column=c)
 
 
         # create labels for each class to store the registers.

@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from Controllers.controller import SQLController
+from SQL_controller import SQLController
 
 '''
 The 'View' contains all the UI for the software. It can call methods from the 'controller' class 
@@ -25,11 +25,16 @@ class DayView(ttk.Frame):
             self.rowconfigure(0, weight=1)
             self.columnconfigure(0, weight=1)
             # this section assigns each button a 'name' and a value from 0-6. The button is then created and gridded.
-            self.day_buttons.append(ttk.Button(self, text=self.days[i], command= lambda i=i: self.change_day(self.days[i]))) #  this command will show classes depending on which day was selected.
+            self.day_buttons.append(ttk.Button(self, text=self.days[i], command= lambda i=i: self.share_day(self.days[i]) )) #  this command will show classes depending on which day was selected.
             self.day_buttons[i].grid(row=0,column=i) # DONT USE PAKCING!!! - matthew :)
+
+    def share_day(self, day):
+        self.change_day(day)
+        
 
     def change_day(self, day):
         info = self.control.change_day_reg(day)
+        
         # return(reg_view(info))
         
 
