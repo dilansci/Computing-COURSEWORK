@@ -1,20 +1,14 @@
 import tkinter as tk
 from tkinter import ttk
-from SQL_controller import *
-
-'''
-The 'View' contains all the UI for the software. It can call methods from the 'controller' class 
-through widgets i.e. Buttons. 
-** 'View' should never contain any actual code!!! It should only be able to use methods and code
-from the controller. **
-'''
+# from SQL_controller import *
 
 class DayView(ttk.Frame):
 
-    def __init__(self, master, **kargs):
+    def __init__(self, master, control, **kargs): # using 'control' as a parameter is a short term fix. REMOVE ASAP!!!
         super().__init__(master, **kargs)
-        # declaring the controller as 'self.control' and passing the 'view' into controller.py
-        self.control = SQLController(DayView)
+        # declaring the controller as 'self.control'
+        self.control = control
+        print("This is DayControl!",self.control)
         # create widgets here
         # buttons
         self.days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
@@ -33,11 +27,8 @@ class DayView(ttk.Frame):
         
 
     def change_day(self, day):
-        return self.control.execute(day)
+    # NEED TO FIX!!!
+        return self.control.day_service.get_lessons_day(day) # Is this a proper solution?? I feel like i am hardcoding the path??
         
         # return(reg_view(info))
         
-
-if __name__ == "__main__":
-    dayview = DayView()
-    dayview.mainloop()

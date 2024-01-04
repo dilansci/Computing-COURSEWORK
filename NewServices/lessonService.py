@@ -6,4 +6,4 @@ class LessonService():
         self.control = sqlcontroller
     
     def get_lessons_day(self, day):
-        return self.control.execute("SELECT * FROM Lessons WHERE day =?",day)
+        return self.control.execute("SELECT * FROM Lessons WHERE day =?", day)

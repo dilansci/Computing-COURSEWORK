@@ -1,5 +1,4 @@
 import SQL_controller
-from Controllers.day_controller import DayController
 
 class SwimmerService():
     
@@ -10,6 +9,7 @@ class SwimmerService():
         return self.control.execute("SELECT * FROM Swimmers")
     
     def get_lessons_day(self, day):
+        print("This is the SQL output!",self.control.execute("SELECT * FROM Lessons WHERE day=?",day))
         return self.control.execute("SELECT * FROM Lessons WHERE day=?",day)
 
     def get_swimmer(self, id):
