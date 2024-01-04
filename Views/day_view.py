@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from SQL_controller import SQLController
+from SQL_controller import *
 
 '''
 The 'View' contains all the UI for the software. It can call methods from the 'controller' class 
@@ -33,7 +33,7 @@ class DayView(ttk.Frame):
         
 
     def change_day(self, day):
-        info = self.control.change_day_reg(day)
+        return self.control.execute(day)
         
         # return(reg_view(info))
         

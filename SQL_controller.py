@@ -2,7 +2,7 @@ import sqlite3
 
 
 class SQLController():
-    # establishing the viw for this controller !* might change as im not sure if this is reusable *!
+    # establishing the view for this controller !* might change as im not sure if this is reusable *!
     def __init__(self, view):
         super().__init__()
         self.view = view

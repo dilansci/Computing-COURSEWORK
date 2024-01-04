@@ -11,8 +11,6 @@ class RegisterView(ttk.Frame):
 
         # make a SQL query here which gets the number of classes and generates a button for each
         classCount = self.control.reg_factory(day)
-        print("Len classCount",len(classCount))
-        print(classCount)
         for count in classCount:
             r, c = 1, 0
             self.reg_button = tk.Button(self, text=f"Register({classCount})").grid(row=r, column=c)
