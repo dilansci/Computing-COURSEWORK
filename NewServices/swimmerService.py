@@ -6,14 +6,14 @@ class SwimmerService():
         self.control = sqlcontroller
 
     def get_swimmers(self):
-        return self.control.execute("SELECT * FROM Swimmers")
+        return self.control.run_execute("SELECT * FROM Swimmers")
     
     def get_lessons_day(self, day):
-        print("This is the SQL output!",self.control.execute("SELECT * FROM Lessons WHERE day=?",day))
-        return self.control.execute("SELECT * FROM Lessons WHERE day=?",day)
+        print("This is the SQL output!",self.control.run_execute("SELECT * FROM Lessons WHERE day=?",day))
+        return self.control.run_execute("SELECT * FROM Lessons WHERE day=?",day)
 
     def get_swimmer(self, id):
-        return self.control.execute("SELECT * FROM Swimmers WHERE swimmer_ID =?",id)
+        return self.control.run_execute("SELECT * FROM Swimmers WHERE swimmer_ID =?",id)
 
     
 '''

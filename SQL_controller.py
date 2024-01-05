@@ -9,10 +9,13 @@ class SQLController():
         self.conn = sqlite3.connect("swimmers.db")
         self.cursor = self.conn.cursor()
 
-    def execute(self, statement, *args):
-        print(self)
+    def run_execute(self, statement, *args):
         # 'statement' is the actual SQL command
-        return self.cursor.execute(statement, args)
+        self.cursor.execute(statement, args)
+        self.data = self.cursor.fetchall()
+        return self.data
+        # this returns the output for the SQL statements used in the services.
+
     '''
     find a way to either: 
     1. Get an interactive listbox, so that when you click on a name it comes up.
