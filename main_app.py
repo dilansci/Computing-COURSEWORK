@@ -50,10 +50,10 @@ class Main(tk.Tk):
         ## VIEWS
         # *** Only VIEWS should have 'self.container' as a parameter! ***
         self.d_view = DayView(self.container, self.day_control)
-        self.d_view.grid(row=1, column=0, padx=5, pady=5)
+        self.d_view.grid(row=1, column=0, padx=5, pady=5, sticky="NESW")
 
-        self.r_view = RegisterView(self.container, "Monday", self.reg_control) # When day = "Monday" it sets Monday as the default register to open.
-        self.r_view.grid(row=2, column=0, padx=5, pady=5) # did a good :)
+        self.r_view = RegisterView(self.container, self.reg_control) # When day = "Monday" it sets Monday as the default register to open.
+        self.r_view.grid(row=2, column=0, padx=5, pady=5, sticky="NESW") # did a good :)
 
 '''
 Need to instanciate all the controllers and services inside of main!
