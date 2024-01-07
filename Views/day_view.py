@@ -28,7 +28,7 @@ class DayView(ttk.Frame):
 
     def change_day(self, day):
     # NEED TO FIX!!!
-        return self.control.day_service.get_lessons_day(day) # Is this a proper solution?? I feel like i am hardcoding the path??
-        
+        day_change = self.control.day_service.get_lessons_day(day) # Is this a proper solution?? I feel like i am hardcoding the path??
+        print(day_change)
         # return(reg_view(info))
         

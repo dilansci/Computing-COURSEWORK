@@ -8,16 +8,21 @@ class RegisterView(ttk.Frame):
         super().__init__(master, **kargs)
         self.control = control
         print("This is RegControl!",self.control)
+        # make a SQL query here which gets the number of classes and generate a button for each
 
-        # make a SQL query here which gets the number of classes and generates a button for each
-        # classCount = self.control.reg_factory(day)
+        # creat widgets here
+        self.reg_container = tk.Frame(self,highlightcolor="blue", highlightthickness=5, highlightbackground="blue")
+        self.reg_container.columnconfigure(0, weight=1) 
+        self.reg_container.rowconfigure(0, weight=1)
+        self.reg_container.grid(sticky="E")
 
-        ## *** FIX CODE BELOW. classCount has 'Nonetype'. Pretty sure controller has not linked properly. ***
-
-        # print(classCount)
-        # for count in classCount:
-        #     r, c = 1, 0
-        #     self.reg_button = tk.Button(self, text=f"Register({classCount})").grid(row=r, column=c)
+        classCount = len(self.control.reg_factory(day))
+        print("Class count",classCount)
+        r, c = 1, 0
+        for count in range (0,classCount):
+            self.reg_button = ttk.Button(self.reg_container, text=f"Register({count+1})")
+            self.reg_button.grid(row=r, column=c,sticky="W")
+            r += 1
 
 
         # create labels for each class to store the registers.

@@ -9,13 +9,12 @@ class SwimmerService():
         return self.control.run_execute("SELECT * FROM Swimmers")
     
     def get_lessons_day(self, day):
-        print("This is the SQL output!",self.control.run_execute("SELECT * FROM Lessons WHERE day=?",day))
         return self.control.run_execute("SELECT * FROM Lessons WHERE day=?",day)
 
     def get_swimmer(self, id):
         return self.control.run_execute("SELECT * FROM Swimmers WHERE swimmer_ID =?",id)
 
-    
+
 '''
 LIST TO DO:
 * Make a service for getting lesson for a day.
