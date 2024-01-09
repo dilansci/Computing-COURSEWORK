@@ -35,8 +35,6 @@ class Main(tk.Tk):
 
         ## SQL_CONTROLLER
         self.sql_control = SQL_controller.SQLController()
-        info = SQL_controller.SQLController().run_execute("SELECT * FROM Lessons WHERE day=?","Monday")
-        print("ALl my info",info)
         ## SERVICES
 
         self.day_service = SwimmerService(self.sql_control)

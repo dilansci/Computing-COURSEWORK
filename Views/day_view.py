@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-# from SQL_controller import *
+from tkinter.constants import * 
+from Widgets.scroll_widgets import *
 
 class DayView(ttk.Frame):
 
@@ -25,26 +26,33 @@ class DayView(ttk.Frame):
         self.reg_buttons("Monday")
 
     def share_day(self, day):
-        self.change_day(day)
+        self.kill_everything()
         self.reg_buttons(day)
-        
+
 
     def reg_buttons(self, day):
-            
-        # KINDA WANT TO MAKE A FRAME NGL. Would be easier to just clear the whole frame than specifically target each fo the reg_buttons ://.
+        ## VerticalScrolledFrame uses 'self.reg_frame.interior' 
+        self.reg_frame = VerticalScrolledFrame(self)
+        self.reg_frame.grid(sticky="NESW")
+
         self.columnconfigure(0, weight=1)
 
         classCount = len(self.control.day_service.get_lessons_day(day))
         print("Class count",classCount)
         r = 1
         for count in range (0,classCount):
-            self.registers.append(ttk.Button(self, text=f"Register({count+1})")) # will give command soon
+            self.registers.append(ttk.Button(self.reg_frame.interior, text=f"Register({count+1})")) # will give command soon   
             self.registers[count].grid(row=r, column=0, sticky="EW")
             # when sticky="NESW" it expands the button to be the size of the row. Could use this for the labels to display info on each class within the Register.
             r += 1
+        self.registers.clear()
 
-    def change_day(self, day):
-        # this function is kinda pointless ://. Might incorporate it into 'reg_buttons'
-        day_change = self.control.day_service.get_lessons_day(day) # Is this a proper solution?? I feel like i am hardcoding the path??
-        print(day_change)
-        
+    def reg_info(self, day):
+        pass
+
+    def kill_everything(self):
+        self.reg_frame.destroy()
+'''
+Lesson --> class_ID --> teacher_ID
+                    --> 
+'''
