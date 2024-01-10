@@ -41,7 +41,7 @@ class Main(tk.Tk):
         self.reg_service = LessonService(self.sql_control)
 
         ## CONTROLLERS
-        self.day_control = DayController(self.day_service)
+        self.day_control = DayController(self.day_service, self.reg_service)
         self.reg_control = RegController(self.reg_service)
 
 
