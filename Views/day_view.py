@@ -11,9 +11,9 @@ class DayView(ttk.Frame):
         self.control = control
         print("This is DayControl!",self.control)
         # create widgets here
-        # buttons
         self.registers = []
         self.class_contents = []
+        self.sow_contents = []
         self.days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
         self.day_buttons = []
         
@@ -25,46 +25,59 @@ class DayView(ttk.Frame):
             self.day_buttons.append(ttk.Button(self, text=self.days[i], command= lambda i=i: self.share_day(self.days[i]) ))
             self.day_buttons[i].grid(row=0,column=i, sticky="EW", pady=5) # DONT USE PAKCING!!! - matthew :)
         self.reg_widgets("Monday")
+        # self.tree_views()
 
     def share_day(self, day):
         self.kill_everything() # this always goes first :))
         self.reg_widgets(day)
-        
+        # self.tree_views()
+    '''UNSURE IF I SHOULD KEEP "TREE_VIEW". MIGHT IMPLEMENT IN POST PROTOTYPE REFINEMENT!'''
+    # def tree_views(self):
+    #     self.column_names = ("Teacher", "Level", "Time") 
+    #     self.reg_tree = ttk.Treeview(self.reg_frame.interior, columns=self.column_names, show="headings")
+    #     self.reg_tree.heading("Teacher", text="Teacher")
+    #     self.reg_tree.heading("Level", text="Level")
+    #     self.reg_tree.heading("Time",text="Time")    
+    #     print("CLass content values TREE",self.class_contents)
+
+    #     for each_class in self.class_contents:
+    #             print("EACH_CLASS",each_class)
+    #             self.reg_tree.insert('', 1, values=each_class)
+    #     self.class_contents.clear()
+
+    #     self.reg_tree.grid(row=2, rowspan=10, column=1, sticky="NESW")
 
     def reg_widgets(self, day):
         ## VerticalScrolledFrame uses 'self.reg_frame.interior' 
         self.reg_frame = VerticalScrolledFrame(self)
         self.reg_frame.grid(columnspan=7,sticky="NESW") # columnspan makes the entire frame occupy from Mon-Sun.
 
-        reg_info = self.control.day_service.get_lessons_day(day) 
-        print("Class count",reg_info)
+        self.reg_info = self.control.get_lessons_day(day) # self.reg_info[count][2] is the SOW_ID!
+        print("Class count",self.reg_info)
 
-        r = 2
-        for count in range (0,len(reg_info)):
-            print(count)
-            self.class_info = self.control.get_class(reg_info[count][1]) ## Recreate service functions inside respective controllers. i.e. self.control.get_class --> (SERVICE) self.service.get_class
-            print("Class info", self.class_info)
-            self.teacher_name = self.control.reg_service.get_teacher_name(self.class_info[0][1])
-            print(self.teacher_name)
+        r = 2   
+        for count in range (0,len(self.reg_info)):
+            # Variables which fetch ALL necessary info
+            self.sow = self.control.get_sow(self.reg_info[count][2]) # make this into an array of buttons and place them beside respective registers (think about this you need to track which reg are which)
+            self.class_info = self.control.get_class(self.reg_info[count][1])
+            # Class Info Components
+            self.teacher_name = self.control.get_teacher_name(self.class_info[0][1])
             self.level_num = self.class_info[0][2]
-            print("Current Level num", self.level_num)
+            self.time = self.class_info[0][3]
             # Reg Buttons
             self.registers.append(ttk.Button(self.reg_frame.interior, text=f"Register {count+1}")) # will give command soon   
             self.registers[count].grid(row=r, column=0, sticky="EW")
             # Info
-            self.class_contents.append(ttk.Label(self.reg_frame.interior, text=f"Teacher: {self.teacher_name[0][0]} {self.teacher_name[0][1]}")) # call class_contents
-            self.class_contents[count].grid(row=r, column=1, columnspan=2, sticky="NESW")
-            # when sticky="NESW" it expands the button to be the size of the row. Could use this for the labels to display info on each class within the Register.
+            self.class_contents.append(ttk.Label(self.reg_frame.interior, text=f"Teacher: {self.teacher_name[0][0]} {self.teacher_name[0][1]}\t Level: {self.level_num}\t Time: {self.time}"))
+            self.class_contents[count].grid(row=r, column=1, columnspan=3)
+            # Syllabus
+            self.sow_contents.append(ttk.Button(self.reg_frame.interior, text="Syllabus")) # command should go to 'sow_view' and display the sow details
+            self.sow_contents[count].grid(row=r, column=6, columnspan=3, sticky="NE")
             r += 1
+        # '.clear()' each of the temp arrays to avoid crashing
         self.registers.clear()
         self.class_contents.clear()
-
-    def tree_views(self):
-        self.column_names = ("Teacher", "Level", "Time") 
-        self.reg_tree = ttk.Treeview(self, columns=self.column_names, show="headings")
-        self.reg_tree.heading("Teacher", text= (self.teacher_name[0][0] + self.teacher_name[0][1]))
-        self.reg_tree.heading("Level", text=self.class_info[0][2])
-        self.reg_tree.heading("Time",text=)
+        self.sow_contents.clear()
 
     def kill_everything(self):
         self.reg_frame.destroy()

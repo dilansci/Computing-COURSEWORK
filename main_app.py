@@ -20,7 +20,7 @@ class Main(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("SwimmerDB")
-        self.geometry("600x500")
+        self.geometry("650x500")
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
 
