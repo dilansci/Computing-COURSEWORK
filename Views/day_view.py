@@ -42,7 +42,7 @@ class DayView(ttk.Frame):
         r = 2
         for count in range (0,len(reg_info)):
             print(count)
-            self.class_info = self.control.reg_service.get_class(reg_info[count][1]) ## Recreate service functions inside respective controllers. i.e. self.control.get_class --> (SERVICE) self.service.get_class
+            self.class_info = self.control.get_class(reg_info[count][1]) ## Recreate service functions inside respective controllers. i.e. self.control.get_class --> (SERVICE) self.service.get_class
             print("Class info", self.class_info)
             self.teacher_name = self.control.reg_service.get_teacher_name(self.class_info[0][1])
             print(self.teacher_name)

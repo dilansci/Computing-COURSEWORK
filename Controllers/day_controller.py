@@ -7,3 +7,5 @@ class DayController():
         self.reg_service = reg_service
         print("This is DayService!",self.day_service)
 
+        def get_class(self)
+
