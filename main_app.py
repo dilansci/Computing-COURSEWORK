@@ -11,8 +11,8 @@ from NewServices.regService import *
 from Controllers.day_controller import *
 from Controllers.reg_controller import *
 # View imports
-from Views.day_view import DayView
 from Views.reg_view import RegisterView
+from Views.day_view import DayView
 
 class Main(tk.Tk):
 
@@ -42,7 +42,7 @@ class Main(tk.Tk):
 
         ## CONTROLLERS
         self.day_control = DayController(self.day_service, self.reg_service)
-        self.reg_control = RegController(self.reg_service)
+        self.reg_control = RegController(self.reg_service, self.day_service)
 
 
         ## VIEWS

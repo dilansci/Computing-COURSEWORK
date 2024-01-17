@@ -2,14 +2,12 @@
 
 class RegController():
 
-    def __init__(self, service):
+    def __init__(self, service, day_service):
         super().__init__()
-        self.reg_service = service # lessonService
+        self.reg_service = service 
+        self.swim_service = day_service
         print("This is RegService!",self.reg_service)
 
-        ''' 
-        Don't think ill need this 'reg_factory'??
-        Not sure what to do with this controller yet.
-        Currently keeping it as a link for 'lessonService' so that
-        '''
+    def get_swimmer_name(self, class_id):
+        return self.swim_service.get_swimmer_name(class_id)
         

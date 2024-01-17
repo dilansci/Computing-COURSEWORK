@@ -4,4 +4,5 @@ Might make a 'ViewService' which contains commands to share data and have the Vi
 '''
 class ViewController():
 
-    def __init__(self, )
+    def __init__(self):
+        pass

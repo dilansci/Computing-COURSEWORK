@@ -11,9 +11,5 @@ class Header(tk.LabelFrame):
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
         
-        self.head_label = tk.Label(self, text="Lesson Manager")
+        self.head_label = ttk.Label(self, text="Lesson Manager")
         self.head_label.grid(row=0, column=0)
-
-if __name__ == "__main__":
-    head = Header()
-    head.mainloop()

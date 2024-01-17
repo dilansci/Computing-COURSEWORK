@@ -3,7 +3,7 @@ from tkinter import ttk
 from tkinter.constants import * 
 from Widgets.scroll_widgets import *
 
-from Views.reg_view import *
+from Views.reg_view import RegisterView
 
 class DayView(ttk.Frame):
 
@@ -11,15 +11,15 @@ class DayView(ttk.Frame):
         super().__init__(master, **kargs)
         # declaring the controller as 'self.control'
         self.control = control
-        # create widgets here
+        # temp arrays
         self.registers = []
         self.class_ids = []
         self.class_contents = []
         self.sow_contents = []
+        # this iterates through each day Mon-Sun and creates a button.
         self.days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
         self.day_buttons = []
-        
-        # this iterates through each day Mon-Sun and creates a button.
+
         for i in range (len(self.days)):
             self.rowconfigure(0, weight=1)
             self.columnconfigure(i, weight=1)
@@ -51,11 +51,11 @@ class DayView(ttk.Frame):
 
     def reg_widgets(self, day):
         self.class_ids.clear()
-        ## VerticalScrolledFrame uses 'self.reg_frame.interior' 
+        # VerticalScrolledFrame uses 'self.reg_frame.interior' 
         self.reg_frame = VerticalScrolledFrame(self)
-        self.reg_frame.grid(columnspan=7,sticky="NESW") # columnspan makes the entire frame occupy from Mon-Sun.
+        self.reg_frame.grid(columnspan=7,sticky="NESW")
 
-        self.reg_info = self.control.get_lessons_day(day) # self.reg_info[count][2] is the SOW_ID!
+        self.reg_info = self.control.get_lessons_day(day)
 
         r = 2   
         for count in range (0,len(self.reg_info)):
@@ -63,21 +63,17 @@ class DayView(ttk.Frame):
             self.sow = self.control.get_sow(self.reg_info[count][2]) 
             # make this into an array of buttons and place them beside respective registers (think about this you need to track which reg are which)
             self.class_info = self.control.get_class(self.reg_info[count][1])
-            print("Class contents!",self.class_info)
 
             # tracking class_ids for each reg_button
             self.current_id = self.class_info[0][0]
             self.class_ids.append(self.current_id)
-            print(self.class_ids)
             # Class Info Components
             self.teacher_name = self.control.get_teacher_name(self.class_info[0][1])
             self.level_num = self.class_info[0][2]
             self.time = self.class_info[0][3]
             # Reg Buttons
-            self.registers.append(ttk.Button(self.reg_frame.interior, text=f"Register {count+1}", command= lambda: RegisterView.reg_layout(self, count, self.class_ids)))
-            # assign to each register a unique number to reference the list of ids in reg_view :))
+            self.registers.append(ttk.Button(self.reg_frame.interior, text=f"Register {count+1}", command= lambda count_id = count: RegisterView.reg_layout(self, count_id, self.class_ids)))
             self.registers[count].grid(row=r, column=0, sticky="EW")
-            print("RegisterButt values",self.registers)
             # Info
             self.class_contents.append(ttk.Label(self.reg_frame.interior, text=f"Teacher: {self.teacher_name[0][0]} {self.teacher_name[0][1]}\t Level: {self.level_num}\t Time: {self.time}"))
             self.class_contents[count].grid(row=r, column=1, columnspan=3)
