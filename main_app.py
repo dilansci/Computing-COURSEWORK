@@ -6,7 +6,7 @@ from register import *
 import SQL_controller
 # Service imports
 from NewServices.swimmerService import *
-from NewServices.lessonService import *
+from NewServices.regService import *
 # Controller imports
 from Controllers.day_controller import *
 from Controllers.reg_controller import *
@@ -38,7 +38,7 @@ class Main(tk.Tk):
         ## SERVICES
 
         self.day_service = SwimmerService(self.sql_control)
-        self.reg_service = LessonService(self.sql_control)
+        self.reg_service = RegisterService(self.sql_control)
 
         ## CONTROLLERS
         self.day_control = DayController(self.day_service, self.reg_service)

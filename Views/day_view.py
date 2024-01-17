@@ -3,15 +3,17 @@ from tkinter import ttk
 from tkinter.constants import * 
 from Widgets.scroll_widgets import *
 
+from Views.reg_view import *
+
 class DayView(ttk.Frame):
 
     def __init__(self, master, control, **kargs): # using 'control' as a parameter is a short term fix. REMOVE ASAP!!!
         super().__init__(master, **kargs)
         # declaring the controller as 'self.control'
         self.control = control
-        print("This is DayControl!",self.control)
         # create widgets here
         self.registers = []
+        self.class_ids = []
         self.class_contents = []
         self.sow_contents = []
         self.days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
@@ -48,30 +50,39 @@ class DayView(ttk.Frame):
     #     self.reg_tree.grid(row=2, rowspan=10, column=1, sticky="NESW")
 
     def reg_widgets(self, day):
+        self.class_ids.clear()
         ## VerticalScrolledFrame uses 'self.reg_frame.interior' 
         self.reg_frame = VerticalScrolledFrame(self)
         self.reg_frame.grid(columnspan=7,sticky="NESW") # columnspan makes the entire frame occupy from Mon-Sun.
 
         self.reg_info = self.control.get_lessons_day(day) # self.reg_info[count][2] is the SOW_ID!
-        print("Class count",self.reg_info)
 
         r = 2   
         for count in range (0,len(self.reg_info)):
             # Variables which fetch ALL necessary info
-            self.sow = self.control.get_sow(self.reg_info[count][2]) # make this into an array of buttons and place them beside respective registers (think about this you need to track which reg are which)
+            self.sow = self.control.get_sow(self.reg_info[count][2]) 
+            # make this into an array of buttons and place them beside respective registers (think about this you need to track which reg are which)
             self.class_info = self.control.get_class(self.reg_info[count][1])
+            print("Class contents!",self.class_info)
+
+            # tracking class_ids for each reg_button
+            self.current_id = self.class_info[0][0]
+            self.class_ids.append(self.current_id)
+            print(self.class_ids)
             # Class Info Components
             self.teacher_name = self.control.get_teacher_name(self.class_info[0][1])
             self.level_num = self.class_info[0][2]
             self.time = self.class_info[0][3]
             # Reg Buttons
-            self.registers.append(ttk.Button(self.reg_frame.interior, text=f"Register {count+1}")) # will give command soon   
+            self.registers.append(ttk.Button(self.reg_frame.interior, text=f"Register {count+1}", command= lambda: RegisterView.reg_layout(self, count, self.class_ids)))
+            # assign to each register a unique number to reference the list of ids in reg_view :))
             self.registers[count].grid(row=r, column=0, sticky="EW")
+            print("RegisterButt values",self.registers)
             # Info
             self.class_contents.append(ttk.Label(self.reg_frame.interior, text=f"Teacher: {self.teacher_name[0][0]} {self.teacher_name[0][1]}\t Level: {self.level_num}\t Time: {self.time}"))
             self.class_contents[count].grid(row=r, column=1, columnspan=3)
             # Syllabus
-            self.sow_contents.append(ttk.Button(self.reg_frame.interior, text="Syllabus")) # command should go to 'sow_view' and display the sow details
+            self.sow_contents.append(ttk.Button(self.reg_frame.interior, text="Syllabus")) # command should go to 'sow_view' file and display the sow details
             self.sow_contents[count].grid(row=r, column=6, columnspan=3, sticky="NE")
             r += 1
         # '.clear()' each of the temp arrays to avoid crashing

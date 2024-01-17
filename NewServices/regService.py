@@ -1,6 +1,6 @@
 import SQL_controller
 
-class LessonService():
+class RegisterService():
     ## The 'sqlcontroller' will be a link to the database in SQL 
     def __init__(self, sqlcontroller: SQL_controller.SQLController):
         self.control = sqlcontroller
