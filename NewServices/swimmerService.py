@@ -12,7 +12,7 @@ class SwimmerService():
         return self.control.run_execute("SELECT * FROM Lessons WHERE day=?",day)
 
     def get_swimmer_name(self, class_id):
-        return self.control.run_execute("SELECT first_name, last_name FROM Swimmers WHERE swimmer_ID =?",class_id)
+        return self.control.run_execute("SELECT first_name, last_name FROM Swimmers WHERE class_ID =?",class_id)
     
 
 

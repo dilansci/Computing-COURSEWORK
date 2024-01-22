@@ -7,11 +7,12 @@ from Views.reg_view import RegisterView
 
 class DayView(ttk.Frame):
 
-    def __init__(self, master, control, **kargs): # using 'control' as a parameter is a short term fix. REMOVE ASAP!!!
+    def __init__(self, master, control, reg_view, **kargs): # using 'control' as a parameter is a short term fix. REMOVE ASAP!!!
         super().__init__(master, **kargs)
         # declaring the controller as 'self.control'
         self.control = control
-        # temp arrays
+        self.reg_view = reg_view
+        # arrays
         self.registers = []
         self.class_ids = []
         self.class_contents = []
@@ -72,7 +73,7 @@ class DayView(ttk.Frame):
             self.level_num = self.class_info[0][2]
             self.time = self.class_info[0][3]
             # Reg Buttons
-            self.registers.append(ttk.Button(self.reg_frame.interior, text=f"Register {count+1}", command= lambda count_id = count: RegisterView.reg_layout(self, count_id, self.class_ids)))
+            self.registers.append(ttk.Button(self.reg_frame.interior, text=f"Register {count+1}", command= lambda count_id = count: self.reg_view.reg_layout(count_id, self.class_ids)))
             self.registers[count].grid(row=r, column=0, sticky="EW")
             # Info
             self.class_contents.append(ttk.Label(self.reg_frame.interior, text=f"Teacher: {self.teacher_name[0][0]} {self.teacher_name[0][1]}\t Level: {self.level_num}\t Time: {self.time}"))
