@@ -1,5 +1,4 @@
 
-
 class RegController():
 
     def __init__(self, service, day_service):

@@ -2,13 +2,16 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.constants import * 
 from Widgets.scroll_widgets import *
-
-from Views.reg_view import RegisterView
+from Views.view_manager import ViewManager
 
 class DayView(ttk.Frame):
 
     def __init__(self, master, control, reg_view, **kargs): # using 'control' as a parameter is a short term fix. REMOVE ASAP!!!
         super().__init__(master, **kargs)
+        # SINGLETON
+        view_manager = ViewManager()
+        view_manager.register_view(self, "DayView")
+        view_manager.show_view("DayView")
         # declaring the controller as 'self.control'
         self.control = control
         self.reg_view = reg_view

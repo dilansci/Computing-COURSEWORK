@@ -1,9 +1,9 @@
 import tkinter as tk
-from tkinter import ttk
 from header_config import *
 from register import *
-
 import SQL_controller
+
+from Views.view_manager import ViewManager
 # Service imports
 from NewServices.swimmerService import *
 from NewServices.regService import *
@@ -35,8 +35,8 @@ class Main(tk.Tk):
 
         ## SQL_CONTROLLER
         self.sql_control = SQL_controller.SQLController()
-        ## SERVICES
 
+        ## SERVICES
         self.day_service = SwimmerService(self.sql_control)
         self.reg_service = RegisterService(self.sql_control)
 
@@ -64,4 +64,8 @@ SQLController goes into Service, Service goes into respective Controller, Contro
 
 if __name__ == '__main__':
     main = Main()
+    # Establishing the first Singleton connection as 'DayView' (will change to login at some point)
+    view_manager = ViewManager()
+    view_manager.register_view(main, "DayView")
+    view_manager.show_view("DayView")
     main.mainloop()
