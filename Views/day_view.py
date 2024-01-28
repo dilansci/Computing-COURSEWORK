@@ -82,7 +82,7 @@ class DayView(ttk.Frame):
             self.sow_contents.append(ttk.Button(self.reg_frame.interior, text="Syllabus")) # command should go to 'sow_view' file and display the sow details
             self.sow_contents[count].grid(row=r, column=6, columnspan=3, sticky="NE")
             r += 1
-        # '.clear()' each of the temp arrays to avoid crashing
+        # '.clear()' avoid crashing
         self.registers.clear()
         self.class_contents.clear()
         self.sow_contents.clear()
