@@ -28,9 +28,17 @@ class ViewManager:
     def pop(self):
         if self.view_stack:
             view = self.view_stack.pop()
-            view.grid()
-    
-    def hide_view(self, next_view):
-        self.grid_forget()
-        self.register_view(self, next_view)
+            self.hide_view(view)
+            self.show_view(self.get_view_name(self.view_stack[len(self.view_stack)-1]))
+
+    def get_view_name(self, view):
+        for key,item in self.views.items():
+            if view == item:
+                return key
+            
+
+    def hide_view(self, view):
+        # the view parameter is the "self" within the respective view.
+        view.grid_forget()
+
 # doesnt work. Refer to DayView for rest of problem

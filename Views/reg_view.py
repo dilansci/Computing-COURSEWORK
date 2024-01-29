@@ -8,13 +8,14 @@ class RegisterView(ttk.Frame):
         super().__init__(master, **kargs)
         # SINGLETON
         ViewManager.instance.register_view(self, "RegisterView")
-        ViewManager.instance.show_view("RegisterView")
 
         self.reg_control = control
         # array for Attendance buttons :))
         self.markipliers = []
 
     def reg_layout(self, reg_pos, list_of_ids):
+        ViewManager.instance.show_view("RegisterView")
+        
         for widget in self.winfo_children():
             widget.destroy()
 

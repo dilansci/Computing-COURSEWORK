@@ -1,5 +1,6 @@
 import tkinter as tk
 from header_config import *
+from exit_config import *
 from register import *
 import SQL_controller
 
@@ -14,9 +15,9 @@ from Controllers.reg_controller import *
 from Views.reg_view import RegisterView
 from Views.day_view import DayView
 
+# creating a class which acts as a dictionary for all the contents of the registry.
 class Main(tk.Tk):
 
-    # creating a class which acts as a dictionary for all the contents of the registry.
     def __init__(self):
         super().__init__()
         self.title("SwimmerDB")
@@ -29,14 +30,16 @@ class Main(tk.Tk):
         # specifiying the area where the 'container' frame is packed within 'Main'.
         self.container.columnconfigure(0, weight=1)
         self.container.grid(sticky="NESW", padx=5, pady=5)
-        # this is the frame where the header from 'header_config' will be displayed.
+
         self.header = Header(self.container)
         self.header.grid(row=0, column=0, padx=5, pady=5, sticky="NEW")
+        # where the 'BACK' button is instanciated
+        self.exit_button = Exit(self.container)
+        self.exit_button.grid(row=4, column=0, sticky="ESW")
 
         # SINGLETON
+        # Establishing the first Singleton connection as 'DayView' (will change to login at some point)
         view_manager = ViewManager()
-        view_manager.register_view(self, "DayView")
-        view_manager.show_view("DayView")
 
         ## SQL_CONTROLLER
         self.sql_control = SQL_controller.SQLController()
@@ -53,10 +56,12 @@ class Main(tk.Tk):
         ## VIEWS
         # *** Only VIEWS should have 'self.container' as a parameter! ***
         self.r_view = RegisterView(self.container, self.reg_control)
-        self.r_view.grid(row=2, column=0, padx=5, pady=5, sticky="NESW") # did a good :)
+        # self.r_view.grid(row=2, column=0, padx=5, pady=5, sticky="NESW") # did a good :)
 
         self.d_view = DayView(self.container, self.day_control, self.r_view)
-        self.d_view.grid(row=1, column=0, padx=5, pady=5, sticky="NESW")
+        # self.d_view.grid(row=1, column=0, padx=5, pady=5, sticky="NESW")
+        view_manager.register_view(self.d_view, "DayView")
+        view_manager.show_view("DayView")
 
 '''
 Need to instanciate all the controllers and services inside of main!
@@ -69,5 +74,4 @@ SQLController goes into Service, Service goes into respective Controller, Contro
 
 if __name__ == '__main__':
     main = Main()
-    # Establishing the first Singleton connection as 'DayView' (will change to login at some point)
     main.mainloop()
