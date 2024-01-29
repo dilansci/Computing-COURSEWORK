@@ -33,6 +33,11 @@ class Main(tk.Tk):
         self.header = Header(self.container)
         self.header.grid(row=0, column=0, padx=5, pady=5, sticky="NEW")
 
+        # SINGLETON
+        view_manager = ViewManager()
+        view_manager.register_view(self, "DayView")
+        view_manager.show_view("DayView")
+
         ## SQL_CONTROLLER
         self.sql_control = SQL_controller.SQLController()
 
@@ -65,7 +70,4 @@ SQLController goes into Service, Service goes into respective Controller, Contro
 if __name__ == '__main__':
     main = Main()
     # Establishing the first Singleton connection as 'DayView' (will change to login at some point)
-    view_manager = ViewManager()
-    view_manager.register_view(main, "DayView")
-    view_manager.show_view("DayView")
     main.mainloop()

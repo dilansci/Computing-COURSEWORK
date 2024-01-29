@@ -7,18 +7,27 @@ class RegisterView(ttk.Frame):
     def __init__(self, master, control, **kargs):
         super().__init__(master, **kargs)
         # SINGLETON
-        view_manager = ViewManager()
-        view_manager.register_view(self, "RegisterView")
-        view_manager.show_view("RegisterView")
-        self.reg_control = control # reg_controller
-        print("This is Register Controller", self.reg_control)
-    
-    def reg_layout(self, reg_pos, list_of_ids):
-        self.destroy()
+        ViewManager.instance.register_view(self, "RegisterView")
+        ViewManager.instance.show_view("RegisterView")
 
+        self.reg_control = control
+        # array for Attendance buttons :))
+        self.markipliers = []
+
+    def reg_layout(self, reg_pos, list_of_ids):
+        for widget in self.winfo_children():
+            widget.destroy()
+
+        self.swimmer_names = self.reg_control.get_swimmer_name(list_of_ids[reg_pos])
+        print(self.swimmer_names)
+        for i in range (0, len(self.swimmer_names)):
+            self.swim_name = tk.Label(self, text=self.swimmer_names[i][0] +" "+ self.swimmer_names[i][1]).grid(row=i, column=0)
+
+            print("Markiplier",self.markipliers)
+            self.markipliers.append(ttk.Button(self, text="Mark")) # will make command to change the attendance of swimmer in DB and colour :))
+            self.markipliers[i].grid(row=i, column=1)
         print("Current Reg_num",reg_pos,"and ID list",list_of_ids)
-        swimmer_names = self.reg_control.get_swimmer_name(list_of_ids[reg_pos])
-        print(swimmer_names)
+        self.markipliers.clear()
 
         # make a function which makes a sql query that updates the Register table with the corresponding class_IDs.
 

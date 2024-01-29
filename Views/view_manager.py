@@ -2,13 +2,13 @@
 import tkinter as tk
 
 class ViewManager:
-    _instance = None
+    instance = None
 
     def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super(ViewManager, cls).__new__(cls)
-            cls._instance._initialized = False
-        return cls._instance
+        if not cls.instance:
+            cls.instance = super(ViewManager, cls).__new__(cls)
+            cls.instance._initialized = False
+        return cls.instance
 
     def __init__(self):
         if not self._initialized:
@@ -29,3 +29,8 @@ class ViewManager:
         if self.view_stack:
             view = self.view_stack.pop()
             view.grid()
+    
+    def hide_view(self, next_view):
+        self.grid_forget()
+        self.register_view(self, next_view)
+# doesnt work. Refer to DayView for rest of problem
