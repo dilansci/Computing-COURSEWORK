@@ -60,8 +60,8 @@ class DayView(ttk.Frame):
 
         self.reg_info = self.control.get_lessons_day(day)
 
-        r = 2   
         for count in range (0,len(self.reg_info)):
+            r = count + 2   
             # Variables which fetch ALL necessary info
             self.sow = self.control.get_sow(self.reg_info[count][2]) 
             # make this into an array of buttons and place them beside respective registers (think about this you need to track which reg are which)
@@ -83,7 +83,6 @@ class DayView(ttk.Frame):
             # Syllabus
             self.sow_contents.append(ttk.Button(self.reg_frame.interior, text="Syllabus")) # command should go to 'sow_view' file and display the sow details
             self.sow_contents[count].grid(row=r, column=6, columnspan=3, sticky="NE")
-            r += 1
         # '.clear()' avoid crashing
         self.registers.clear()
         self.class_contents.clear()

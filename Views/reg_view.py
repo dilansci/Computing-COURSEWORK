@@ -14,6 +14,7 @@ class RegisterView(ttk.Frame):
         self.markipliers = []
 
     def reg_layout(self, reg_pos, list_of_ids):
+        # this shows the RegView when the reg_button is pressed.
         ViewManager.instance.show_view("RegisterView")
         
         for widget in self.winfo_children():

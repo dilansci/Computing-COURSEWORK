@@ -5,7 +5,6 @@ class DayController():
         super().__init__()
         self.day_service = service
         self.reg_service = reg_service
-        print("This is DayService!",self.day_service)
 
     def get_class(self, teacher_id):
         return self.reg_service.get_class(teacher_id)

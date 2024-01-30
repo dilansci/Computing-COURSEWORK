@@ -18,6 +18,7 @@ class ViewManager:
 
     def register_view(self, view, name):
         self.views[name] = view
+        print(self.views)
 
     def show_view(self, name):
         view = self.views.get(name)
@@ -26,17 +27,13 @@ class ViewManager:
             view.grid()
 
     def pop(self):
-        if self.view_stack:
+        if len(self.view_stack) > 1:
+            # problem with this. It keeps adding instances of DayView into the self.view_stack
+            print("This is view_stack BEFORE",self.view_stack)
             view = self.view_stack.pop()
             self.hide_view(view)
-            self.show_view(self.get_view_name(self.view_stack[len(self.view_stack)-1]))
-
-    def get_view_name(self, view):
-        for key,item in self.views.items():
-            if view == item:
-                return key
+            self.view_stack[len(self.view_stack)-1].grid()
             
-
     def hide_view(self, view):
         # the view parameter is the "self" within the respective view.
         view.grid_forget()
