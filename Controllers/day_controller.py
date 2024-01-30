@@ -1,9 +1,9 @@
 
 class DayController():
     
-    def __init__(self, service, reg_service):
+    def __init__(self, day_service, reg_service):
         super().__init__()
-        self.day_service = service
+        self.day_service = day_service
         self.reg_service = reg_service
 
     def get_class(self, teacher_id):
@@ -17,4 +17,3 @@ class DayController():
     
     def get_sow(self, sow_id):
         return self.reg_service.get_sow(sow_id)
-

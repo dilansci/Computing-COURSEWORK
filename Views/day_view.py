@@ -6,7 +6,7 @@ from Views.view_manager import ViewManager
 
 class DayView(ttk.Frame):
 
-    def __init__(self, master, control, reg_view, **kargs): # using 'control' as a parameter is a short term fix. REMOVE ASAP!!!
+    def __init__(self, master, control, reg_view, sow_view, **kargs): # using 'control' as a parameter is a short term fix. REMOVE ASAP!!!
         super().__init__(master, **kargs)
         # SINGLETON
         ViewManager.instance = ViewManager()
@@ -14,6 +14,7 @@ class DayView(ttk.Frame):
         # declaring the controller as 'self.control'
         self.control = control
         self.reg_view = reg_view
+        self.sow_view = sow_view
         # arrays
         self.registers = []
         self.class_ids = []
@@ -30,27 +31,10 @@ class DayView(ttk.Frame):
             self.day_buttons.append(ttk.Button(self, text=self.days[i], command= lambda i=i: self.share_day(self.days[i]) ))
             self.day_buttons[i].grid(row=0,column=i, sticky="EW", pady=5) # DONT USE PAKCING!!! - matthew :)
         self.reg_widgets("Monday")
-        # self.tree_views()
 
     def share_day(self, day):
         self.kill_everything() # this always goes first :))
         self.reg_widgets(day)
-        # self.tree_views()
-    '''UNSURE IF I SHOULD KEEP "TREE_VIEW". MIGHT IMPLEMENT IN POST PROTOTYPE REFINEMENT!'''
-    # def tree_views(self):
-    #     self.column_names = ("Teacher", "Level", "Time") 
-    #     self.reg_tree = ttk.Treeview(self.reg_frame.interior, columns=self.column_names, show="headings")
-    #     self.reg_tree.heading("Teacher", text="Teacher")
-    #     self.reg_tree.heading("Level", text="Level")
-    #     self.reg_tree.heading("Time",text="Time")    
-    #     print("CLass content values TREE",self.class_contents)
-
-    #     for each_class in self.class_contents:
-    #             print("EACH_CLASS",each_class)
-    #             self.reg_tree.insert('', 1, values=each_class)
-    #     self.class_contents.clear()
-
-    #     self.reg_tree.grid(row=2, rowspan=10, column=1, sticky="NESW")
 
     def reg_widgets(self, day):
         self.class_ids.clear()
@@ -81,8 +65,9 @@ class DayView(ttk.Frame):
             self.class_contents.append(ttk.Label(self.reg_frame.interior, text=f"Teacher: {self.teacher_name[0][0]} {self.teacher_name[0][1]}\t Level: {self.level_num}\t Time: {self.time}"))
             self.class_contents[count].grid(row=r, column=1, columnspan=3)
             # Syllabus
-            self.sow_contents.append(ttk.Button(self.reg_frame.interior, text="Syllabus")) # command should go to 'sow_view' file and display the sow details
+            self.sow_contents.append(ttk.Button(self.reg_frame.interior, text="SOW", command= lambda level_num_id = self.level_num: [ViewManager.instance.hide_view(self), self.sow_view.sow_layout(level_num_id)])) # command should go to 'sow_view' file and display the sow details
             self.sow_contents[count].grid(row=r, column=6, columnspan=3, sticky="NE")
+
         # '.clear()' avoid crashing
         self.registers.clear()
         self.class_contents.clear()
