@@ -25,9 +25,8 @@ class RegisterView(ttk.Frame):
         for i in range (0, len(self.swimmer_names)):
             self.swim_name = tk.Label(self, text=self.swimmer_names[i][0] +" "+ self.swimmer_names[i][1]).grid(row=i, column=0)
 
-            print("Markiplier",self.markipliers)
-            self.markipliers.append(ttk.Button(self, text="Mark")) # will make command to change the attendance of swimmer in DB and colour :))
-            self.markipliers[i].grid(row=i, column=1)
+            self.markipliers.append(tk.Button(self, text="Mark", background="red")) # will make command to change the attendance of swimmer in DB and colour :))
+            self.markipliers[i].grid(row=i, column=5, columnspan=5)
         print("Current Reg_num",reg_pos,"and ID list",list_of_ids)
         self.markipliers.clear()
 
