@@ -72,6 +72,29 @@ A controller needs to be passed into a view and there should only exist 1 of eac
 
 SQLController goes into Service, Service goes into respective Controller, Controller goes into View.
 *** These are all created in main!!! ***
+
+NOTES:
+
+For login have 3 different buttons:
+Assistant Login
+Teacher Login
+Manager Login
+There will be 3 different UserAccessLevels. (0,1,2)
+'0' being lowest and '2' being highest
+When you click on Assistant Login and successfully login, it will check
+the DB for the correct login and will then assign the access level 
+which corresponds with said login 
+e.g
+Table: STAFF    Joseph Mully, Login = 1234, access_level = 0
+IF login in "Staff":
+    current_access_level = Staff.get(access_level)
+This 'current_access_level' will be implemented into the whole program 
+and there will be another IF statement to check the 'current_access_level'.
+IF current_access_level = 2:
+    show_this_view
+IF current_access_level = 0:
+    show_this_other_view
+
 '''
 
 
