@@ -24,7 +24,11 @@ class ViewManager:
         view = self.views.get(name)
         if view:
             self.view_stack.append(view)
-            view.grid()
+            self.grid_view(view)
+            
+    
+    def grid_view(self, view):
+        view.grid(sticky="NESW")
 
     def pop(self):
         if len(self.view_stack) > 1:
@@ -32,7 +36,7 @@ class ViewManager:
             print("This is view_stack BEFORE",self.view_stack)
             view = self.view_stack.pop()
             self.hide_view(view)
-            self.view_stack[len(self.view_stack)-1].grid()
+            self.grid_view(self.view_stack[len(self.view_stack)-1])
             
     def hide_view(self, view):
         # the view parameter is the "self" within the respective view.

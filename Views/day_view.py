@@ -64,7 +64,7 @@ class DayView(ttk.Frame):
             # Info
             self.class_contents.append(ttk.Label(self.reg_frame.interior, text=f"Teacher: {self.teacher_name[0][0]} {self.teacher_name[0][1]}\t Level: {self.level_num}\t Time: {self.time}"))
             self.class_contents[count].grid(row=r, column=1, columnspan=3)
-            # Syllabus
+            # SOW Buttons
             self.sow_contents.append(ttk.Button(self.reg_frame.interior, text="SOW", command= lambda level_num_id = self.level_num: [ViewManager.instance.hide_view(self), self.sow_view.sow_layout(level_num_id)])) # command should go to 'sow_view' file and display the sow details
             self.sow_contents[count].grid(row=r, column=6, columnspan=3, sticky="NE")
 
