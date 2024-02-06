@@ -7,4 +7,7 @@ class RegController():
         self.swim_service = day_service
 
     def get_swimmer_name(self, class_id):
-        return self.swim_service.get_swimmer_name(class_id)    
+        return self.swim_service.get_swimmer_name(class_id)   
+    
+    def get_attendance(self, swimmer_names):
+        return self.reg_service.get_attendance(swimmer_names)

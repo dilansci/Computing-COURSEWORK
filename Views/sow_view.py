@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 from Views.view_manager import ViewManager
 from Widgets.scroll_widgets import *
 
@@ -10,56 +11,102 @@ class SOWView(ttk.Frame):
         super().__init__(master,**kargs)
         # SINGLETON
         ViewManager.instance.register_view(self, "SOWView")
-
         self.sow_control = control
-    # will make a list of buttons for each level 1-7 and have them output the SOW when each is pressed.
+
     def sow_layout(self, level_num): # will need to implement week num into this
         ViewManager.instance.show_view("SOWView")
         for widget in self.winfo_children():
             widget.destroy()
 
         self.sow_info = self.sow_control.get_sow_level(level_num)
-        
+
         print("This is the level num",level_num)
         print("Details for this level",self.sow_info)
-
-    # def tree_views(self):
+        r = 1
+        # headings for SOW
         self.column_names = ("Intro", "Main", "Contrast", "Depth") 
-        self.reg_tree = ttk.Treeview(self, columns=self.column_names, show="headings")
-        self.reg_tree.heading("Intro", text="Intro")
-        self.reg_tree.column("Intro", width=100)
-        self.reg_tree.heading("Main", text="Main")
-        self.reg_tree.column("Main", width=250) # width=250 give 50 characters worth of space (5 : 1) ratio
-        self.reg_tree.heading("Contrast",text="Contrast")
-        self.reg_tree.heading("Depth",text="Depth")
-        self.reg_tree.column("Depth", width=40)
+        for i in range (0, len(self.column_names)):
+             self.column_l = tk.Label(self, text=self.column_names[i]).grid(row=0, column=i)
+        # length check for each SOW
+        truncated_infos = []
+        for sow in range (len(self.sow_info)):
+            info = self.sow_info[sow]
+            if len(self.sow_info[sow]) > 35:
+                info = info[0:35] + "..." + info[35:-1]
+            truncated_infos.append(info)
+        # listboxes for SOW
+        self.intro_box = tk.Listbox(self, width=30)
+        self.intro_box.grid(row=r, column=0)
+        self.intro_box.bind("<<ListboxSelect>>", self.callback)
 
-        self.main_temp = []
-        self.rowconfigure(0, weight=1)
-        self.columnconfigure(1, weight=1)
-        for each_sow in self.sow_info:
-                print("Length",len(each_sow[1]))
-                if len(each_sow[1]) > 40:
-                     new_slice = each_sow[1]
-                     old_slice = each_sow # have to make a variable to hold the remaining parts of 'each_sow[1]' (main)
-                     # have to convert the tuple 'each_sow' into a list for slicing
-                    #  new_list = list(each_sow)
-                    #  new_list[1] = new_slice[0:40]
-                    #  print("NEW LIST",new_list)
-                    #  print("Sliced version",new_slice[0:40])
-                print("EACH_CLASS",each_sow[1])
-                self.reg_tree.insert('', 1, values=each_sow)
-                self.reg_tree.insert('', 2, values=("","Heyyy","",""))
-                # somehow track the length of each parameter and create a new line to prevent it extending onwards.
-        self.sow_info.clear()
+        self.main_box = tk.Listbox(self, width=30)
+        self.main_box.grid(row=r, column=1)
+        self.main_box.bind("<<ListboxSelect>>", self.callback)
 
-        self.reg_tree.grid(row=0, column=1, sticky="NEW")
+        self.contrast_box = tk.Listbox(self, width=30)
+        self.contrast_box.grid(row=r, column=2)
+        self.contrast_box.bind("<<ListboxSelect>>", self.callback)
+
+        self.depth = tk.Listbox(self, width=10)
+        self.depth.grid(row=r, column=3)
+        # insert SOW
+        self.intro_box.insert(0, truncated_infos[0])
+        self.main_box.insert(0, truncated_infos[1])
+        self.contrast_box.insert(0, truncated_infos[2])
+        self.depth.insert(0, truncated_infos[3])
+    
+    def callback(self, event):
+        # selects the listbox widget
+        selection = event.widget.curselection()
+        if selection:
+            # declaring the index for the listbox to access
+            index = selection[0]
+            data = (event.widget.get(index)).replace("...","")
+            self.full_info = messagebox.showinfo("Info", data)
+            # almost done, need to find a way to show which box is being selected and a way to reference 'self.sow_info[i]'
+
+    
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+        # self.reg_tree = ttk.Treeview(self, columns=self.column_names, show="headings", selectmode="none")
+        # self.reg_tree.heading("Intro", text="Intro")
+        # self.reg_tree.column("Intro", stretch=0)
+        # self.reg_tree.heading("Main", text="Main")
+        # self.reg_tree.column("Main", stretch=0)
+        # self.reg_tree.heading("Contrast",text="Contrast")
+        # self.reg_tree.column("Contrast", stretch=0)
+        # self.reg_tree.heading("Depth",text="Depth")
+        # self.reg_tree.column("Depth", stretch=0)
+        # might just make 3 listboxes with an 'EDIT' button tied to each widget which unlocks them (for managers)
+
+        # self.main_temp = []
+        # self.rowconfigure(0, weight=1)
+        # self.columnconfigure(1, weight=1)
+        # for each_sow in self.sow_info:
+        #         self.reg_tree.insert('', 1, values=each_sow)
+        #         self.reg_tree.insert('', 2, values=("","Heyyy","",""))
+        #         # somehow track the length of each parameter and create a new line to prevent it extending onwards.
+        #         # or just make the treeview column to resize itself when more characters are put ins
+        # self.sow_info.clear()
+
+        # self.reg_tree.grid(row=0, column=1, sticky="NEW")
 
 '''
 SOWView will display the SOW for the set week (Week 1). 
