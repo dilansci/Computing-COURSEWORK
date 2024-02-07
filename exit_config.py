@@ -8,11 +8,13 @@ class Exit(tk.LabelFrame):
     I'm thinking of making a dictionary which stores all views once they are accessed (Login being the very first view) 
     and when 'Exit' is called, then it goes to the previous view and deletes the current view from the dictionary. :)) 
     '''
-    def __init__(self, master, **kargs):
+    def __init__(self, master, header, **kargs):
         super().__init__(master, **kargs)
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
+        self.header = header
+        self.new_view = "ViewManager.instance.pop()"
 
-        self.exit_bar = ttk.Button(self, text="EXIT", command = lambda: ViewManager.instance.pop())
+        self.exit_bar = ttk.Button(self, text="EXIT", command = lambda: [eval(self.new_view), self.header.update_header(eval(self.new_view))])
         self.exit_bar.grid(sticky="S")
 

@@ -13,6 +13,7 @@ class SQLController():
         # 'statement' is the actual SQL command
         self.cursor.execute(statement, args)
         self.data = self.cursor.fetchall()
+        self.conn.commit()
         return self.data
         # this returns the output for the SQL statements used in the services.
 

@@ -6,24 +6,26 @@ from Views.view_manager import ViewManager
 
 class DayView(ttk.Frame):
 
-    def __init__(self, master, control, reg_view, sow_view, **kargs): # using 'control' as a parameter is a short term fix. REMOVE ASAP!!!
+    def __init__(self, master, control, reg_view, sow_view, header, **kargs): # using 'control' as a parameter is a short term fix. REMOVE ASAP!!!
         super().__init__(master, **kargs)
         # SINGLETON
         ViewManager.instance = ViewManager()
         ViewManager.instance.instance.register_view(self, "DayView")
-        # declaring the controller as 'self.control'
+        # declaring parameters
         self.control = control
         self.reg_view = reg_view
         self.sow_view = sow_view
+        self.header = header
         # arrays
         self.registers = []
         self.class_ids = []
         self.class_contents = []
         self.sow_contents = []
-        # this iterates through each day Mon-Sun and creates a button.
+
+        self.view_name = "Lesson Manager"
+        self.header.update_header(self.view_name)
         self.days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
         self.day_buttons = []
-
         for i in range (len(self.days)):
             self.rowconfigure(0, weight=1)
             self.columnconfigure(i, weight=1)
@@ -37,6 +39,7 @@ class DayView(ttk.Frame):
         self.reg_widgets(day)
 
     def reg_widgets(self, day):
+        self.header.update_header(self.view_name)
         self.class_ids.clear()
         # VerticalScrolledFrame uses 'self.reg_frame.interior' 
         self.reg_frame = VerticalScrolledFrame(self)

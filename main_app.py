@@ -37,7 +37,7 @@ class Main(tk.Tk):
         self.header = Header(self.container)
         self.header.grid(row=0, column=0, padx=5, pady=5, sticky="NEW")
         # where the 'BACK' button is instanciated
-        self.exit_button = Exit(self.container)
+        self.exit_button = Exit(self.container, self.header)
         self.exit_button.grid(row=4, column=0, sticky="ESW")
 
         # SINGLETON
@@ -60,8 +60,8 @@ class Main(tk.Tk):
         ## VIEWS
         #  Only VIEWS should have 'self.container' as a parameter!
         self.sow_view = SOWView(self.container, self.sow_control)
-        self.r_view = RegisterView(self.container, self.reg_control)
-        self.d_view = DayView(self.container, self.day_control, self.r_view, self.sow_view)
+        self.r_view = RegisterView(self.container, self.reg_control, self.header)
+        self.d_view = DayView(self.container, self.day_control, self.r_view, self.sow_view, self.header)
 
         view_manager.register_view(self.d_view, "DayView")
         view_manager.show_view("DayView")

@@ -11,3 +11,6 @@ class RegController():
     
     def get_attendance(self, swimmer_names):
         return self.reg_service.get_attendance(swimmer_names)
+    
+    def set_attendance(self, swimmer_names, attendance_data):
+        return self.reg_service.set_attendance(swimmer_names, attendance_data)
