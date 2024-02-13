@@ -1,6 +1,6 @@
 # Computer Science Coursework
 
-This is my project for the Lisburn LeisurePlex Lesson Manager System.
+This is my A-Level coursework for my Computer Science course which contains a prototype for the current Lisburn LeisurePlex Lesson Manager System. This is used to manage swimmers by marking attendance, writing notes, assessing swimmers etc.
 
 # The Frontend (Tkinter)
 My UI for the system will be made using Python's wonderful and hassle-free Tkinter framework.
