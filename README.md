@@ -8,3 +8,5 @@ My UI for the system will be made using Python's wonderful and hassle-free Tkint
 Whilst overall design and flair is lacking it does the job :)
 # The Backend (SQLite 3)
 I will also be using SQLite 3 as my database of choice to store/update various details for the system when needed.
+
+RUN THE APP IN 'main_app.py"
