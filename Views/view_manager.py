@@ -31,6 +31,8 @@ class ViewManager:
             self.grid_view(self.view_stack[len(self.view_stack)-1])
             print("VIEW",self.view_stack)
             return view
+        else:
+            print("TRYING TO POP WITHOUT VIEW IN STACK!!!")
             
     def hide_view(self, view):
         # the view parameter is the "self" within the respective view.

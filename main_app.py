@@ -5,6 +5,7 @@ from register import *
 import SQL_controller
 
 from Views.view_manager import ViewManager
+from account_manager import AccountManager
 # Service imports
 from NewServices.swimmerService import *
 from NewServices.regService import *
@@ -20,6 +21,7 @@ from Views.reg_view import RegisterView
 from Views.day_view import DayView
 from Views.sow_view import SOWView
 from Views.login_view import LoginView
+from Views.login_screen import LoginScreen
 # creating a class which acts as a dictionary for all the contents of the registry.
 class Main(tk.Tk):
 
@@ -29,18 +31,6 @@ class Main(tk.Tk):
         self.geometry("650x500")
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
-
-        # most of the code/widgets will be stored with the 'self.container' frame.
-        self.container = tk.LabelFrame(self)
-        # specifiying the area where the 'container' frame is packed within 'Main'.
-        self.container.columnconfigure(0, weight=1)
-        self.container.grid(sticky="NESW", padx=5, pady=5)
-
-        self.header = Header(self.container)
-        self.header.grid(row=0, column=0, padx=5, pady=5, sticky="NEW")
-        # where the 'BACK' button is instanciated
-        self.exit_button = Exit(self.container, self.header)
-        self.exit_button.grid(row=4, column=0, sticky="ESW")
 
         # SINGLETON
         # Establishing the first Singleton connection as 'DayView' (will change to login at some point)
@@ -61,12 +51,23 @@ class Main(tk.Tk):
         self.sow_control = SOWController(self.sow_service)
         self.login_control = LoginController(self.login_service)
 
+        self.container = tk.LabelFrame(self)
+        self.container.columnconfigure(0, weight=1)
+        self.container.grid(sticky="NESW", padx=5, pady=5)
+
+        self.header = Header(self.container)
+        self.header.grid(row=0, column=0, padx=5, pady=5, sticky="NEW")
+        # where the 'BACK' button is instanciated
+        self.exit_button = Exit(self.container, self.header)
+        self.exit_button.grid(row=4, column=0, sticky="ESW")
+
         ## VIEWS
         #  Only VIEWS should have 'self.container' as a parameter!
         self.sow_view = SOWView(self.container, self.sow_control)
         self.r_view = RegisterView(self.container, self.reg_control, self.header)
         self.d_view = DayView(self.container, self.day_control, self.r_view, self.sow_view, self.header)
-        self.login_view = LoginView(self.container, self.login_control, self.d_view)
+        self.login_screen = LoginScreen(self.container, self.login_control)
+        self.login_view = LoginView(self.container, self.login_control, self.login_screen)
 
         view_manager.register_view(self.login_view, "LoginView")
         view_manager.show_view("LoginView")

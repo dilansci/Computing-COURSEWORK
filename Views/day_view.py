@@ -9,8 +9,7 @@ class DayView(ttk.Frame):
     def __init__(self, master, control, reg_view, sow_view, header, **kargs): # using 'control' as a parameter is a short term fix. REMOVE ASAP!!!
         super().__init__(master, **kargs)
         # SINGLETON
-        ViewManager.instance = ViewManager()
-        ViewManager.instance.instance.register_view(self, "DayView")
+        ViewManager.instance.register_view(self, "DayView")
         # declaring parameters
         self.control = control
         self.reg_view = reg_view

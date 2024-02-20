@@ -13,8 +13,7 @@ class Exit(tk.LabelFrame):
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
         self.header = header
-        self.new_view = "ViewManager.instance.pop()"
 
-        self.exit_bar = ttk.Button(self, text="EXIT", command = lambda: [eval(self.new_view), self.header.update_header(eval(self.new_view))])
+        self.exit_bar = ttk.Button(self, text="penis", command = lambda: ViewManager.instance.pop())
         self.exit_bar.grid(sticky="S")
 
