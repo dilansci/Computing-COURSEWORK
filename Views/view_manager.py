@@ -5,16 +5,11 @@ class ViewManager:
     instance = None
 
     def __init__(self):
-        if not self._initialized:
-            self.views = {}
-            self.view_stack = []
-            self._initialized = True
+        if self.__class__.instance == None:
+            self.__class__.instance = self
 
-    def __new__(cls, *args, **kwargs):
-        if not cls.instance:
-            cls.instance = super(ViewManager, cls).__new__(cls)
-            cls.instance._initialized = False
-        return cls.instance
+        self.views = {}
+        self.view_stack = []
 
     def register_view(self, view, name):
         self.views[name] = view

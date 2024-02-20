@@ -24,6 +24,12 @@ class DayView(ttk.Frame):
 
         self.view_name = "Lesson Manager"
         self.header.update_header(self.view_name)
+
+    def day_layout(self): # user_access
+        ViewManager.instance.show_view("DayView")
+        for widget in self.winfo_children():
+            widget.destroy()
+
         self.days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
         self.day_buttons = []
         for i in range (len(self.days)):
