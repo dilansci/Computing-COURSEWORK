@@ -10,4 +10,7 @@ class LoginService():
         self.control = sqlcontroller
     
     def get_login(self, pin, access_level):
-        return self.control.run_execute("SELECT first_name,last_name FROM Staff WHERE staff_pin=? AND access_level=?", pin, access_level)
+        try:
+            return self.control.run_execute("SELECT staff_pin, first_name, last_name FROM Staff WHERE staff_pin=? AND access_level=?", pin, access_level)[0][0]
+        except:
+            return

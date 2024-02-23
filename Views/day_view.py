@@ -6,7 +6,7 @@ from Views.view_manager import ViewManager
 
 class DayView(ttk.Frame):
 
-    def __init__(self, master, control, reg_view, sow_view, header, **kargs): # using 'control' as a parameter is a short term fix. REMOVE ASAP!!!
+    def __init__(self, master, control, reg_view, sow_view, new_teacher_view, header, **kargs): # using 'control' as a parameter is a short term fix. REMOVE ASAP!!!
         super().__init__(master, **kargs)
         # SINGLETON
         ViewManager.instance.register_view(self, "DayView")
@@ -15,6 +15,7 @@ class DayView(ttk.Frame):
         self.reg_view = reg_view
         self.sow_view = sow_view
         self.header = header
+        self.new_teacher_view = new_teacher_view
         # arrays
         self.registers = []
         self.class_ids = []
@@ -24,7 +25,8 @@ class DayView(ttk.Frame):
         self.view_name = "Lesson Manager"
         self.header.update_header(self.view_name)
 
-    def day_layout(self): # user_access
+    def day_layout(self, access_level):
+        self.access_level = access_level
         ViewManager.instance.show_view("DayView")
         for widget in self.winfo_children():
             widget.destroy()
@@ -38,6 +40,27 @@ class DayView(ttk.Frame):
             self.day_buttons.append(ttk.Button(self, text=self.days[i], command= lambda i=i: self.share_day(self.days[i]) ))
             self.day_buttons[i].grid(row=0,column=i, sticky="EW", pady=5) # DONT USE PAKCING!!! - matthew :)
         self.reg_widgets("Monday")
+
+        # Add teacher buttons here
+        '''
+        Here we will make widgets that can only be accessed with the correct "access_level".
+        For example:
+        -->
+        add_teacher_btn.grid()
+        if access_level != 0:
+            add_teacher_btn.config(state = "disabled")
+        '''
+        self.add_teacher_btn = ttk.Button(self, text="New Teacher", command= lambda: [ViewManager.instance.hide_view(self), self.new_teacher_view.new_teacher_layout()]) # add command = lambda: ...
+        self.add_teacher_btn.grid()
+        self.add_class_btn = ttk.Button(self, text="New Class") # add command here too
+        self.add_class_btn.grid()
+        # Prohibits Teachers and Assisstants from Adding Teachers/Classes
+        if self.access_level != 0:
+            self.add_teacher_btn.config(state="disabled")
+            self.add_class_btn.config(state="disabled")
+
+
+
 
     def share_day(self, day):
         self.kill_everything() # this always goes first :))

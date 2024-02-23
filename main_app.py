@@ -11,17 +11,20 @@ from NewServices.swimmerService import *
 from NewServices.regService import *
 from NewServices.syllabusService import *
 from NewServices.loginService import *
+from NewServices.teacherService import *
 # Controller imports
 from Controllers.day_controller import *
 from Controllers.reg_controller import *
 from Controllers.sow_controller import *
 from Controllers.login_controller import *
+from Controllers.teacher_controller import *
 # View imports
 from Views.reg_view import RegisterView
 from Views.day_view import DayView
 from Views.sow_view import SOWView
 from Views.login_view import LoginView
 from Views.login_screen import LoginScreen
+from Views.new_teacher_view import NewTeacherView
 # creating a class which acts as a dictionary for all the contents of the registry.
 class Main(tk.Tk):
 
@@ -44,12 +47,14 @@ class Main(tk.Tk):
         self.reg_service = RegisterService(self.sql_control)
         self.sow_service = SOWService(self.sql_control)
         self.login_service = LoginService(self.sql_control)
+        self.teacher_service = TeacherService(self.sql_control)
 
         ## CONTROLLERS
         self.day_control = DayController(self.day_service, self.reg_service)
         self.reg_control = RegController(self.reg_service, self.day_service)
         self.sow_control = SOWController(self.sow_service)
         self.login_control = LoginController(self.login_service)
+        self.teacher_control = TeacherController(self.teacher_service)
 
         self.container = tk.LabelFrame(self)
         self.container.columnconfigure(0, weight=1)
@@ -63,10 +68,11 @@ class Main(tk.Tk):
 
         ## VIEWS
         #  Only VIEWS should have 'self.container' as a parameter!
+        self.new_teacher_view = NewTeacherView(self.container, self.teacher_control)
         self.sow_view = SOWView(self.container, self.sow_control)
         self.r_view = RegisterView(self.container, self.reg_control, self.header)
-        self.d_view = DayView(self.container, self.day_control, self.r_view, self.sow_view, self.header)
-        self.login_screen = LoginScreen(self.container, self.login_control)
+        self.d_view = DayView(self.container, self.day_control, self.r_view, self.sow_view, self.new_teacher_view, self.header)
+        self.login_screen = LoginScreen(self.container, self.login_control, self.d_view)
         self.login_view = LoginView(self.container, self.login_control, self.login_screen)
 
         view_manager.register_view(self.login_view, "LoginView")
