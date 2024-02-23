@@ -5,5 +5,5 @@ class LoginController():
         super().__init__()
         self.login_service = login_service
     
-    def get_login(self): # copy login service
-        pass
+    def get_login(self, pin, access_level):
+        return self.login_service.get_login(pin, access_level)

@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from Views.view_manager import ViewManager
+from account_manager import *
 class LoginScreen(ttk.Frame):
 
     def __init__(self, master, control, **kargs):
@@ -12,6 +13,47 @@ class LoginScreen(ttk.Frame):
     
     def login_layout(self, user_access):
         ViewManager.instance.show_view("LoginScreen")
-        print("DIS ONE",user_access)
-        self.pin_box = ttk.Entry(self)
-        self.pin_box.grid()
+        for widget in self.winfo_children():
+            widget.destroy()
+        
+        self.user_access = user_access
+
+        print("DIS ONE",self.user_access)
+        self.pin_l = ttk.Label(self, text="")
+        self.pin_box = ttk.Entry(self, show="*")
+        self.pin_box.grid(row=4, column=1)
+        self.pin_box.config(state="disabled")
+        self.rowconfigure(4, weight=1)
+
+        # create the "num pad" here
+        self.btn_names = ["0","1","2","3","4","5","6","7","8","CLR","9","ENTER"]
+        for i in range (len(self.btn_names)):
+            self.rowconfigure(i, weight=1)
+            self.columnconfigure(i, weight=1)
+            self.pin_button = ttk.Button(self, width=20 ,text=self.btn_names[i], command= lambda btn_id=i: self.get_pin_fnct(self.btn_names[btn_id]))
+            # for column use MOD (%) AND FOR row use //
+            self.pin_button.grid(row=i//3, column=i%3)
+
+    def get_pin_fnct(self,btn_id):
+        # might make a function which switches between "active" and "disabled" entry widget 
+        if btn_id == "CLR":
+            # the 'pin_box' is becoming "active" to allow a character to be input and then "disables" to prevent any other input
+            self.pin_box.config(state="active")
+            self.pin_box.delete(0, tk.END)
+            self.pin_box.config(state="disabled")
+
+        elif btn_id == "ENTER":
+            print("ENTERED :))")
+            self.real_pin = AccountManager.login(self.pin_box.get(), self.user_access, self.control)
+            print("THIS IS REAL PIN", self.real_pin)
+            if self.real_pin == self.pin_box.get():
+                print("CORRECT PIN!")
+            else:
+                print("INCORRECT!")
+
+        elif len(self.pin_box.get()) != 4:
+            self.pin_box.config(state="active")
+            self.pin_box.insert(0, btn_id)
+            self.pin_box.config(state="disabled")
+        else:
+            print("MAX PIN LIMIT IS 4 DIGITS!!!")
