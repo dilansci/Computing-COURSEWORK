@@ -11,6 +11,9 @@ class LoginService():
     
     def get_login(self, pin, access_level):
         try:
-            return self.control.run_execute("SELECT staff_pin, first_name, last_name FROM Staff WHERE staff_pin=? AND access_level=?", pin, access_level)[0][0]
+            print("IM HERE SANITTY")
+            info = self.control.run_execute("SELECT staff_pin, first_name, last_name FROM Staff WHERE staff_pin=? AND access_level=?", pin, access_level)
+            print("INFO",info)
+            return self.control.run_execute("SELECT staff_pin, first_name, last_name FROM Staff WHERE staff_pin=? AND access_level=?", pin, access_level)[0]
         except:
             return
