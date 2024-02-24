@@ -47,27 +47,27 @@ class LoginScreen(ttk.Frame):
 
         elif btn_id == "ENTER":
             self.teacher_info = AccountManager.login(self.pin_box.get(), self.access_level, self.control)
-            self.real_pin = self.teacher_info[0]
-            self.teacher_name = self.teacher_info[1] + " " + self.teacher_info[2]
-            # might also add a query for getting teacher name, Put teacher name at top side of screen.
-            if self.real_pin == self.pin_box.get():
-                # clear 'pin_box before hiding the frame
-                self.pin_box.config(state="active")
-                self.pin_box.delete(0, tk.END)
-                self.pin_box.config(state="disabled")
+            if self.teacher_info != None:
+                self.real_pin = self.teacher_info[0]
+                self.teacher_name = self.teacher_info[1] + " " + self.teacher_info[2]
+                # might also add a query for getting teacher name, Put teacher name at top side of screen.
+                if self.real_pin == self.pin_box.get():
+                    # clear 'pin_box before hiding the frame
+                    self.pin_box.config(state="active")
+                    self.pin_box.delete(0, tk.END)
+                    self.pin_box.config(state="disabled")
 
-                ViewManager.instance.hide_view(self)
-                self.day_view.day_layout(self.access_level, self.teacher_name) ## pass in 'self.teacher_name' and grid in label on top right of screen??
-            else:
-                messagebox.showinfo("Error","Incorrect Password!")
-                self.pin_box.config(state="active")
-                self.pin_box.delete(0, tk.END)
-                self.pin_box.config(state="disabled")
+                    ViewManager.instance.hide_view(self)
+                    self.day_view.day_layout(self.access_level, self.teacher_name) ## pass in 'self.teacher_name' and grid in label on top right of screen??
+                else:
+                    messagebox.showinfo("Error","Incorrect Password!")
+                    self.pin_box.config(state="active")
+                    self.pin_box.delete(0, tk.END)
+                    self.pin_box.config(state="disabled")
 
         elif len(self.pin_box.get()) != 4:
             self.pin_box.config(state="active")
-            self.pin_box.insert(0, btn_id)
+            self.pin_box.insert(tk.END, btn_id)
             self.pin_box.config(state="disabled")
         else:
             messagebox.showinfo("Length Error","Max. 4 digits!")
-            print("MAX PIN LIMIT IS 4 DIGITS!!!")

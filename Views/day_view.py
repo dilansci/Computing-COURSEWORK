@@ -6,7 +6,7 @@ from Views.view_manager import ViewManager
 
 class DayView(ttk.Frame):
 
-    def __init__(self, master, control, reg_view, sow_view, new_teacher_view, header, **kargs): # using 'control' as a parameter is a short term fix. REMOVE ASAP!!!
+    def __init__(self, master, control, reg_view, sow_view, staff_select_view, header, **kargs): # using 'control' as a parameter is a short term fix. REMOVE ASAP!!!
         super().__init__(master, **kargs)
         # SINGLETON
         ViewManager.instance.register_view(self, "DayView")
@@ -15,7 +15,7 @@ class DayView(ttk.Frame):
         self.reg_view = reg_view
         self.sow_view = sow_view
         self.header = header
-        self.new_teacher_view = new_teacher_view
+        self.staff_select_view = staff_select_view
         # arrays
         self.registers = []
         self.class_ids = []
@@ -29,6 +29,7 @@ class DayView(ttk.Frame):
         ViewManager.instance.show_view("DayView")
         for widget in self.winfo_children():
             widget.destroy()
+            
         self.access_level = access_level
         self.display_name = teacher_name
         
@@ -37,7 +38,7 @@ class DayView(ttk.Frame):
         for i in range (len(self.days)):
             self.rowconfigure(0, weight=1)
             self.columnconfigure(i, weight=1)
-            # this section assigns each button a 'name'. The button is then created and gridded.
+            # This section assigns each button a 'name'. The button is then created and gridded.
             self.day_buttons.append(ttk.Button(self, text=self.days[i], command= lambda i=i: self.share_day(self.days[i]) ))
             self.day_buttons[i].grid(row=0,column=i, sticky="EW", pady=5) # DONT USE PAKCING!!! - matthew :)
         # Defaults the day to 'Monday'
@@ -49,7 +50,7 @@ class DayView(ttk.Frame):
         self.add_btn_frame = tk.Frame(self)
         self.add_btn_frame.grid()
 
-        self.add_teacher_btn = ttk.Button(self.add_btn_frame, text="New Teacher", command= lambda: [ViewManager.instance.hide_view(self), self.new_teacher_view.new_teacher_layout()]) # add command = lambda: ...
+        self.add_teacher_btn = ttk.Button(self.add_btn_frame, text="View Staff", command= lambda: [ViewManager.instance.hide_view(self), self.staff_select_view.select_staff()])
         self.add_teacher_btn.grid()
         self.add_class_btn = ttk.Button(self.add_btn_frame, text="New Class") # add command here too
         self.add_class_btn.grid()
@@ -76,7 +77,6 @@ class DayView(ttk.Frame):
             r = count + 2   
             # Variables which fetch ALL necessary info
             self.sow = self.control.get_sow(self.reg_info[count][2]) 
-            # make this into an array of buttons and place them beside respective registers (think about this you need to track which reg are which)
             self.class_info = self.control.get_class(self.reg_info[count][1])
 
             # tracking class_ids for each reg_button
@@ -93,7 +93,7 @@ class DayView(ttk.Frame):
             self.class_contents.append(ttk.Label(self.reg_frame.interior, text=f"Teacher: {self.teacher_name[0][0]} {self.teacher_name[0][1]}\t Level: {self.level_num}\t Time: {self.time}"))
             self.class_contents[count].grid(row=r, column=1, columnspan=3)
             # SOW Buttons
-            self.sow_contents.append(ttk.Button(self.reg_frame.interior, text="SOW", command= lambda level_num_id = self.level_num: [ViewManager.instance.hide_view(self), self.sow_view.sow_layout(level_num_id)])) # command should go to 'sow_view' file and display the sow details
+            self.sow_contents.append(ttk.Button(self.reg_frame.interior, text="SOW", command= lambda level_num_id = self.level_num: [ViewManager.instance.hide_view(self), self.sow_view.sow_layout(level_num_id)]))
             self.sow_contents[count].grid(row=r, column=6, columnspan=3, sticky="NE")
 
         # '.clear()' avoid crashing
@@ -104,9 +104,3 @@ class DayView(ttk.Frame):
     def kill_everything(self):
         self.reg_frame.destroy()
         self.add_btn_frame.destroy()
-
-'''
-Lesson --> class_ID --> teacher_ID -->
-                    --> level_num
-                        --> syllabus
-'''
