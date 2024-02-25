@@ -25,6 +25,7 @@ from Views.login_view import LoginView
 from Views.login_screen import LoginScreen
 from Views.all_teachers_view import AllTeachersView
 from Views.staff_select_view import StaffSelectView
+from Views.edit_teacher_view import EditTeacherView
 # creating a class which acts as a dictionary for all the contents of the registry.
 class Main(tk.Tk):
 
@@ -68,7 +69,8 @@ class Main(tk.Tk):
 
         ## VIEWS
         #  Only VIEWS should have 'self.container' as a parameter!
-        self.all_teachers_view = AllTeachersView(self.container, self.staff_control)
+        self.edit_teacher_view = EditTeacherView(self.container, self.staff_control)
+        self.all_teachers_view = AllTeachersView(self.container, self.staff_control, self.edit_teacher_view)
         self.staff_select_view = StaffSelectView(self.container, self.all_teachers_view)
         self.sow_view = SOWView(self.container, self.sow_control)
         self.r_view = RegisterView(self.container, self.reg_control, self.header)

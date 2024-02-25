@@ -59,11 +59,11 @@ class LoginScreen(ttk.Frame):
 
                     ViewManager.instance.hide_view(self)
                     self.day_view.day_layout(self.access_level, self.teacher_name) ## pass in 'self.teacher_name' and grid in label on top right of screen??
-                else:
-                    messagebox.showinfo("Error","Incorrect Password!")
-                    self.pin_box.config(state="active")
-                    self.pin_box.delete(0, tk.END)
-                    self.pin_box.config(state="disabled")
+            else:
+                messagebox.showerror("Error","Incorrect Password!")
+                self.pin_box.config(state="active")
+                self.pin_box.delete(0, tk.END)
+                self.pin_box.config(state="disabled")
 
         elif len(self.pin_box.get()) != 4:
             self.pin_box.config(state="active")

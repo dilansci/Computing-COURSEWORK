@@ -13,7 +13,7 @@ class Header(ttk.Frame):
         
         self.head_label = ttk.Label(self, text="Lesson Manager")
         self.head_label.grid(row=0, column=0)
-    
+    # Could not finish 'Update_header' due to the deadline for the solution. This is also a QOL feature and doesn't directly impact the program.
     def update_header(self, name):
         self.head_label["text"] = name
 

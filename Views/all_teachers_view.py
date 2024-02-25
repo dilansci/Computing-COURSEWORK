@@ -5,10 +5,12 @@ from Views.view_manager import ViewManager
 
 class AllTeachersView(ttk.Frame):
 
-    def __init__(self, master, control, **kargs): # add additional parameters
+    def __init__(self, master, control, edit_teacher_view, **kargs): # add additional parameters
         super().__init__(master,**kargs)
-        self.control = control
         ViewManager.instance.register_view(self, "AllTeachersView")
+
+        self.control = control
+        self.edit_teacher = edit_teacher_view
         '''
         This view will show entry widgets containing the info needed for a teacher
         e.g. Fname, Lname, Phone, Email, Pin etc
@@ -42,21 +44,21 @@ class AllTeachersView(ttk.Frame):
 
         '''
         self.all_teachers = self.control.get_teachers()
-        print("ALL TEACHERS",self.all_teachers)
         self.fname_entries = []
         curr_id = 0
         r = 0
         for teacher in self.all_teachers:
             # This inserts the 'first_name' of each teacher into an entry box
             self.new_entry = ttk.Entry(self)
-            self.new_entry.insert(0, teacher[0])
+            self.new_entry.insert(0, teacher)
             self.new_entry.grid()
             self.new_entry.config(state="disabled")
             self.fname_entries.append(self.new_entry)
             # make an "edit" button which is linked to each 'new_entry'
-            self.edit_btn = (ttk.Button(self, text="EDIT", command= lambda btn_id = curr_id: [self.fname_entries[btn_id].config(state="active"), print(btn_id)])) # this command should bring to the edit_teacher view
+            self.edit_btn = (ttk.Button(self, text="EDIT", command= lambda btn_id = curr_id: [ViewManager.instance.hide_view(self), self.edit_teacher.display_teacher_info(self.all_teachers, btn_id)])) # this command should bring to the edit_teacher view
             self.edit_btn.grid(row=r,column=1)
             r += 1
             curr_id += 1
+            # self.edit_btn cmnd - "self.fname_entries[btn_id].config(state="active")"
 
         
