@@ -24,8 +24,10 @@ from Views.sow_view import SOWView
 from Views.login_view import LoginView
 from Views.login_screen import LoginScreen
 from Views.all_teachers_view import AllTeachersView
+from Views.all_assistants_view import AllAssistantsView
 from Views.staff_select_view import StaffSelectView
 from Views.edit_teacher_view import EditTeacherView
+from Views.edit_assistant_view import EditAssistantView
 # creating a class which acts as a dictionary for all the contents of the registry.
 class Main(tk.Tk):
 
@@ -69,9 +71,11 @@ class Main(tk.Tk):
 
         ## VIEWS
         #  Only VIEWS should have 'self.container' as a parameter!
+        self.edit_assist_view = EditAssistantView(self.container, self.staff_control)
         self.edit_teacher_view = EditTeacherView(self.container, self.staff_control)
+        self.all_assist_view = AllAssistantsView(self.container, self.staff_control, self.edit_assist_view)
         self.all_teachers_view = AllTeachersView(self.container, self.staff_control, self.edit_teacher_view)
-        self.staff_select_view = StaffSelectView(self.container, self.all_teachers_view)
+        self.staff_select_view = StaffSelectView(self.container, self.all_teachers_view, self.all_assist_view)
         self.sow_view = SOWView(self.container, self.sow_control)
         self.r_view = RegisterView(self.container, self.reg_control, self.header)
         self.d_view = DayView(self.container, self.day_control, self.r_view, self.sow_view, self.staff_select_view, self.header)

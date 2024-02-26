@@ -21,28 +21,7 @@ class AllTeachersView(ttk.Frame):
         ViewManager.instance.show_view("AllTeachersView")
         for widget in self.winfo_children():
             widget.destroy()
-        '''
-        ______________
-        OVERALL LAYOUT
-        ______________
-        Entry boxes will be made for each teacher in the DB.
-        They will be split into "Mangers??", "Teachers" and "Assistants"
-        Using a SQL query we will populate the box with the Teachers'/Assistants' FULLNAME followed by an "EDIT" button.
-        _____________
-        EDITING STAFF
-        _____________
-        On clicking the "EDIT" button it will open a new view "edit_staff" which contains all the info of the teacher.
-        All of the states of the entry boxes will be enabled until "SAVE" is pressed, which will disable them all.
-        SQL query will be run after this to UPDATE the info in each entrybox i.e. entry_box_name.get()
-        ____________
-        ADDING STAFF
-        ____________
-        An "ADD STAFF" button will be added to the "all_staff_view" frame.
-        On click it will open a new view "add_staff" with a series of "Entry" widgets and "listboxes" (listbox for the access_level)
-        After "SAVE" they will be brought back to the "edit_staff" view.
-
-
-        '''
+            
         self.all_teachers = self.control.get_teachers()
         self.fname_entries = []
         curr_id = 0
