@@ -29,7 +29,7 @@ class ViewManager:
             view = self.view_stack.pop()
             self.hide_view(view)
             self.grid_view(self.view_stack[len(self.view_stack)-1])
-            print("VIEW",self.view_stack)
+            # print("VIEW",self.view_stack)
             return view
         else:
             print("TRYING TO POP WITHOUT VIEW IN STACK!!!")

@@ -1,6 +1,5 @@
 import sqlite3
 
-
 class SQLController():
     # establishing the view for this controller !* might change as im not sure if this is reusable *!
     def __init__(self):
