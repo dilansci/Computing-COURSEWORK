@@ -13,10 +13,17 @@ class Header(ttk.Frame):
         
         self.head_label = ttk.Label(self, text="Lesson Manager")
         self.head_label.grid(row=0, column=0)
-    # Could not finish 'Update_header' due to the deadline for the solution. This is also a QOL feature and doesn't directly impact the program.
+        self.head_list = []
+
     def update_header(self, name):
-        self.head_label["text"] = name
-
-
-
+        self.head_list.append(name)
+        self.head_label["text"] = "Lesson Manager - " + name
     
+    def on_exit(self):
+        if len(self.head_list) > 1:
+            self.head_list.pop()
+            self.head_label["text"] = "Lesson Manager - " + self.head_list[-1]
+            print("CUrrent View list", self.head_list)
+        elif len(self.head_list) == 1:
+            self.head_list.pop()
+            self.head_label["text"] = "Lesson Manager"

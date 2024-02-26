@@ -22,10 +22,11 @@ class DayView(ttk.Frame):
         self.class_contents = []
         self.sow_contents = []
 
-        self.view_name = "Lesson Manager"
-        self.header.update_header(self.view_name)
+        self.view_name = "Class Select"
 
     def day_layout(self, access_level, teacher_name):
+        self.header.update_header(self.view_name)
+
         ViewManager.instance.show_view("DayView")
         for widget in self.winfo_children():
             widget.destroy()
@@ -52,7 +53,7 @@ class DayView(ttk.Frame):
 
         self.add_teacher_btn = ttk.Button(self.add_btn_frame, text="View Staff", command= lambda: [ViewManager.instance.hide_view(self), self.staff_select_view.select_staff()])
         self.add_teacher_btn.grid()
-        self.add_class_btn = ttk.Button(self.add_btn_frame, text="New Class") # add command here too
+        self.add_class_btn = ttk.Button(self.add_btn_frame, text="View Classes") # add command here too
         self.add_class_btn.grid()
         # Prohibits Teachers and Assisstants from Adding Teachers/Classes
         if self.access_level != 0:
@@ -65,7 +66,7 @@ class DayView(ttk.Frame):
         self.other_widgets()
 
     def reg_widgets(self, day):
-        self.header.update_header(self.view_name)
+        # self.header.update_header(self.view_name)
         self.class_ids.clear()
         # VerticalScrolledFrame uses 'self.reg_frame.interior' 
         self.reg_frame = VerticalScrolledFrame(self)

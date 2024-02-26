@@ -13,7 +13,7 @@ class Exit(tk.LabelFrame):
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
         self.header = header
-
-        self.exit_bar = ttk.Button(self, text="EXIT", command = lambda: ViewManager.instance.pop())
+        ## add function which looks up dict_of_view_names and displays the next name. (HAVE TO LINK WITH HEADER THO!!!)
+        self.exit_bar = ttk.Button(self, text="EXIT", command = lambda: [ViewManager.instance.pop(), self.header.on_exit()])
         self.exit_bar.grid(sticky="S")
 

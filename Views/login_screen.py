@@ -5,19 +5,23 @@ from account_manager import *
 from tkinter import messagebox
 class LoginScreen(ttk.Frame):
 
-    def __init__(self, master, control, day_view, **kargs):
+    def __init__(self, master, control, day_view, header, **kargs):
         super().__init__(master, **kargs)
         ViewManager.instance.register_view(self, "LoginScreen")
 
         self.control = control
         self.day_view = day_view
-        self.view_name = "Login"
+        self.header = header
+
+        self.view_name = "Login Choice"
     
     def login_layout(self, access_level):
+        self.header.update_header(self.view_name)
+
         ViewManager.instance.show_view("LoginScreen")
         for widget in self.winfo_children():
             widget.destroy()
-        
+
         self.access_level = access_level
 
         self.pin_l = ttk.Label(self, text="")

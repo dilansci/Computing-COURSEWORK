@@ -5,14 +5,17 @@ from account_manager import AccountManager
 
 class LoginView(ttk.Frame):
 
-    def __init__(self, master, control, login_screen, **kargs):
+    def __init__(self, master, control, login_screen, header, **kargs):
         super().__init__(master, **kargs)
         ViewManager.instance.register_view(self, "LoginView")
         # declaring parameters
         self.control = control
         self.login_screen = login_screen
+        self.header = header
 
-        self.view_name = "Login"
+        # self.view_name = "Login"
+        # self.header.update_header(self.view_name)
+
         self.login_choice = ["Manager","Teacher","Assistant"]
 
         for i in range (len(self.login_choice)):
