@@ -54,7 +54,7 @@ class Main(tk.Tk):
         self.sow_service = SOWService(self.sql_control)
         self.login_service = LoginService(self.sql_control)
         self.staff_service = StaffService(self.sql_control)
-        self.class_service = 
+        self.class_service = ClassService(self.sql_control)
 
         ## CONTROLLERS
         self.day_control = DayController(self.day_service, self.reg_service)
@@ -62,6 +62,7 @@ class Main(tk.Tk):
         self.sow_control = SOWController(self.sow_service)
         self.login_control = LoginController(self.login_service)
         self.staff_control = StaffController(self.staff_service)
+        self.class_control = ClassController(self.class_service, self.reg_service)
 
         self.container = tk.LabelFrame(self)
         self.container.columnconfigure(0, weight=1)
@@ -75,7 +76,7 @@ class Main(tk.Tk):
 
         ## VIEWS
         #  Only VIEWS should have 'self.container' as a parameter!
-        self.add_class_view = AddClassView(self.container) ## need to add serrvice and controller
+        self.add_class_view = AddClassView(self.container, self.class_control)
         self.edit_assist_view = EditAssistantView(self.container, self.staff_control)
         self.edit_teacher_view = EditTeacherView(self.container, self.staff_control)
         self.all_assist_view = AllAssistantsView(self.container, self.staff_control, self.edit_assist_view)
