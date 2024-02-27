@@ -62,7 +62,7 @@ class Main(tk.Tk):
         self.sow_control = SOWController(self.sow_service)
         self.login_control = LoginController(self.login_service)
         self.staff_control = StaffController(self.staff_service)
-        self.class_control = ClassController(self.class_service)
+        self.class_control = ClassController(self.class_service, self.reg_service, self.day_service)
 
         self.container = tk.LabelFrame(self)
         self.container.columnconfigure(0, weight=1)
@@ -84,7 +84,7 @@ class Main(tk.Tk):
         self.staff_select_view = StaffSelectView(self.container, self.all_teachers_view, self.all_assist_view)
         self.sow_view = SOWView(self.container, self.sow_control)
         self.r_view = RegisterView(self.container, self.reg_control, self.header)
-        self.d_view = DayView(self.container, self.day_control, self.r_view, self.sow_view, self.staff_select_view, self.header)
+        self.d_view = DayView(self.container, self.day_control, self.r_view, self.sow_view, self.staff_select_view, self.class_view, self.header)
         self.login_screen = LoginScreen(self.container, self.login_control, self.d_view, self.header)
         self.login_view = LoginView(self.container, self.login_control, self.login_screen, self.header)
 
