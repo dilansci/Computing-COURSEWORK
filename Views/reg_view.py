@@ -27,7 +27,7 @@ class RegisterView(ttk.Frame):
         ViewManager.instance.show_view("RegisterView")
         for widget in self.winfo_children():
             widget.destroy()
-
+        
         self.swimmer_names = self.reg_control.get_swimmer_name(list_of_ids[reg_pos])
         self.swim_attendance = self.reg_control.get_attendance(self.swimmer_names)
 

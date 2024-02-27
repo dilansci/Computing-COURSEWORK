@@ -11,7 +11,8 @@ class SwimmerService():
     def get_lessons_day(self, day):
         return self.control.run_execute("SELECT * FROM Lessons WHERE day=?",day)
 
-    def get_swimmer_name(self, class_id):
+    def get_swimmer_name(self, class_id): # THIS ISNT CLASS_ID!!! THIS IS TEACHER_ID
+        print("This is the currrent ID",class_id)
         return self.control.run_execute("SELECT first_name, last_name FROM Swimmers WHERE class_ID =?",class_id)
     
     def add_swimmer(self): # prob pass in details for adding new swimmer :)
