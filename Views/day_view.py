@@ -96,11 +96,11 @@ class DayView(ttk.Frame):
             self.class_contents.append(ttk.Label(self.reg_frame.interior, text=f"Teacher: {self.full_name}\t Level: {self.level_num}\t Time: {self.time}"))
             self.class_contents[count].grid(row=r, column=1, columnspan=3)
             # SOW Buttons
-            self.sow_contents.append(ttk.Button(self.reg_frame.interior, text="SOW", command= lambda level_num_id = self.level_num: [ViewManager.instance.hide_view(self), self.sow_view.sow_layout(self.level_num)]))
+            self.sow_contents.append(ttk.Button(self.reg_frame.interior, text="SOW", command= lambda level_num_id = self.level_num: [ViewManager.instance.hide_view(self), self.sow_view.sow_layout(level_num_id)]))
             self.sow_contents[count].grid(row=r, column=6, sticky="NE")
             # EditClass Buttons
             # pass into the command the details of the class. i.e. Day, SOW, Class_info (this comes with teacher_id, level_num), Time (incase teacher)
-            self.add_class_btn = ttk.Button(self.reg_frame.interior, text="Edit Classes", command= lambda teacher_id = self.current_id, time = self.time: [ViewManager.instance.hide_view(self), self.class_view.show_classes(day, teacher_id, time)]) # get SOW from sow_service
+            self.add_class_btn = ttk.Button(self.reg_frame.interior, text="Edit Classes", command= lambda teacher_id = self.current_id, time = self.time, level_num = self.level_num, curr_class_id = self.current_class_id: [ViewManager.instance.hide_view(self), self.class_view.show_classes(day, teacher_id, time, level_num, curr_class_id)]) # get SOW from sow_service
             self.add_class_btn.grid(row=r, column=7, sticky="NE")
             if self.access_level != 0:
                 self.add_class_btn.config(state="disabled")

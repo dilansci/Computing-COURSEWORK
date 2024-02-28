@@ -13,7 +13,7 @@ class ViewManager:
 
     def register_view(self, view, name):
         self.views[name] = view
-        print(self.views)
+        # print(self.views)
 
     def show_view(self, name):
         view = self.views.get(name)
