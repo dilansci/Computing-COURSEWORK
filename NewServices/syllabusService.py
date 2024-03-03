@@ -5,5 +5,5 @@ class SOWService():
     def __init__(self, sqlcontroller: SQL_controller.SQLController):
         self.control = sqlcontroller
     
-    def get_sow_level(self, level_num):
-        return self.control.run_execute("SELECT intro,main,contrast,pool_depth FROM SOW WHERE level_num=? AND week_num=1",level_num)[0]
+    def get_sow_level(self, sow_id):
+        return self.control.run_execute("SELECT intro,main,contrast,pool_depth FROM SOW WHERE sow_ID=?",sow_id)[0]
