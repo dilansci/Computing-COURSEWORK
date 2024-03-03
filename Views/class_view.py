@@ -60,12 +60,7 @@ class ClassView(ttk.Frame):
         e.g.
         get_lesson = (SELECT )
         UPDATE Class
-        '''
 
-
-
-        
-        '''
         Adding a class goes as follow:
         ------------------------------
         - CREATE the class in 'Classes' table. ASSIGN 'staff_ID', 'level' and 'time' for class.
