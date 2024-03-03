@@ -14,19 +14,16 @@ class ClassView(ttk.Frame):
         self.view_name = "Classes"
 
     # use swimmerService like in "day_view"
-    def show_classes(self, day, teacher_id, time, level, curr_class_id):
+    def show_classes(self, class_id, sow_id, teacher_id): # , day, time, level, curr_class_id
         self.header.update_header(self.view_name)
 
         ViewManager.instance.show_view("ClassView")
         for widget in self.winfo_children():
             widget.destroy()
-        
-        self.day = day
+
+        self.class_id = class_id
+        self.sow_id = sow_id
         self.teacher_id = teacher_id # use this to make the first selection in the ComboBox the current teacher.
-        self.time = time
-        self.level = level
-        self.curr_class = curr_class_id
-        print("TEACHER ID",self.teacher_id,"TIME",self.time,"DAY",self.day, "LEVEL",self.level,"CLASS ID",self.curr_class)
 
         self.all_teachers_id = self.control.get_all_teachers_id()
         self.all_teachers = self.control.get_all_teachers()
@@ -58,8 +55,10 @@ class ClassView(ttk.Frame):
         '''
         HERE WE USE A SLQ QUERY TO UPDATE THE DB FOR THE TEACHER OF THIS CLASS
         e.g.
-        get_lesson = (SELECT )
-        UPDATE Class
+        UPDATE Class SET staff_ID=?, time=?, level_num=? WHERE class_ID=?, {values}  
+
+        To Update SOW:
+        get_lesson = UPDATE SOW SET intro=?, main=?, contrast=?, depth=? WHERE sow_ID=?, {values}
         '''
 
 

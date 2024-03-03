@@ -5,5 +5,5 @@ class SOWController():
         super().__init__()
         self.sow_service = sow_service
     
-    def get_sow_level(self, level_num):
-        return self.sow_service.get_sow_level(level_num)
+    def get_sow_level(self, sow_id):
+        return self.sow_service.get_sow_level(sow_id)
