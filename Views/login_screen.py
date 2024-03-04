@@ -13,7 +13,7 @@ class LoginScreen(ttk.Frame):
         self.day_view = day_view
         self.header = header
 
-        self.view_name = "Login Choice"
+        self.view_name = "Login"
     
     def login_layout(self, access_level):
         self.header.update_header(self.view_name)
@@ -62,6 +62,7 @@ class LoginScreen(ttk.Frame):
                     self.pin_box.config(state="disabled")
 
                     ViewManager.instance.hide_view(self)
+                    # ViewManager.instance.pop() Popping doesnt work as it displays the previous view and the next view ://
                     self.day_view.day_layout(self.access_level, self.teacher_name) ## pass in 'self.teacher_name' and grid in label on top right of screen??
             else:
                 messagebox.showerror("Error","Incorrect Password!")

@@ -5,11 +5,12 @@ from Views.view_manager import ViewManager
 
 class ClassView(ttk.Frame):
 
-    def __init__(self, master, control, header, **kargs):
+    def __init__(self, master, control, edit_sow_view, header, **kargs):
         super().__init__(master, **kargs)
         ViewManager.instance.register_view(self, "ClassView")
         self.control = control
         self.header = header
+        self.edit_sow_view = edit_sow_view
 
         self.view_name = "Classes"
 
@@ -24,7 +25,31 @@ class ClassView(ttk.Frame):
         self.class_id = class_id
         self.sow_id = sow_id
         self.teacher_id = teacher_id # use this to make the first selection in the ComboBox the current teacher.
+        ## Editing SOW
+        self.sow_info = self.control.get_sow(sow_id) # Successfully fetched SOW for this class :))
 
+        c = 0
+        w = 30
+        self.column_names = ("Intro", "Main", "Contrast", "Depth") 
+        for i in range (0, len(self.column_names)):
+             self.column_l = tk.Label(self, text=self.column_names[i]).grid(row=0, column=i)
+        # length check for each SOW
+        truncated_infos = []
+        for sow in range (len(self.sow_info)):
+            info = self.sow_info[sow]
+            if len(self.sow_info[sow]) > 35:
+                info = info[0:35] + "..." + info[35:-1]
+            truncated_infos.append(info)
+            # adjusts the width for the 'depth' listbox
+            if sow == 3:
+                w = 10
+            self.listbox = tk.Listbox(self, width= w)
+            self.listbox.insert(tk.END, truncated_infos[sow])
+            self.listbox.grid(row=1, column=c)
+            self.listbox.bind("<<ListboxSelect>>", self.edit_box)
+            c += 1
+
+        ## Changing Teacher
         self.all_teachers_id = self.control.get_all_teachers_id()
         self.all_teachers = self.control.get_all_teachers()
         self.all_names = []
@@ -49,22 +74,34 @@ class ClassView(ttk.Frame):
 
         self.teacher_select.bind('<<ComboboxSelected>>', self.teacher_changed)
 
+    def edit_box(self, event): # maybe pass in 'Label name' and 'sow_id'??
+        ViewManager.instance.hide_view(self)
+        # This is the ListBox object ' event.widget()
+        # print("Listbox contents", event.widget.get(0))
+
+        # selects the listbox widget
+        selection = event.widget.curselection()
+        if selection:
+            # declaring the index for the listbox to access
+            index = selection[0]
+            data = (event.widget.get(index)).replace("...","")
+            self.edit_sow_view.edit_sow(data)
+        ## Might create a seperate view which displays the current 'selected' ListBox as a 'Text' widget.
+        # test_text = tk.Text(self) ** THIS IS AN INTERACTIBLE TEXT WIDGET i.e. (You can type in here!) **
+
+
+
     def teacher_changed(self, event=None):
         print("NEW TEACHER",self.teacher_select.get())
         print("NEW TEACHER ID",self.teacher_dict.get(self.teacher_select.get()))
         '''
         HERE WE USE A SLQ QUERY TO UPDATE THE DB FOR THE TEACHER OF THIS CLASS
         e.g.
-<<<<<<< HEAD
-        get_lesson = (SELECT )
-        UPDATE Class
-=======
         UPDATE Class SET staff_ID=?, time=?, level_num=? WHERE class_ID=?, {values}  
 
         To Update SOW:
         get_lesson = UPDATE SOW SET intro=?, main=?, contrast=?, depth=? WHERE sow_ID=?, {values}
-        '''
->>>>>>> 9d8e7a4c1f110cb6dd66d898e6b71074bc576ffe
+
 
         Adding a class goes as follow:
         ------------------------------

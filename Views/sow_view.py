@@ -13,14 +13,14 @@ class SOWView(ttk.Frame):
         ViewManager.instance.register_view(self, "SOWView")
         self.sow_control = control
 
-    def sow_layout(self, level_num): # will need to implement week num into this
+    def sow_layout(self, sow_id): # will need to implement week num into this
         ViewManager.instance.show_view("SOWView")
         for widget in self.winfo_children():
             widget.destroy()
 
-        self.sow_info = self.sow_control.get_sow_level(level_num)
+        self.sow_info = self.sow_control.get_sow(sow_id)
 
-        print("This is the level num",level_num)
+        print("This is the SOW ID",sow_id)
         print("Details for this level",self.sow_info)
         r = 1
         # headings for SOW
@@ -60,10 +60,9 @@ class SOWView(ttk.Frame):
         selection = event.widget.curselection()
         if selection:
             # declaring the index for the listbox to access
-            index = selection[0]
+            index = selection[0] # this is just '0'
             data = (event.widget.get(index)).replace("...","")
             self.full_info = messagebox.showinfo("Info", data)
-            # almost done, need to find a way to show which box is being selected and a way to reference 'self.sow_info[i]'
 
     
 
