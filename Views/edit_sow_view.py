@@ -33,9 +33,7 @@ class EditSowView(ttk.Frame):
     def save_sow(self): # use 'new_data' to pass into "update_sow(new_data)""
         new_data = self.sow_contents.get("1.0",END)
         print(new_data)
-        # self.control.update_sow()
+        self.control.update_class_sow()
         messagebox.showinfo("Success!","SOW UPDATED!")
-        pass
-    # self.control.update_sow()
     # this will run the UPDATE query through class_service.
         

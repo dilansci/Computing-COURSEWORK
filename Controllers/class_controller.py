@@ -28,3 +28,7 @@ class ClassController():
     
     def update_class_level(self, new_level, class_id):
         return self.class_service.update_class_level(new_level, class_id)
+    
+    def update_class_sow(self, sow_label):
+        return self.class_service.update_class_sow(sow_label)
+    

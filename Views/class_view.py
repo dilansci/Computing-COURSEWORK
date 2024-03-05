@@ -39,6 +39,7 @@ class ClassView(ttk.Frame):
              self.column_l = tk.Label(self, text=self.column_names[i]).grid(row=0, column=i)
         # length check for each SOW
         truncated_infos = []
+        self.list_of_listboxes = []
         for sow in range (len(self.sow_info)):
             info = self.sow_info[sow]
             if len(self.sow_info[sow]) > 35:
@@ -51,6 +52,7 @@ class ClassView(ttk.Frame):
             self.listbox.insert(tk.END, truncated_infos[sow])
             self.listbox.grid(row=1, column=c)
             self.listbox.bind("<<ListboxSelect>>", self.edit_box)
+            # self.list_of_listboxes
             c += 1
 
         ''' CHANGING TEACHER '''
@@ -89,20 +91,16 @@ class ClassView(ttk.Frame):
         self.level_select.bind('<<ComboboxSelected>>', self.level_changed)
 
     def edit_box(self, event): # maybe pass in 'Label name' and 'sow_id'??
+        # self.column_names[n] is the Label Name
+        # HOW DO I GET THE LABEL_NAME
         ViewManager.instance.hide_view(self)
-        # This is the ListBox object ' event.widget()
-        # print("Listbox contents", event.widget.get(0))
-
         # selects the listbox widget
         selection = event.widget.curselection()
         if selection:
             # declaring the index for the listbox to access
             index = selection[0]
             data = (event.widget.get(index)).replace("...","")
-            self.edit_sow_view.edit_sow(data)
-        ## Might create a seperate view which displays the current 'selected' ListBox as a 'Text' widget.
-        # test_text = tk.Text(self) ** THIS IS AN INTERACTIBLE TEXT WIDGET i.e. (You can type in here!) **
-
+            self.edit_sow_view.edit_sow(data, )
 
     def teacher_changed(self, event=None):
         new_teacher = self.teacher_select.get()
@@ -114,6 +112,8 @@ class ClassView(ttk.Frame):
         new_level = self.level_select.get()
         self.control.update_class_level(new_level,self.class_id)
         messagebox.showinfo("UPDATED INFO!",f"Updated Level to '{new_level}'.")
+
+
         '''
         HERE WE USE A SLQ QUERY TO UPDATE THE DB FOR THE TEACHER OF THIS CLASS
         e.g.
