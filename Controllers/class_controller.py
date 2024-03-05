@@ -23,6 +23,8 @@ class ClassController():
     def get_sow(self, sow_id):
         return self.sow_service.get_sow(sow_id)
     
-    def update_class(self, teacher_id, class_id):
-        return self.class_service.update_class(teacher_id, class_id)
+    def update_class_teacher(self, teacher_id, class_id):
+        return self.class_service.update_class_teacher(teacher_id, class_id)
     
+    def update_class_level(self, new_level, class_id):
+        return self.class_service.update_class_level(new_level, class_id)

@@ -16,7 +16,7 @@ class ClassView(ttk.Frame):
         self.view_name = "Classes"
 
     # use swimmerService like in "day_view"
-    def show_classes(self, class_id, sow_id, teacher_id): # , day, time, level, curr_class_id
+    def show_classes(self, class_id, sow_id, teacher_id, level): # , day, time, level, curr_class_id
         self.header.update_header(self.view_name)
 
         ViewManager.instance.show_view("ClassView")
@@ -26,7 +26,10 @@ class ClassView(ttk.Frame):
         self.class_id = class_id
         self.sow_id = sow_id
         self.teacher_id = teacher_id
-        ## Editing SOW
+        self.curr_level = level
+        print("THIS IS THE CURRENT LEVEL",self.curr_level)
+
+        ''' EDITING SOW '''
         self.sow_info = self.control.get_sow(sow_id)
 
         c = 0
@@ -50,7 +53,7 @@ class ClassView(ttk.Frame):
             self.listbox.bind("<<ListboxSelect>>", self.edit_box)
             c += 1
 
-        ## Changing Teacher
+        ''' CHANGING TEACHER '''
         self.all_teachers_id = self.control.get_all_teachers_id()
         self.all_teachers = self.control.get_all_teachers()
         self.all_names = []
@@ -71,9 +74,19 @@ class ClassView(ttk.Frame):
         self.teacher_select['state'] = 'readonly'
         self.teacher_select['values'] = (self.all_names)
         self.teacher_select.set(self.curr_teacher_name)
-        self.teacher_select.grid()
+        self.teacher_select.grid(row=2, column=0)
 
         self.teacher_select.bind('<<ComboboxSelected>>', self.teacher_changed)
+
+        ''' CHANGING LEVEL '''
+        self.all_levels = [1,2,3,4,5,6,7]
+        self.level_select = ttk.Combobox(self, textvariable=tk.StringVar())
+        self.level_select['state'] = 'readonly'
+        self.level_select['values'] = (self.all_levels)
+        self.level_select.set(self.curr_level)
+        self.level_select.grid(row=2, column=1)
+
+        self.level_select.bind('<<ComboboxSelected>>', self.level_changed)
 
     def edit_box(self, event): # maybe pass in 'Label name' and 'sow_id'??
         ViewManager.instance.hide_view(self)
@@ -94,10 +107,13 @@ class ClassView(ttk.Frame):
     def teacher_changed(self, event=None):
         new_teacher = self.teacher_select.get()
         new_teacher_id = self.teacher_dict.get(new_teacher)
-        self.control.update_class(new_teacher_id, self.class_id)
-        messagebox.showinfo("UPDATED INFO!",f"Updated teacher to {new_teacher}.")
-        # print("NEW TEACHER",self.teacher_select.get())
-        # print("NEW TEACHER ID",self.teacher_dict.get(self.teacher_select.get()))
+        self.control.update_class_teacher(new_teacher_id, self.class_id)
+        messagebox.showinfo("UPDATED INFO!",f"Updated teacher to '{new_teacher}'.")
+    
+    def level_changed(self, event=None):
+        new_level = self.level_select.get()
+        self.control.update_class_level(new_level,self.class_id)
+        messagebox.showinfo("UPDATED INFO!",f"Updated Level to '{new_level}'.")
         '''
         HERE WE USE A SLQ QUERY TO UPDATE THE DB FOR THE TEACHER OF THIS CLASS
         e.g.
