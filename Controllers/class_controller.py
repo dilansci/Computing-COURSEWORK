@@ -22,8 +22,7 @@ class ClassController():
 
     def get_sow(self, sow_id):
         return self.sow_service.get_sow(sow_id)
-
-    '''
-    Going to rework the "View Class" function.
-    Thinking of just adding a "Edit Class" button beside each class within "day_view".
-    '''
+    
+    def update_class(self, teacher_id, class_id):
+        return self.class_service.update_class(teacher_id, class_id)
+    

@@ -13,3 +13,7 @@ class ClassService():
     
     def get_all_teachers_id(self):
         return self.control.run_execute("SELECT staff_ID FROM Staff")
+    
+    def update_class(self, teacher_id, class_id):
+        print("TEACHER ID",teacher_id, "CLASS ID",class_id)
+        return ("UPDATE Class SET staff_ID=? WHERE class_ID=?",teacher_id, class_id)

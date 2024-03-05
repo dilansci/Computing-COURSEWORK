@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.constants import * 
 from Views.view_manager import ViewManager
+from tkinter import messagebox
 
 class ClassView(ttk.Frame):
 
@@ -24,9 +25,9 @@ class ClassView(ttk.Frame):
 
         self.class_id = class_id
         self.sow_id = sow_id
-        self.teacher_id = teacher_id # use this to make the first selection in the ComboBox the current teacher.
+        self.teacher_id = teacher_id
         ## Editing SOW
-        self.sow_info = self.control.get_sow(sow_id) # Successfully fetched SOW for this class :))
+        self.sow_info = self.control.get_sow(sow_id)
 
         c = 0
         w = 30
@@ -90,10 +91,13 @@ class ClassView(ttk.Frame):
         # test_text = tk.Text(self) ** THIS IS AN INTERACTIBLE TEXT WIDGET i.e. (You can type in here!) **
 
 
-
     def teacher_changed(self, event=None):
-        print("NEW TEACHER",self.teacher_select.get())
-        print("NEW TEACHER ID",self.teacher_dict.get(self.teacher_select.get()))
+        new_teacher = self.teacher_select.get()
+        new_teacher_id = self.teacher_dict.get(new_teacher)
+        self.control.update_class(new_teacher_id, self.class_id)
+        messagebox.showinfo("UPDATED INFO!",f"Updated teacher to {new_teacher}.")
+        # print("NEW TEACHER",self.teacher_select.get())
+        # print("NEW TEACHER ID",self.teacher_dict.get(self.teacher_select.get()))
         '''
         HERE WE USE A SLQ QUERY TO UPDATE THE DB FOR THE TEACHER OF THIS CLASS
         e.g.
@@ -118,6 +122,3 @@ class ClassView(ttk.Frame):
           2. Have a seperate listbox with swimmers not in the class.
           There will also be a seperate function that will "ADD NEW SWIMMER"
         '''
-        
-
-        
