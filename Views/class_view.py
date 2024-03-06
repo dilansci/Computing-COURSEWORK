@@ -103,13 +103,6 @@ class ClassView(ttk.Frame):
             index = self.list_of_listboxes.index(event.widget)
             list_of_indexes.append(index)
         curr_listbox = self.column_names[index].lower()
-        print("THIS NEW INDEX",index)
-        '''
-        LOGIC ERROR: For some reason this code runs twice, producing '2 INDEXES'.
-        However, it does not call 'self.edit_sow_view' twice. Thus it doesn't actually
-        affect the program.
-        Just an interesting conundrum :)) 
-        '''
 
         selection = event.widget.curselection()
         if selection:

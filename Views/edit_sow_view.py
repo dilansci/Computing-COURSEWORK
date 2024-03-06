@@ -36,10 +36,6 @@ class EditSowView(ttk.Frame):
     
     def save_sow(self): # use 'new_data' to pass into "update_sow(new_data)""
         new_data = self.sow_contents.get("1.0",END)
-        ''' 
-        PROBLEM HERE:
-        Update works fine, but 'new_data' creates a new line in the database. 
-        This could lead to memory leakage.
-        '''
+
         self.control.update_class_sow(self.listbox_label, new_data, self.sow_id)
         messagebox.showinfo("Success!","SOW UPDATED!")
