@@ -36,7 +36,6 @@ class EditSowView(ttk.Frame):
     
     def save_sow(self): # use 'new_data' to pass into "update_sow(new_data)""
         new_data = self.sow_contents.get("1.0",END)
-        print(new_data)
         ''' 
         PROBLEM HERE:
         Update works fine, but 'new_data' creates a new line in the database. 

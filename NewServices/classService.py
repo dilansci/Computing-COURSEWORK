@@ -19,4 +19,4 @@ class ClassService():
     
     def update_class_sow(self, sow_label, new_data, sow_id):
         print("IN SERVICE! NAME:",sow_label)
-        return self.control.run_execute(f"UPDATE SOW SET {sow_label}=? WHERE sow_ID=?",new_data, sow_id)
+        return self.control.run_execute(f"UPDATE SOW SET {sow_label}=? WHERE sow_ID=?",new_data.strip(), sow_id)
