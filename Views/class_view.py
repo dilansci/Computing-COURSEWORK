@@ -55,7 +55,6 @@ class ClassView(ttk.Frame):
             self.list_of_listboxes.append(self.listbox)
             c += 1
 
-
         ''' CHANGING TEACHER '''
         self.all_teachers_id = self.control.get_all_teachers_id()
         self.all_teachers = self.control.get_all_teachers()
@@ -92,24 +91,25 @@ class ClassView(ttk.Frame):
         self.level_select.bind('<<ComboboxSelected>>', self.level_changed)
         
 
-    def edit_box(self, event):
-        if len(event.widget.curselection()) == 0:
-            return
-
+    def edit_box(self, event): # maybe pass in 'Label name' and 'sow_id'??
         ViewManager.instance.hide_view(self)
-        # self.column_names[n] is the Label Name
         list_of_indexes = []
         if event.widget in self.list_of_listboxes:
             index = self.list_of_listboxes.index(event.widget)
             list_of_indexes.append(index)
-        curr_listbox = self.column_names[index].lower()
-
+        listbox_label = self.column_names[index].lower()
+        '''
+        LOGIC ERROR: For some reason this code runs twice, producing '2 INDEXES'.
+        However, it does not call 'self.edit_sow_view' twice. Thus it doesn't actually
+        affect the program.
+        Just an interesting conundrum :)) 
+        '''
         selection = event.widget.curselection()
         if selection:
             # declaring the index for the listbox to access
             index = selection[0]
             data = (event.widget.get(index)).replace("...","")
-            self.edit_sow_view.edit_sow(data, curr_listbox, self.sow_id)
+            self.edit_sow_view.edit_sow(data, listbox_label, self.sow_id)
 
     def teacher_changed(self, event=None):
         new_teacher = self.teacher_select.get()
@@ -119,7 +119,7 @@ class ClassView(ttk.Frame):
     
     def level_changed(self, event=None):
         new_level = self.level_select.get()
-        self.control.update_class_level(new_level,self.class_id)
+        self.control.update_class_level(new_level, self.class_id)
         messagebox.showinfo("UPDATED INFO!",f"Updated Level to '{new_level}'.")
 
 

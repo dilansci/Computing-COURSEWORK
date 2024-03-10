@@ -7,7 +7,7 @@ This view will contain the contents of each reg_button within 'day_view'
 and display the appropriate data correlating to each 'register' i.e. class info.
 '''
 class RegisterView(ttk.Frame):
-    # Ideally this will clear the entire frame and put in the 'RegisterView'
+
     def __init__(self, master, control, header, **kargs):
         super().__init__(master, **kargs)
         # SINGLETON
@@ -23,12 +23,13 @@ class RegisterView(ttk.Frame):
         self.header.update_header(self.view_name)
 
         self.markipliers.clear()
-        # this shows the RegView when the reg_button is pressed.
+
         ViewManager.instance.show_view("RegisterView")
         for widget in self.winfo_children():
             widget.destroy()
-        
-        self.swimmer_names = self.reg_control.get_swimmer_name(list_of_ids[reg_pos])
+            
+        curr_class_id = list_of_ids[reg_pos]
+        self.swimmer_names = self.reg_control.get_swimmer_name(curr_class_id)
         self.swim_attendance = self.reg_control.get_attendance(self.swimmer_names)
 
         for i in range (0, len(self.swimmer_names)): 
@@ -37,13 +38,17 @@ class RegisterView(ttk.Frame):
             self.swim_name = tk.Label(self, text= full_name).grid(row=i, column=0)
 
             if self.swim_attendance[i]== 0:
-                presence = "Absent"
+                state = "Absent"
                 pres_colour = "red"
             else:
-                presence = "Present"
+                state = "Present"
                 pres_colour = "green"
-            self.markipliers.append(tk.Button(self, text=presence, background=pres_colour, command= lambda index = i: self.attendance(index))) # will make command to change the attendance of swimmer in DB and colour :))
-            self.markipliers[i].grid(row=i, column=5, columnspan=5)
+            self.markipliers.append(tk.Button(self, text=state, background=pres_colour, command= lambda index = i:
+                                              self.attendance(index)))
+            self.markipliers[i].grid(row=i, column=5, sticky="E")
+
+            self.mark_swimmer = ttk.Button(self, text="MARK") # NO COMMAND YET!
+            self.mark_swimmer.grid(row=i, column=6, sticky="E")
 
     def attendance(self, index):
         self.swim_attendance = self.reg_control.get_attendance(self.swimmer_names)
@@ -57,4 +62,3 @@ class RegisterView(ttk.Frame):
             self.curr_btn["text"] = "Absent"
             self.curr_btn["background"] = "red"
             self.reg_control.set_attendance(self.swimmer_names[index], self.swim_attendance[index])
-# make a function which makes a sql query that updates the Register table with the corresponding class_IDs.

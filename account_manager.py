@@ -10,12 +10,11 @@ class AccountManager():
 
     @classmethod
     def login(cls, pin, access_level, control):
-        # Get data from sql database
+        # Gets data from sql database
+        # 'cls' is the class passed into 'login'
         cls.control = control
         return cls.control.get_login(pin, access_level)
         # Example:
         # name = "Jimmy"
         # pin = "1234"
-        # access_level = 3
-
-        # cls.currentAccount = AccountManager(pin, access_level)
+        # access_level = 1

@@ -28,7 +28,6 @@ class LoginScreen(ttk.Frame):
         self.pin_box = ttk.Entry(self, show="*")
         self.pin_box.grid(row=4, column=1)
         self.rowconfigure(4, weight=1)
-        # clear the "pin_box" when using "EXIT" to go back to this frame.
         self.pin_box.delete(0, tk.END)
         self.pin_box.config(state="disabled")
 
@@ -38,11 +37,9 @@ class LoginScreen(ttk.Frame):
             self.rowconfigure(i, weight=1)
             self.columnconfigure(i, weight=1)
             self.pin_button = ttk.Button(self, width=20 ,text=self.btn_names[i], command= lambda btn_id=i: self.get_pin_fnct(self.btn_names[btn_id]))
-            # for column use MOD (%) AND FOR row use //
             self.pin_button.grid(row=i//3, column=i%3)
 
     def get_pin_fnct(self,btn_id):
-        # might make a function which switches between "active" and "disabled" entry widget 
         if btn_id == "CLR":
             # the 'pin_box' is becoming "active" to allow a character to be input and then "disables" to prevent any other input
             self.pin_box.config(state="active")
@@ -62,8 +59,8 @@ class LoginScreen(ttk.Frame):
                     self.pin_box.config(state="disabled")
 
                     ViewManager.instance.hide_view(self)
-                    # ViewManager.instance.pop() Popping doesnt work as it displays the previous view and the next view ://
-                    self.day_view.day_layout(self.access_level, self.teacher_name) ## pass in 'self.teacher_name' and grid in label on top right of screen??
+
+                    self.day_view.day_layout(self.access_level, self.teacher_name)
             else:
                 messagebox.showerror("Error","Incorrect Password!")
                 self.pin_box.config(state="active")
