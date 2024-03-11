@@ -1,6 +1,5 @@
 # Views/view_manager.py
 import tkinter as tk
-
 class ViewManager:
     instance = None
 
@@ -13,7 +12,6 @@ class ViewManager:
 
     def register_view(self, view, name):
         self.views[name] = view
-        # print(self.views)
 
     def show_view(self, name):
         view = self.views.get(name)
@@ -29,7 +27,6 @@ class ViewManager:
             view = self.view_stack.pop()
             self.hide_view(view)
             self.grid_view(self.view_stack[len(self.view_stack)-1])
-            # print("VIEW",self.view_stack)
             return view
         else:
             print("TRYING TO POP WITHOUT VIEW IN STACK!!!")

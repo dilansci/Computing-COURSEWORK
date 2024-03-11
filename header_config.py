@@ -23,7 +23,6 @@ class Header(ttk.Frame):
         if len(self.head_list) > 1:
             self.head_list.pop()
             self.head_label["text"] = "Lesson Manager - " + self.head_list[-1]
-            print("CUrrent View list", self.head_list)
         elif len(self.head_list) == 1:
             self.head_list.pop()
             self.head_label["text"] = "Lesson Manager"
