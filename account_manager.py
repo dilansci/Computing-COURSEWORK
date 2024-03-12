@@ -2,13 +2,12 @@
 import tkinter as tk
 
 class AccountManager():
-    currentAccount = None
 
     def __init__(self, pin, access_level):
         self.pin = pin
         self.access_level = access_level
 
-    @classmethod
+    @classmethod # this makes the method 'login' recieve a class as it's first argument ('cls') instead of 'self'
     def login(cls, pin, access_level, control):
         # Gets data from sql database
         # 'cls' is the class passed into 'login'

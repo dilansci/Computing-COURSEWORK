@@ -10,5 +10,6 @@ class Exit(tk.LabelFrame):
         self.columnconfigure(0, weight=1)
         self.header = header
         
-        self.exit_bar = ttk.Button(self, text="BACK", command = lambda: [ViewManager.instance.pop(), self.header.on_exit()])
+        self.exit_bar = ttk.Button(self, text="BACK", command = lambda: 
+                                   [ViewManager.instance.pop(), self.header.on_exit()])
         self.exit_bar.grid(sticky="S")
