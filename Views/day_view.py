@@ -119,4 +119,4 @@ class DayView(ttk.Frame):
 
     def destroy_everything(self):
         self.reg_frame.destroy()
-        self.add_btn_frame.destroy()
+        self.more_widgets_frame.destroy()

@@ -20,12 +20,15 @@ class RegisterService():
     def get_attendance(self, swimmer_names):
         attendance_data = []
         for i in range (len(swimmer_names)):
-            curr_attendance = self.control.run_execute("SELECT attendance FROM Swimmers WHERE first_name=? AND last_name=?",swimmer_names[i][0], swimmer_names[i][1])
+            curr_attendance = self.control.run_execute("SELECT attendance FROM Swimmers WHERE first_name=? AND last_name=?"
+                                                       ,swimmer_names[i][0], swimmer_names[i][1])
             attendance_data.append(curr_attendance[0][0])
         return attendance_data
 
     def set_attendance(self, swimmer_names, curr_attendance):
         if curr_attendance == 0:
-            self.control.run_execute("UPDATE Swimmers SET attendance=1 WHERE first_name=? AND last_name=?",swimmer_names[0], swimmer_names[1])
+            self.control.run_execute("UPDATE Swimmers SET attendance=1 WHERE first_name=? AND last_name=?"
+                                     ,swimmer_names[0], swimmer_names[1])
         else:
-            self.control.run_execute("UPDATE Swimmers SET attendance=0 WHERE first_name=? AND last_name=?",swimmer_names[0], swimmer_names[1])
+            self.control.run_execute("UPDATE Swimmers SET attendance=0 WHERE first_name=? AND last_name=?"
+                                     ,swimmer_names[0], swimmer_names[1])
