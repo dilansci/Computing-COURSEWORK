@@ -50,9 +50,9 @@ class EditTeacherView(ttk.Frame):
         # Binding the ComboBox to 'role_changed' function
         self.role_selection.bind('<<ComboboxSelected>>', self.role_changed)
 
-
-        ## refresh the 'all_teachers_view'. Might import 'exit_config' and tie it to 'save' so that it goes back to 'all_teachers_view'. (IDK)
-        self.save_btn = ttk.Button(self, text="SAVE", command= lambda: [self.control.update_teacher_info(curr_fname, curr_lname, each_display_box[0].get(), each_display_box[1].get(), each_display_box[2].get(), each_display_box[3].get(), each_display_box[4].get(), self.new_access_level), messagebox.showinfo("Save Success","Info Saved!")])
+        self.save_btn = ttk.Button(self, text="SAVE", command= lambda: 
+                                   [self.control.update_teacher_info(curr_fname, curr_lname, each_display_box[0].get(), each_display_box[1].get(), each_display_box[2].get(), 
+                                                                     each_display_box[3].get(), each_display_box[4].get(), self.new_access_level), messagebox.showinfo("Save Success","Info Saved!")])
         self.save_btn.grid()
 
     def role_changed(self, event=None):

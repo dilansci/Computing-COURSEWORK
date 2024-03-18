@@ -27,14 +27,16 @@ class AllTeachersView(ttk.Frame):
         curr_id = 0
         r = 0
         for teacher in self.all_teachers:
-            # This inserts the 'first_name' of each teacher into an entry box
+            # This inserts the 'full_name' of each teacher into an entry box
             self.new_entry = ttk.Entry(self)
             self.new_entry.insert(0, teacher)
             self.new_entry.grid()
             self.new_entry.config(state="disabled")
             self.fname_entries.append(self.new_entry)
             # make an "edit" button which is linked to each 'new_entry'
-            self.edit_btn = (ttk.Button(self, text="EDIT", command= lambda btn_id = curr_id: [ViewManager.instance.hide_view(self), self.edit_teacher.display_teacher_info(self.all_teachers, btn_id)])) # this command should bring to the edit_teacher view
+            self.edit_btn = (ttk.Button(self, text="EDIT", command= lambda btn_id = curr_id: 
+                                        [ViewManager.instance.hide_view(self), self.edit_teacher.display_teacher_info(self.all_teachers, btn_id)]))
+                                        # this command brings you to 'edit_teacher_view.py'
             self.edit_btn.grid(row=r,column=1)
             r += 1
             curr_id += 1

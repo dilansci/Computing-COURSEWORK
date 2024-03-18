@@ -20,8 +20,6 @@ class SOWView(ttk.Frame):
 
         self.sow_info = self.sow_control.get_sow(sow_id)
 
-        print("This is the SOW ID",sow_id)
-        print("Details for this level",self.sow_info)
         r = 1
         # headings for SOW
         self.column_names = ("Intro", "Main", "Contrast", "Depth") 
