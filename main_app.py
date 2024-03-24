@@ -30,7 +30,7 @@ from Views.all_assistants_view import AllAssistantsView
 from Views.staff_select_view import StaffSelectView
 from Views.edit_teacher_view import EditTeacherView
 from Views.edit_assistant_view import EditAssistantView
-from Views.class_view import ClassView
+from Views.edit_class_view import ClassView
 from Views.edit_sow_view import EditSowView
 # creating a class which acts as a dictionary for all the contents of the registry.
 class Main(tk.Tk):
@@ -78,7 +78,7 @@ class Main(tk.Tk):
         ## VIEWS
         #  Only VIEWS should have 'self.container' as a parameter!
         self.edit_sow_view = EditSowView(self.container, self.class_control, self.header) # might change this controller for 'edit_sow_view'??
-        self.class_view = ClassView(self.container, self.class_control, self.edit_sow_view, self.header)
+        self.edit_class_view = ClassView(self.container, self.class_control, self.edit_sow_view, self.header)
         self.edit_assist_view = EditAssistantView(self.container, self.staff_control)
         self.edit_teacher_view = EditTeacherView(self.container, self.staff_control)
         self.all_assist_view = AllAssistantsView(self.container, self.staff_control, self.edit_assist_view)
@@ -86,7 +86,7 @@ class Main(tk.Tk):
         self.staff_select_view = StaffSelectView(self.container, self.all_teachers_view, self.all_assist_view)
         self.sow_view = SOWView(self.container, self.sow_control)
         self.r_view = RegisterView(self.container, self.reg_control, self.header)
-        self.d_view = DayView(self.container, self.day_control, self.r_view, self.sow_view, self.staff_select_view, self.class_view, self.header)
+        self.d_view = DayView(self.container, self.day_control, self.r_view, self.sow_view, self.staff_select_view, self.edit_class_view, self.header)
         self.login_screen = LoginScreen(self.container, self.login_control, self.d_view, self.header)
         self.login_view = LoginView(self.container, self.login_control, self.login_screen, self.header)
 

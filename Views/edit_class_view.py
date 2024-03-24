@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.constants import * 
 from Views.view_manager import ViewManager
+from Widgets.scroll_widgets import VerticalScrolledFrame
 from tkinter import messagebox
 
 class ClassView(ttk.Frame):
@@ -23,6 +24,10 @@ class ClassView(ttk.Frame):
         for widget in self.winfo_children():
             widget.destroy()
 
+        self.edit_frame = VerticalScrolledFrame(self)
+        self.edit_frame.grid(columnspan=7, sticky="NESW")
+        # self.edit_frame.interior
+
         self.class_id = class_id
         self.sow_id = sow_id
         self.teacher_id = teacher_id
@@ -36,7 +41,7 @@ class ClassView(ttk.Frame):
         w = 30
         self.column_names = ("Intro", "Main", "Contrast", "Depth") 
         for i in range (0, len(self.column_names)):
-             self.column_l = tk.Label(self, text=self.column_names[i]).grid(row=0, column=i)
+             self.column_l = tk.Label(self.edit_frame.interior, text=self.column_names[i]).grid(row=0, column=i)
         # length check for each SOW
         truncated_infos = []
         self.list_of_listboxes = []
@@ -48,7 +53,7 @@ class ClassView(ttk.Frame):
             # adjusts the width for the 'depth' listbox
             if sow == 3:
                 w = 10
-            self.listbox = tk.Listbox(self, width= w)
+            self.listbox = tk.Listbox(self.edit_frame.interior, width= w)
             self.listbox.insert(tk.END, truncated_infos[sow])
             self.listbox.grid(row=1, column=c)
             self.listbox.bind("<<ListboxSelect>>", self.edit_box)
@@ -72,7 +77,7 @@ class ClassView(ttk.Frame):
         self.curr_fname = self.curr_teacher_name[0]
         self.curr_lname = self.curr_teacher_name[1]
 
-        self.teacher_select = ttk.Combobox(self, textvariable=tk.StringVar())
+        self.teacher_select = ttk.Combobox(self.edit_frame.interior, textvariable=tk.StringVar())
         self.teacher_select['state'] = 'readonly'
         self.teacher_select['values'] = (self.all_names)
         self.teacher_select.set(self.curr_teacher_name)
@@ -82,14 +87,29 @@ class ClassView(ttk.Frame):
 
         ''' CHANGING LEVEL '''
         self.all_levels = [1,2,3,4,5,6,7]
-        self.level_select = ttk.Combobox(self, textvariable=tk.StringVar())
+        self.level_select = ttk.Combobox(self.edit_frame.interior, textvariable=tk.StringVar())
         self.level_select['state'] = 'readonly'
         self.level_select['values'] = (self.all_levels)
         self.level_select.set(self.curr_level)
         self.level_select.grid(row=2, column=1)
 
         self.level_select.bind('<<ComboboxSelected>>', self.level_changed)
-        
+
+
+        ''' EDITING SWIMMERS '''
+        swimmer_info = ["ClassID","First Name","Last Name","Email","Phone"]
+        self.all_swimmers = ttk.Treeview(self.edit_frame.interior, columns=swimmer_info)
+        self.all_swimmers.heading("#0",text="ClassID")
+        self.all_swimmers.heading("f_name",text="First Name")
+        self.all_swimmers.heading("l_name",text="Last Name")
+        self.all_swimmers.heading("email",text="Email")
+        self.all_swimmers.heading("phone",text="Phone")
+
+        for i in range (1, len(swimmer_info), 1):
+            self.all_swimmers.heading(f"{swimmer_info[i]}",text=swimmer_info[i])
+        self.all_swimmers.grid()
+
+
 
     def edit_box(self, event): # maybe pass in 'Label name' and 'sow_id'??
         ViewManager.instance.hide_view(self)
@@ -121,6 +141,9 @@ class ClassView(ttk.Frame):
         new_level = self.level_select.get()
         self.control.update_class_level(new_level, self.class_id)
         messagebox.showinfo("UPDATED INFO!",f"Updated Level to '{new_level}'.")
+    
+    def swimmers(self):
+
 
 
         '''
