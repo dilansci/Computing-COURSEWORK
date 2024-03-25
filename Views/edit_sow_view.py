@@ -15,7 +15,7 @@ class EditSowView(ttk.Frame):
 
         self.view_name = "Edit SOW"
 
-    def edit_sow(self, data, listbox_label, sow_id): # label of listbox (to pass into update_sow()). */* UPDATE SOW SET {sow_label}=new_data */*
+    def edit_sow(self, data, listbox_label, sow_id):
         self.header.update_header(self.view_name)
 
         ViewManager.instance.show_view("EditSowView")
@@ -30,11 +30,11 @@ class EditSowView(ttk.Frame):
         self.sow_contents.grid(sticky="NESW")
         self.sow_contents.insert(tk.END, self.data)
 
-        self.save_btn = ttk.Button(self, text="SAVE", command= lambda: [self.save_sow(), ViewManager.instance.pop()]) # if we .pop() here, then Header displays wrong info!
+        self.save_btn = ttk.Button(self, text="SAVE", command= lambda: [self.save_sow(), ViewManager.instance.pop()])
         self.save_btn.grid()
 
     
-    def save_sow(self): # use 'new_data' to pass into "update_sow(new_data)""
+    def save_sow(self):
         new_data = self.sow_contents.get("1.0",END)
 
         self.control.update_class_sow(self.listbox_label, new_data, self.sow_id)

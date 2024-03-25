@@ -21,4 +21,5 @@ class StaffService():
         return self.control.run_execute("SELECT access_level FROM Staff WHERE first_name=? AND last_name=?",fname, lname)[0][0]
     
     def update_teacher_info(self, old_fname, old_lname, fname, lname, pin, email, phone, access_level):
-        return self.control.run_execute("UPDATE Staff SET first_name=?, last_name=?, staff_pin=?, email=?, phone=?, access_level=? WHERE first_name=? AND last_name=?",fname, lname, pin, email, phone, access_level, old_fname, old_lname)
+        return self.control.run_execute("UPDATE Staff SET first_name=?, last_name=?, staff_pin=?, email=?, phone=?, access_level=? WHERE first_name=? AND last_name=?"
+                                        ,fname, lname, pin, email, phone, access_level, old_fname, old_lname)

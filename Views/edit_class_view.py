@@ -33,10 +33,8 @@ class ClassView(ttk.Frame):
         self.teacher_id = teacher_id
         self.curr_level = level
 
-
         ''' EDITING SOW '''
         self.sow_info = self.control.get_sow(sow_id)
-
         c = 0
         w = 30
         self.column_names = ("Intro", "Main", "Contrast", "Depth") 
@@ -111,19 +109,14 @@ class ClassView(ttk.Frame):
 
 
 
-    def edit_box(self, event): # maybe pass in 'Label name' and 'sow_id'??
+    def edit_box(self, event):
         ViewManager.instance.hide_view(self)
         list_of_indexes = []
         if event.widget in self.list_of_listboxes:
             index = self.list_of_listboxes.index(event.widget)
             list_of_indexes.append(index)
         listbox_label = self.column_names[index].lower()
-        '''
-        LOGIC ERROR: For some reason this code runs twice, producing '2 INDEXES'.
-        However, it does not call 'self.edit_sow_view' twice. Thus it doesn't actually
-        affect the program.
-        Just an interesting conundrum :)) 
-        '''
+
         selection = event.widget.curselection()
         if selection:
             # declaring the index for the listbox to access

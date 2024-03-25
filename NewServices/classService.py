@@ -18,5 +18,6 @@ class ClassService():
         return self.control.run_execute("UPDATE Class SET level_num=? WHERE class_ID=?",new_level, class_id)
     
     def update_class_sow(self, sow_label, new_data, sow_id):
-        print("IN SERVICE! NAME:",sow_label)
-        return self.control.run_execute(f"UPDATE SOW SET {sow_label}=? WHERE sow_ID=?",new_data.strip(), sow_id)
+        return self.control.run_execute(f"UPDATE SOW SET {sow_label}=? WHERE sow_ID=?",new_data, sow_id)
+    
+    #use new_data.strip() to prevent 'memory leakage'
