@@ -13,6 +13,9 @@ class ClassController():
 
     def get_class(self): # will get all info of a class to edit :)) (!!!NEED TO DO ASAP!!!)
         return self.reg_service.get_class()
+    
+    def get_all_classes(self):
+        return self.class_service.get_all_classes()
 
     def get_all_swimmers(self):
         return self.class_service.get_all_swimmers()
@@ -37,4 +40,7 @@ class ClassController():
     
     def update_class_sow(self, sow_label, new_data, sow_id):
         return self.class_service.update_class_sow(sow_label, new_data, sow_id)
+    
+    def update_swimmer_info(self):
+        return self.day_service.update_swimmer_info()
     

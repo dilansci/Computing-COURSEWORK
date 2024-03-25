@@ -51,7 +51,7 @@ class ClassView(ttk.Frame):
             # adjusts the width for the 'depth' listbox
             if sow == 3:
                 w = 10
-            self.listbox = tk.Listbox(self.edit_frame.interior, width= w)
+            self.listbox = tk.Listbox(self.edit_frame.interior, width=w)
             self.listbox.insert(tk.END, truncated_infos[sow])
             self.listbox.grid(row=1, column=c)
             self.listbox.bind("<<ListboxSelect>>", self.edit_box)
@@ -75,21 +75,23 @@ class ClassView(ttk.Frame):
         self.curr_fname = self.curr_teacher_name[0]
         self.curr_lname = self.curr_teacher_name[1]
 
-        self.teacher_select = ttk.Combobox(self.edit_frame.interior, textvariable=tk.StringVar())
+        teacher_l = tk.Label(self, text="Teachers").grid(row=5, column=0)
+        self.teacher_select = ttk.Combobox(self, textvariable=tk.StringVar())
         self.teacher_select['state'] = 'readonly'
         self.teacher_select['values'] = (self.all_names)
         self.teacher_select.set(self.curr_teacher_name)
-        self.teacher_select.grid(row=2, column=0)
+        self.teacher_select.grid(row=6, column=0)
 
         self.teacher_select.bind('<<ComboboxSelected>>', self.teacher_changed)
 
         ''' CHANGING LEVEL '''
+        level_l = tk.Label(self, text="Levels").grid(row=5, column=1)
         self.all_levels = [1,2,3,4,5,6,7]
-        self.level_select = ttk.Combobox(self.edit_frame.interior, textvariable=tk.StringVar())
+        self.level_select = ttk.Combobox(self, textvariable=tk.StringVar())
         self.level_select['state'] = 'readonly'
         self.level_select['values'] = (self.all_levels)
         self.level_select.set(self.curr_level)
-        self.level_select.grid(row=2, column=1)
+        self.level_select.grid(row=6, column=1)
 
         self.level_select.bind('<<ComboboxSelected>>', self.level_changed)
 
@@ -108,20 +110,49 @@ class ClassView(ttk.Frame):
         self.swimmer_info.heading("phone",text="Phone")
 
         self.swimmer_info.grid(columnspan=8)
-        # only get swimmers with the same class_id as the selected class.
+        self.swimmer_info.bind('<ButtonRelease-1>', self.populate_swimmer_info)
+        # gets swimmers with the same class_id as the selected class
         self.all_swimmers = self.control.get_swimmers_from_class(self.class_id)
 
         for i in range (len(self.all_swimmers)):
             # self.all_swimmers[i][0] is the 'class_id' and the "values" are the rest of the swimmer info.
             self.swimmer_info.insert("", tk.END, text=self.all_swimmers[i][0], values=self.all_swimmers[i][1:])
-        # Swimmers Details
-            ## make class_id a combo box select.
-        fname_l = tk.Label(self, text="First Name:").grid()
-        self.fname = tk.Entry(self)
-        self.fname.grid()
-        lname_l = tk.Label(self, text="Last Name:").grid()
-        self.lname = tk.Entry(self)
-        self.lname.grid()
+
+        ''' SWIMMER DETAILS '''
+        detail_names = ["First Name","Last Name","Email","Phone"]
+        self.list_of_entries = []
+        for i in range (len(detail_names)):
+            detail_l = tk.Label(self, text=detail_names[i]).grid(row=3, column=i)
+            self.detail_bx = tk.Entry(self, width=25)
+            self.list_of_entries.append(self.detail_bx)
+            self.detail_bx.grid(row=4, column=i)
+         
+        ''' SAVING DETAILS '''
+        self.save_btn = ttk.Button(self, text="SAVE", command= lambda: self.save_details())
+        self.save_btn.grid(row=7, pady=10)
+    
+    def save_details(self):
+        # pass in all details as parameters
+        all_details = []
+        for each_detail in self.list_of_entries:
+            all_details.append(each_detail.get())
+        self.control.update_class_details(all_details[0], all_details[1], all_details[2], all_details[3])
+
+    def populate_swimmer_info(self, event=None):
+        # clears contents of each entry widget before adding info
+        for each_box in self.list_of_entries:
+            each_box.delete(0, tk.END)
+
+        item = self.swimmer_info.selection()
+        # 'item' contains the index of the items in the treeview. We can now reference specific info.
+        for i in item:
+            all_info = self.swimmer_info.item(i, "values")
+            print("You selected", all_info)
+        # populate entry widgets here
+        curr_entry = 0
+        for each_info in all_info:
+            self.list_of_entries[curr_entry].insert(0, each_info)
+            curr_entry += 1
 
     def edit_box(self, event):
         ViewManager.instance.hide_view(self)

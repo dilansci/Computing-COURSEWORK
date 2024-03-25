@@ -5,6 +5,9 @@ class ClassService():
     def __init__(self, sqlcontroller: SQL_controller.SQLController):
         self.control = sqlcontroller
 
+    def get_all_classes(self):
+        return self.control.run_execute("SELECT class_ID FROM Class")
+    
     def get_all_teachers(self):
         return self.control.run_execute("SELECT first_name, last_name FROM Staff")
     
@@ -22,5 +25,4 @@ class ClassService():
     
     def update_class_sow(self, sow_label, new_data, sow_id):
         return self.control.run_execute(f"UPDATE SOW SET {sow_label}=? WHERE sow_ID=?",new_data, sow_id)
-    
-    #use new_data.strip() to prevent 'memory leakage'
+        # use new_data.strip() to prevent 'memory leakage'
