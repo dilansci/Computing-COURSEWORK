@@ -93,21 +93,35 @@ class ClassView(ttk.Frame):
 
         self.level_select.bind('<<ComboboxSelected>>', self.level_changed)
 
-
         ''' EDITING SWIMMERS '''
-        swimmer_info = ["ClassID","First Name","Last Name","Email","Phone"]
-        self.all_swimmers = ttk.Treeview(self.edit_frame.interior, columns=swimmer_info)
-        self.all_swimmers.heading("#0",text="ClassID")
-        self.all_swimmers.heading("f_name",text="First Name")
-        self.all_swimmers.heading("l_name",text="Last Name")
-        self.all_swimmers.heading("email",text="Email")
-        self.all_swimmers.heading("phone",text="Phone")
+        self.swimmer_info = ttk.Treeview(self.edit_frame.interior)
+        self.swimmer_info['columns'] = ("f_name","l_name","email","phone")
+        self.swimmer_info.column("f_name",width=100)
+        self.swimmer_info.column("l_name",width=100)
+        self.swimmer_info.column("email",width=100)
+        self.swimmer_info.column("phone",width=100)
 
-        for i in range (1, len(swimmer_info), 1):
-            self.all_swimmers.heading(f"{swimmer_info[i]}",text=swimmer_info[i])
-        self.all_swimmers.grid()
+        self.swimmer_info.heading("#0",text="ClassID")
+        self.swimmer_info.heading("f_name",text="FirstName")
+        self.swimmer_info.heading("l_name",text="LastName")
+        self.swimmer_info.heading("email",text="Email")
+        self.swimmer_info.heading("phone",text="Phone")
 
+        self.swimmer_info.grid(columnspan=8)
+        # only get swimmers with the same class_id as the selected class.
+        self.all_swimmers = self.control.get_swimmers_from_class(self.class_id)
 
+        for i in range (len(self.all_swimmers)):
+            # self.all_swimmers[i][0] is the 'class_id' and the "values" are the rest of the swimmer info.
+            self.swimmer_info.insert("", tk.END, text=self.all_swimmers[i][0], values=self.all_swimmers[i][1:])
+        # Swimmers Details
+            ## make class_id a combo box select.
+        fname_l = tk.Label(self, text="First Name:").grid()
+        self.fname = tk.Entry(self)
+        self.fname.grid()
+        lname_l = tk.Label(self, text="Last Name:").grid()
+        self.lname = tk.Entry(self)
+        self.lname.grid()
 
     def edit_box(self, event):
         ViewManager.instance.hide_view(self)
@@ -134,10 +148,6 @@ class ClassView(ttk.Frame):
         new_level = self.level_select.get()
         self.control.update_class_level(new_level, self.class_id)
         messagebox.showinfo("UPDATED INFO!",f"Updated Level to '{new_level}'.")
-    
-    def swimmers(self):
-
-
 
         '''
         HERE WE USE A SLQ QUERY TO UPDATE THE DB FOR THE TEACHER OF THIS CLASS
