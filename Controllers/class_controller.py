@@ -41,6 +41,6 @@ class ClassController():
     def update_class_sow(self, sow_label, new_data, sow_id):
         return self.class_service.update_class_sow(sow_label, new_data, sow_id)
     
-    def update_swimmer_info(self):
-        return self.day_service.update_swimmer_info()
+    def update_swimmer_info(self, swimmer_id, f_name, l_name, email, phone):
+        return self.class_service.update_swimmer_info(swimmer_id, f_name, l_name, email, phone)
     

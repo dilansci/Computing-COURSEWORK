@@ -97,13 +97,16 @@ class ClassView(ttk.Frame):
 
         ''' EDITING SWIMMERS '''
         self.swimmer_info = ttk.Treeview(self.edit_frame.interior)
-        self.swimmer_info['columns'] = ("f_name","l_name","email","phone")
+        self.swimmer_info['columns'] = ("swimmer_id","f_name","l_name","email","phone")
+        self.swimmer_info.column("#0", width=50)
+        self.swimmer_info.column("swimmer_id", width=70)
         self.swimmer_info.column("f_name",width=100)
         self.swimmer_info.column("l_name",width=100)
-        self.swimmer_info.column("email",width=100)
+        self.swimmer_info.column("email")
         self.swimmer_info.column("phone",width=100)
 
         self.swimmer_info.heading("#0",text="ClassID")
+        self.swimmer_info.heading("swimmer_id", text="SwimmerID")
         self.swimmer_info.heading("f_name",text="FirstName")
         self.swimmer_info.heading("l_name",text="LastName")
         self.swimmer_info.heading("email",text="Email")
@@ -113,6 +116,7 @@ class ClassView(ttk.Frame):
         self.swimmer_info.bind('<ButtonRelease-1>', self.populate_swimmer_info)
         # gets swimmers with the same class_id as the selected class
         self.all_swimmers = self.control.get_swimmers_from_class(self.class_id)
+        print("ALL SDWIMMRES",self.all_swimmers)
 
         for i in range (len(self.all_swimmers)):
             # self.all_swimmers[i][0] is the 'class_id' and the "values" are the rest of the swimmer info.
@@ -132,23 +136,30 @@ class ClassView(ttk.Frame):
         self.save_btn.grid(row=7, pady=10)
     
     def save_details(self):
-        # pass in all details as parameters
         all_details = []
         for each_detail in self.list_of_entries:
             all_details.append(each_detail.get())
-        self.control.update_class_details(all_details[0], all_details[1], all_details[2], all_details[3])
+        self.control.update_swimmer_info(self.curr_swimmer_id, all_details[0], all_details[1], all_details[2], all_details[3])
+        messagebox.showinfo("Save Complete!","Swimmer Info Updated!")
 
     def populate_swimmer_info(self, event=None):
+        class_ids = self.control.get_all_classes()
         # clears contents of each entry widget before adding info
         for each_box in self.list_of_entries:
             each_box.delete(0, tk.END)
 
         item = self.swimmer_info.selection()
-        # 'item' contains the index of the items in the treeview. We can now reference specific info.
+        # 'item' contains the index of the items in the treeview. We can now reference specific info on the treeview.
         for i in item:
             all_info = self.swimmer_info.item(i, "values")
-            print("You selected", all_info)
-        # populate entry widgets here
+            all_info = list(all_info)
+            self.curr_swimmer_id = all_info[0]
+            print(self.curr_swimmer_id)
+            print("SLECTED",all_info)
+            # removing the 'swimmer_id' and storing it as 'curr_swimmer_id'
+            del all_info[0]
+
+        # populate entry widgets here 
         curr_entry = 0
         for each_info in all_info:
             self.list_of_entries[curr_entry].insert(0, each_info)
