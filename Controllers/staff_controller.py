@@ -17,5 +17,5 @@ class StaffController():
     def get_access_level(self, fname, lname):
         return self.staff_service.get_access_level(fname, lname)
     
-    def update_teacher_info(self, old_fname, old_lname, fname, lname, pin, email, phone, access_level):
-        return self.staff_service.update_teacher_info(old_fname, old_lname, fname, lname, pin, email, phone, access_level)
+    def update_staff_info(self, staff_id, fname, lname, pin, email, phone, access_level):
+        return self.staff_service.update_teacher_info(staff_id, fname, lname, pin, email, phone, access_level)

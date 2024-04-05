@@ -75,7 +75,7 @@ class ClassView(ttk.Frame):
         self.curr_fname = self.curr_teacher_name[0]
         self.curr_lname = self.curr_teacher_name[1]
 
-        teacher_l = tk.Label(self, text="Teachers").grid(row=5, column=0)
+        teacher_l = tk.Label(self, text="Teacher").grid(row=5, column=0)
         self.teacher_select = ttk.Combobox(self, textvariable=tk.StringVar())
         self.teacher_select['state'] = 'readonly'
         self.teacher_select['values'] = (self.all_names)
@@ -85,7 +85,7 @@ class ClassView(ttk.Frame):
         self.teacher_select.bind('<<ComboboxSelected>>', self.teacher_changed)
 
         ''' CHANGING LEVEL '''
-        level_l = tk.Label(self, text="Levels").grid(row=5, column=1)
+        level_l = tk.Label(self, text="Level").grid(row=5, column=1)
         self.all_levels = [1,2,3,4,5,6,7]
         self.level_select = ttk.Combobox(self, textvariable=tk.StringVar())
         self.level_select['state'] = 'readonly'
@@ -116,7 +116,6 @@ class ClassView(ttk.Frame):
         self.swimmer_info.bind('<ButtonRelease-1>', self.populate_swimmer_info)
         # gets swimmers with the same class_id as the selected class
         self.all_swimmers = self.control.get_swimmers_from_class(self.class_id)
-        print("ALL SDWIMMRES",self.all_swimmers)
 
         for i in range (len(self.all_swimmers)):
             # self.all_swimmers[i][0] is the 'class_id' and the "values" are the rest of the swimmer info.
@@ -143,7 +142,6 @@ class ClassView(ttk.Frame):
         messagebox.showinfo("Save Complete!","Swimmer Info Updated!")
 
     def populate_swimmer_info(self, event=None):
-        class_ids = self.control.get_all_classes()
         # clears contents of each entry widget before adding info
         for each_box in self.list_of_entries:
             each_box.delete(0, tk.END)
@@ -154,8 +152,6 @@ class ClassView(ttk.Frame):
             all_info = self.swimmer_info.item(i, "values")
             all_info = list(all_info)
             self.curr_swimmer_id = all_info[0]
-            print(self.curr_swimmer_id)
-            print("SLECTED",all_info)
             # removing the 'swimmer_id' and storing it as 'curr_swimmer_id'
             del all_info[0]
 
