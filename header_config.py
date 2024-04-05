@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-
+from Views.view_manager import ViewManager
 # this class which eventually be able to change the header shown depending on what functionality is being used i.e
 # if in register section it will display "Lesson Manager - Register".
 class Header(ttk.Frame):
@@ -14,6 +14,9 @@ class Header(ttk.Frame):
         self.head_label = ttk.Label(self, text="Lesson Manager")
         self.head_label.grid(row=0, column=0)
         self.head_list = []
+        photo = tk.PhotoImage(file= r"C:\Users\Dylan Branda\OneDrive\Documents\School YR14\Computing\Computing-COURSEWORK\Refresh_icon.png")
+        self.refresh_btn = tk.Button(self, image = photo, command= lambda: ViewManager.refresh_view())
+        self.refresh_btn.grid(sticky="E")
 
     def update_header(self, name):
         self.head_list.append(name)
