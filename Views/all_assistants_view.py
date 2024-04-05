@@ -7,12 +7,11 @@ from tkinter import messagebox
 
 class AllAssistantsView(ttk.Frame):
 
-    def __init__(self, master, control, edit_assistant_view, **kargs):
+    def __init__(self, master, control, **kargs):
         super().__init__(master, **kargs)
         ViewManager.instance.register_view(self, "AllAssistantsView")
 
         self.control = control
-        self.edit_assistant= edit_assistant_view
 
     def populate_assistants(self):
         ViewManager.instance.show_view("AllAssistantsView")

@@ -7,12 +7,11 @@ from tkinter import messagebox
 
 class AllTeachersView(ttk.Frame):
 
-    def __init__(self, master, control, edit_teacher_view, **kargs): # add additional parameters
+    def __init__(self, master, control, **kargs): # add additional parameters
         super().__init__(master,**kargs)
         ViewManager.instance.register_view(self, "AllTeachersView")
 
         self.control = control
-        self.edit_teacher = edit_teacher_view
 
     def populate_teachers(self):
         ViewManager.instance.show_view("AllTeachersView")
