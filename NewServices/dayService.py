@@ -1,6 +1,6 @@
 import SQL_controller
 
-class SwimmerService():
+class DayService():
     
     def __init__(self, sqlcontroller: SQL_controller.SQLController):
         self.control = sqlcontroller
@@ -9,14 +9,22 @@ class SwimmerService():
         return self.control.run_execute("SELECT * FROM Swimmers")
     
     def get_lessons_day(self, day):
-        return self.control.run_execute("SELECT * FROM Lessons WHERE day=?",day)
+        return self.control.run_execute("SELECT * FROM Lessons WHERE day=?", day)
 
     def get_swimmer_name(self, class_id):
-        print("This is the currrent ID",class_id)
-        return self.control.run_execute("SELECT first_name, last_name FROM Swimmers WHERE class_ID =?",class_id)
+        return self.control.run_execute("SELECT first_name, last_name FROM Swimmers WHERE class_ID =?", class_id)
 
     def add_swimmer(self): # prob pass in details for adding new swimmer :)
         pass   
+    
+    def get_swimmers_in_class(self, class_id):
+        return self.control.run_execute("SELECT swimmer_ID, first_name, last_name FROM Swimmers WHERE class_ID=?", class_id)
+    
+    def get_swimmer(self, swimmer_id):
+        return self.control.run_execute("SELECT swimmer_ID, first_name, last_name FROM Swimmers WHERE swimmer_ID=?", swimmer_id)
+    
+    def get_mark(self, swimmer_id):
+        return self.control.run_execute("SELECT passed FROM Swimmers WHERE swimmer_ID=?", swimmer_id)[0]
 
 
 '''

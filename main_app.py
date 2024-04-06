@@ -6,9 +6,9 @@ import SQL_controller
 
 from Views.view_manager import ViewManager
 # Service imports
-from NewServices.swimmerService import *
+from NewServices.dayService import *
 from NewServices.regService import *
-from NewServices.syllabusService import *
+from NewServices.sowService import *
 from NewServices.loginService import *
 from NewServices.staffService import *
 from NewServices.classService import *
@@ -30,6 +30,9 @@ from Views.all_assistants_view import AllAssistantsView
 from Views.staff_select_view import StaffSelectView
 from Views.edit_class_view import ClassView
 from Views.edit_sow_view import EditSowView
+from Views.assessment_view import AssessmentView
+from Views.move_view import MoveView
+
 # creating a class which acts as a dictionary for all the contents of the registry.
 class Main(tk.Tk):
 
@@ -48,7 +51,7 @@ class Main(tk.Tk):
         self.sql_control = SQL_controller.SQLController()
 
         ## SERVICES
-        self.day_service = SwimmerService(self.sql_control)
+        self.day_service = DayService(self.sql_control)
         self.reg_service = RegisterService(self.sql_control)
         self.sow_service = SOWService(self.sql_control)
         self.login_service = LoginService(self.sql_control)
@@ -58,7 +61,7 @@ class Main(tk.Tk):
         ## CONTROLLERS
         self.day_control = DayController(self.day_service, self.reg_service)
         self.reg_control = RegController(self.reg_service, self.day_service)
-        self.sow_control = SOWController(self.sow_service)
+        self.sow_control = SOWController(self.sow_service, self.day_service, self.class_service)
         self.login_control = LoginController(self.login_service)
         self.staff_control = StaffController(self.staff_service)
         self.class_control = ClassController(self.class_service, self.reg_service, self.day_service, self.sow_service)
@@ -75,16 +78,19 @@ class Main(tk.Tk):
 
         ## VIEWS
         #  Only VIEWS should have 'self.container' as a parameter!
-        self.edit_sow_view = EditSowView(self.container, self.class_control, self.header) # might change this controller for 'edit_sow_view'??
+        self.move_view = MoveView(self.container, self.class_control, self.header)
+        self.assessment_view = AssessmentView(self.container, self.sow_control, self.move_view, self.header)
+        self.edit_sow_view = EditSowView(self.container, self.class_control, self.header)
         self.edit_class_view = ClassView(self.container, self.class_control, self.edit_sow_view, self.header)
         self.all_assist_view = AllAssistantsView(self.container, self.staff_control, self.header)
         self.all_teachers_view = AllTeachersView(self.container, self.staff_control, self.header)
         self.staff_select_view = StaffSelectView(self.container, self.all_teachers_view, self.all_assist_view, self.header)
-        self.sow_view = SOWView(self.container, self.sow_control, self.header)#
-        self.r_view = RegisterView(self.container, self.reg_control, self.header)
+        self.sow_view = SOWView(self.container, self.sow_control, self.header)
+        self.r_view = RegisterView(self.container, self.reg_control, self.assessment_view, self.header)
         self.d_view = DayView(self.container, self.day_control, self.r_view, self.sow_view, self.staff_select_view, self.edit_class_view, self.header)
         self.login_screen = LoginScreen(self.container, self.login_control, self.d_view, self.header)
         self.login_view = LoginView(self.container, self.login_control, self.login_screen, self.header)
+        
 
         view_manager.register_view(self.login_view, "LoginView")
         view_manager.show_view("LoginView")

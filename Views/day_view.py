@@ -4,17 +4,10 @@ from tkinter.constants import *
 from Widgets.scroll_widgets import *
 from Views.view_manager import ViewManager
 
-
-
 class DayView(ttk.Frame):
-    
-    '''
-    ADD a "Refresh" button to the top right of the screen.
-    ''' 
-    
+
     def __init__(self, master, control, reg_view, sow_view, staff_select_view, class_view, header, **kargs):
         super().__init__(master, **kargs)
-        # SINGLETON
         ViewManager.instance.register_view(self, "DayView")
         # declaring parameters
         self.control = control

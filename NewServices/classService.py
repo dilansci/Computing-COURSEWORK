@@ -16,6 +16,9 @@ class ClassService():
     
     def get_swimmers_from_class(self, class_id):
         return self.control.run_execute("SELECT class_ID, swimmer_ID, first_name, last_name, email, phone FROM Swimmers WHERE class_ID=?",class_id)
+    
+    def get_swimmer_level(self, class_id):
+        return self.control.run_execute("SELECT level_num FROM Class WHERE class_id=?", class_id)[0][0]
 
     def update_class_teacher(self, teacher_id, class_id):
         return self.control.run_execute("UPDATE Class SET staff_ID=? WHERE class_ID=?",teacher_id, class_id)

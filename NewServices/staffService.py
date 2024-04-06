@@ -5,9 +5,6 @@ class StaffService():
     def __init__(self, sqlcontroller: SQL_controller.SQLController):
         self.control = sqlcontroller
 
-    def new_teacher(self): # pass in details for adding new teacher
-        pass
-
     def get_teachers(self):
         return self.control.run_execute("SELECT * FROM Staff WHERE access_level=1")
     
