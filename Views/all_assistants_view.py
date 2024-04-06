@@ -27,7 +27,7 @@ class AllAssistantsView(ttk.Frame):
 
         self.all_assistants = self.control.get_assistants()
 
-        ''' EDITING TEACHERS '''
+        ''' EDITING ASSISTANTS '''
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
 
@@ -102,20 +102,20 @@ class AllAssistantsView(ttk.Frame):
     
     def add_assistant(self): # validation here for format of all details!
         all_details = []
+        for each_detail in self.list_of_entries:
+            all_details.append(each_detail.get())
+        self.control.add_staff(all_details[0], all_details[1], all_details[2], all_details[3], all_details[4], self.role_select.current())
+
+    def save_details(self):
+        all_details = []
         # Get index of selected teacher in treeview
         selected = self.assistant_info.focus()
-
+        
         for each_detail in self.list_of_entries:
             all_details.append(each_detail.get())
         # Update treeview info
         self.assistant_info.item(selected, values=(all_details[0], all_details[1], all_details[2], all_details[3], all_details[4], self.role_select.get()))
         # Update DataBase
-        self.control.add_staff(all_details[0], all_details[1], all_details[2], all_details[3], all_details[4], self.role_select.current())
-
-    def save_details(self):
-        all_details = []
-        for each_detail in self.list_of_entries:
-            all_details.append(each_detail.get())
         self.control.update_staff_info(self.curr_assistant_id, all_details[0], all_details[1], all_details[2], all_details[3], all_details[4], self.role_select.current()) ## NOT FINSIHED YET!!!
         messagebox.showinfo("Save Complete!","Swimmer Info Updated!")
 
