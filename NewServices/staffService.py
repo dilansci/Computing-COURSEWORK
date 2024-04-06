@@ -23,3 +23,6 @@ class StaffService():
     def update_staff_info(self, staff_id, fname, lname, pin, email, phone, access_level):
         return self.control.run_execute("UPDATE Staff SET first_name=?, last_name=?, staff_pin=?, email=?, phone=?, access_level=? WHERE staff_ID=?"
                                         , fname, lname, pin, email, phone, access_level, staff_id)
+    
+    def add_staff(self, fname, lname, pin, email, phone, access_level):
+        return self.control.run_execute(f"INSERT INTO Staff (first_name, last_name, staff_pin, email, phone, access_level) VALUES ('{fname}','{lname}','{pin}','{email}','{phone}','{access_level}')")

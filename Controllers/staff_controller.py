@@ -18,4 +18,7 @@ class StaffController():
         return self.staff_service.get_access_level(fname, lname)
     
     def update_staff_info(self, staff_id, fname, lname, pin, email, phone, access_level):
-        return self.staff_service.update_teacher_info(staff_id, fname, lname, pin, email, phone, access_level)
+        return self.staff_service.update_staff_info(staff_id, fname, lname, pin, email, phone, access_level)
+
+    def add_staff(self, fname, lname, pin, email, phone, access_level):
+        return self.staff_service.add_staff(fname, lname, pin, email, phone, access_level)

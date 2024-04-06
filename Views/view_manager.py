@@ -13,10 +13,12 @@ class ViewManager:
         self.view_stack = []
 
     def register_view(self, view, name):
+        # the 'name' will always be loginview as it is the last called view in 'main.py'!
         self.views[name] = view
 
     def show_view(self, name):
         view = self.views.get(name)
+        print("SHOW",view)
         if view:
             self.view_stack.append(view)
             self.grid_view(view)
@@ -28,7 +30,7 @@ class ViewManager:
         if len(self.view_stack) > 1:
             view = self.view_stack.pop()
             self.hide_view(view)
-            self.grid_view(self.view_stack[len(self.view_stack)-1])
+            self.grid_view(self.view_stack[-1])
             return view
         else:
             messagebox.showerror("Error","No view to go back to!")
@@ -38,8 +40,17 @@ class ViewManager:
         # the view parameter is the "self" within the respective view.
         view.grid_forget()
     
-    def refresh_view(self):
-        # this will simply register the view again and pop it out of the stack, acting like the view simply refreshed.
-        curr_view_name = self.views[self.view_stack]
-        self.register_view(self.view_stack[0], curr_view_name)
-        self.pop()
+    def refresh_view(self): # this will simply register the view again and pop it out of the stack, acting like the view refreshed.
+        # get the key (i.e. 'name') from 'self.views' by using the value from 'self.view_stack[-1]'
+        ''' NOT WORKING!!!'''
+        
+        name = [k for k, value in self.views.items() if value == self.view_stack[-1]][0]
+        view = self.views[name] # this is the 'self'!
+        self.refresh_pop()
+        self.show_view(name)
+        
+
+    def refresh_pop(self):
+        view = self.view_stack.pop()
+        self.hide_view(view)
+        

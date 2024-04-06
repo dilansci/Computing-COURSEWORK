@@ -84,13 +84,24 @@ class AllTeachersView(ttk.Frame):
         ''' CLEARING DETAILS '''
         self.clear_btn = ttk.Button(self, text="CLEAR", command= lambda: self.clear_details())
         self.clear_btn.grid(row=5, column=2, pady=10)
-    
+
+        ''' ADDING TEACHER '''
+        self.add_btn = ttk.Button(self, text="ADD", command= lambda: self.add_teacher())
+        self.add_btn.grid(row=5, column=0)
+
+    def add_teacher(self):
+        all_details = []
+        for each_detail in self.list_of_entries:
+            all_details.append(each_detail.get())
+        self.control.add_staff(all_details[0], all_details[1], all_details[2], all_details[3], all_details[4], self.role_select.current())
+
     def save_details(self):
         all_details = []
         for each_detail in self.list_of_entries:
             all_details.append(each_detail.get())
         self.control.update_staff_info(self.curr_teacher_id, all_details[0], all_details[1], all_details[2], all_details[3], all_details[4], self.role_select.current()) ## NOT FINSIHED YET!!!
         messagebox.showinfo("Save Complete!","Swimmer Info Updated!")
+        self.teacher_info.grid(row=0, column=0, sticky="NESW")
 
     def clear_details(self):
         for each_detail in self.list_of_entries:
