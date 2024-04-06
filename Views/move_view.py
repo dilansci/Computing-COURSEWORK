@@ -35,6 +35,10 @@ class MoveView(ttk.Frame):
         * On pressing MOVE button, make new 'move_class' service using swimmer_ID and the new class_ID selected
         * Put up confirmation messagebox displaying the change.
         * Exit view and go into 'AssessmentView' (OR go straight back to RegisterView, might be better!)
+        DO LATER
+        * Make ReportView button in DayView. 
+        * create new field in swimmer table for 'Reports'
+        * MAYBE make note function :)) ADD TO RegisterView
         
         '''
         self.teachers = 
