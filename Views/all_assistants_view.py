@@ -7,13 +7,17 @@ from tkinter import messagebox
 
 class AllAssistantsView(ttk.Frame):
 
-    def __init__(self, master, control, **kargs):
+    def __init__(self, master, control, header, **kargs):
         super().__init__(master, **kargs)
         ViewManager.instance.register_view(self, "AllAssistantsView")
 
         self.control = control
+        self.header = header
+
+        self.view_name = "All Assistants"
 
     def populate_assistants(self):
+        self.header.update_header(self.view_name)
         ViewManager.instance.show_view("AllAssistantsView")
         for widget in self.winfo_children():
             widget.destroy()
@@ -56,6 +60,9 @@ class AllAssistantsView(ttk.Frame):
             self.assistant_info.insert("", tk.END, text=self.all_assistants[i][0], values=self.all_assistants[i][1:])
 
         ''' ASSISTANT DETAILS '''
+        self.assistant_details = ttk.Labelframe(self, text="Teacher Details")
+        self.assistant_details.grid(row=1, column=1)
+
         detail_names = ["First Name","Last Name","Pin","Email","Phone"]
         self.list_of_entries = []
         l_row = 1
@@ -66,33 +73,43 @@ class AllAssistantsView(ttk.Frame):
                 l_row += 2
                 e_row += 2
                 c = 1
-            detail_l = tk.Label(self, text=detail_names[i]).grid(row=l_row, column=c)
-            self.detail_bx = tk.Entry(self, width=25)
+            detail_l = tk.Label(self.assistant_details, text=detail_names[i]).grid(row=l_row, column=c)
+            self.detail_bx = tk.Entry(self.assistant_details, width=25)
             self.list_of_entries.append(self.detail_bx)
             self.detail_bx.grid(row=e_row, column=c)
             c += 1
 
-        role_l = tk.Label(self, text="Role").grid(row=l_row,column=c)
-        self.role_select = ttk.Combobox(self, textvariable=tk.StringVar())
+        role_l = tk.Label(self.assistant_details, text="Role").grid(row=l_row,column=c)
+        self.role_select = ttk.Combobox(self.assistant_details, textvariable=tk.StringVar())
         self.role_select['values'] = ("Manager","Teacher","Assistant")
         self.role_select.grid(row=e_row, column=c)
 
+        ''' OTHER FUNCTIONS '''
+        self.field_set = ttk.Labelframe(self, text="Function")
+        self.field_set.grid(row=1, column=0)
+        
         ''' SAVING DETAILS '''
-        self.save_btn = ttk.Button(self, text="SAVE", command= lambda: self.save_details())
-        self.save_btn.grid(row=5, column=1, pady=10)
+        self.save_btn = ttk.Button(self.field_set, text="SAVE", command= lambda: self.save_details())
+        self.save_btn.grid(row=0, column=0, pady=5)
 
         ''' CLEARING DETAILS '''
-        self.clear_btn = ttk.Button(self, text="CLEAR", command= lambda: self.clear_details())
-        self.clear_btn.grid(row=5, column=2, pady=10)
+        self.clear_btn = ttk.Button(self.field_set, text="CLEAR", command= lambda: self.clear_details())
+        self.clear_btn.grid(row=1, column=0, pady=5)
 
         ''' ADDING ASSISTANT '''
-        self.add_btn = ttk.Button(self, text="ADD", command= lambda: self.add_assistant())
-        self.add_btn.grid(row=5, column=0)
+        self.add_btn = ttk.Button(self.field_set, text="ADD", command= lambda: self.add_assistant())
+        self.add_btn.grid(row=2, column=0, pady=5)
     
     def add_assistant(self): # validation here for format of all details!
         all_details = []
+        # Get index of selected teacher in treeview
+        selected = self.assistant_info.focus()
+
         for each_detail in self.list_of_entries:
             all_details.append(each_detail.get())
+        # Update treeview info
+        self.assistant_info.item(selected, values=(all_details[0], all_details[1], all_details[2], all_details[3], all_details[4], self.role_select.get()))
+        # Update DataBase
         self.control.add_staff(all_details[0], all_details[1], all_details[2], all_details[3], all_details[4], self.role_select.current())
 
     def save_details(self):

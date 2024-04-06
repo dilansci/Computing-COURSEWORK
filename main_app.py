@@ -77,10 +77,10 @@ class Main(tk.Tk):
         #  Only VIEWS should have 'self.container' as a parameter!
         self.edit_sow_view = EditSowView(self.container, self.class_control, self.header) # might change this controller for 'edit_sow_view'??
         self.edit_class_view = ClassView(self.container, self.class_control, self.edit_sow_view, self.header)
-        self.all_assist_view = AllAssistantsView(self.container, self.staff_control)
-        self.all_teachers_view = AllTeachersView(self.container, self.staff_control)
-        self.staff_select_view = StaffSelectView(self.container, self.all_teachers_view, self.all_assist_view)
-        self.sow_view = SOWView(self.container, self.sow_control)
+        self.all_assist_view = AllAssistantsView(self.container, self.staff_control, self.header)
+        self.all_teachers_view = AllTeachersView(self.container, self.staff_control, self.header)
+        self.staff_select_view = StaffSelectView(self.container, self.all_teachers_view, self.all_assist_view, self.header)
+        self.sow_view = SOWView(self.container, self.sow_control, self.header)#
         self.r_view = RegisterView(self.container, self.reg_control, self.header)
         self.d_view = DayView(self.container, self.day_control, self.r_view, self.sow_view, self.staff_select_view, self.edit_class_view, self.header)
         self.login_screen = LoginScreen(self.container, self.login_control, self.d_view, self.header)

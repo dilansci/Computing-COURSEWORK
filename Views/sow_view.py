@@ -7,13 +7,18 @@ from Widgets.scroll_widgets import *
 
 class SOWView(ttk.Frame):
 
-    def __init__(self, master, control, **kargs):
+    def __init__(self, master, control, header, **kargs):
         super().__init__(master,**kargs)
-        # SINGLETON
         ViewManager.instance.register_view(self, "SOWView")
-        self.sow_control = control
 
-    def sow_layout(self, sow_id): # will need to implement week num into this
+        self.sow_control = control
+        self.header = header
+
+        self.view_name = "Scheme of Work"
+
+    def sow_layout(self, sow_id):
+        self.header.update_header(self.view_name)
+
         ViewManager.instance.show_view("SOWView")
         for widget in self.winfo_children():
             widget.destroy()
