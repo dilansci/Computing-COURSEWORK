@@ -87,7 +87,7 @@ class AllTeachersView(ttk.Frame):
         self.role_select.grid(row=e_row, column=c)
 
         ''' OTHER FUNCTIONS '''
-        self.field_set = ttk.Labelframe(self, text="Function")
+        self.field_set = ttk.Labelframe(self, text="Functions")
         self.field_set.grid(row=1, column=0)
         ''' SAVING DETAILS '''
         self.save_btn = ttk.Button(self.field_set, text="SAVE", command= lambda: self.save_details())
@@ -142,7 +142,6 @@ class AllTeachersView(ttk.Frame):
             self.curr_teacher_id = item_dict["text"]
             del all_info[-1] # remove the "Role" here as it's not needed.
 
-        # populate entry widgets here 
         curr_entry = 0
         for each_info in all_info:
             self.list_of_entries[curr_entry].insert(0, each_info)

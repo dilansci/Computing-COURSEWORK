@@ -14,6 +14,9 @@ class ClassController():
     def get_teacher_name(self, teacher_id):
         return self.reg_service.get_teacher_name(teacher_id)
 
+    def get_class_day(self, class_id):
+        return self.class_service.get_class_day(class_id)
+
     def get_class(self):
         return self.reg_service.get_class()
     
@@ -53,3 +56,8 @@ class ClassController():
     def update_swimmer_class_id(self, class_id, swimmer_id):
         return self.class_service.update_swimmer_class_id(class_id, swimmer_id)
     
+    def update_class_info(self, class_id, level, time, teacher_id, day):
+        return self.class_service.update_class_info(class_id, level, time, teacher_id, day)
+    
+    def add_class(self, level, time, teacher_id, day):
+        return self.class_service.add_class(level, time, teacher_id, day)

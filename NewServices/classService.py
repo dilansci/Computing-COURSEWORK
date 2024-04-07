@@ -14,6 +14,9 @@ class ClassService():
     def get_all_teachers_id(self):
         return self.control.run_execute("SELECT staff_ID FROM Staff")
     
+    def get_class_day(self, class_id):
+        return self.control.run_execute("SELECT day FROM Lessons WHERE class_ID=?", class_id)
+
     def get_all_classes(self):
         return self.control.run_execute("SELECT * FROM Class")
     
@@ -38,3 +41,21 @@ class ClassService():
     
     def update_swimmer_class_id(self, class_id, swimmer_id):
         return self.control.run_execute("UPDATE Swimmers SET class_ID=? WHERE swimmer_ID=?", class_id, swimmer_id)
+
+    def update_class_info(self, class_id, level, time, teacher_id, day):
+        update_class = self.control.run_execute("UPDATE Class SET staff_ID=?, level_num=?, time=? WHERE class_ID=?", teacher_id, level, time, class_id)
+        update_class_day = self.control.run_execute("UPDATE Lessons SET Day=? WHERE class_ID=?", day, class_id)
+        return update_class, update_class_day
+    
+    def add_class(self, level, time, teacher_id, day):
+        self.control.run_execute(f"INSERT INTO Class (staff_ID, level_num, time) VALUES ('{teacher_id}','{level}', '{time}')")
+        new_class_id = self.control.run_execute("SELECT class_ID FROM Class WHERE staff_ID=? AND level_num=? AND time=?", teacher_id, level, time)
+        if (len(new_class_id)) > 1:
+            for i in range (len(new_class_id)):
+                self.control.run_execute(f"DELETE FROM Class WHERE class_ID={new_class_id[i][0]}")
+                return False
+        else:
+            print("MAIN SANITY")
+            new_class_id = new_class_id[0][0]
+            self.control.run_execute(f"INSERT INTO Lessons (class_ID, sow_ID, day) VALUES ('{new_class_id}', '{level}', '{day}')")
+            return True

@@ -6,7 +6,7 @@ from Views.view_manager import ViewManager
 
 class DayView(ttk.Frame):
 
-    def __init__(self, master, control, reg_view, sow_view, staff_select_view, class_view, header, **kargs):
+    def __init__(self, master, control, reg_view, sow_view, staff_select_view, class_view, all_classes_view, header, **kargs):
         super().__init__(master, **kargs)
         ViewManager.instance.register_view(self, "DayView")
         # declaring parameters
@@ -16,6 +16,7 @@ class DayView(ttk.Frame):
         self.header = header
         self.staff_select_view = staff_select_view
         self.class_view = class_view
+        self.all_classes_view = all_classes_view
         # arrays
         self.registers = []
         self.class_ids = []
@@ -48,12 +49,15 @@ class DayView(ttk.Frame):
 
     def other_fncts(self):
         # Add teacher buttons to this frame
-        self.more_widgets_frame = tk.Frame(self)
-        self.more_widgets_frame.grid()
+        self.more_widgets_frame = ttk.Labelframe(self, text="Other functions")
+        self.more_widgets_frame.grid(pady=10)
 
         self.view_staff_btn = ttk.Button(self.more_widgets_frame, text="View Staff", command= lambda: 
                                          [ViewManager.instance.hide_view(self), self.staff_select_view.select_staff()])
-        self.view_staff_btn.grid()
+        self.view_staff_btn.grid(row=0, column=0, padx=5, pady=5)
+
+        self.view_classes_btn = ttk.Button(self.more_widgets_frame, text="View Classes", command= lambda: [ViewManager.instance.hide_view(self), self.all_classes_view.classes_layout()])
+        self.view_classes_btn.grid(row=0, column=1, padx=5, pady=5)
         # Prohibits Teachers and Assistants from Adding Teachers/Classes
         if self.access_level != 0:
             self.view_staff_btn.config(state="disabled")
