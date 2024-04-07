@@ -92,6 +92,10 @@ class AllClassesView(ttk.Frame):
         # ADD CLASS
         self.add_btn = ttk.Button(self.field_set, text="ADD", command= lambda: self.add_class())
         self.add_btn.grid(row=3, column=0, pady=5)
+        # REMOVE CLASS
+        self.remove_btn = ttk.Button(self.field_set, text="REMOVE", command= lambda: self.remove_class())
+        self.remove_btn.grid(row=4, column=0, pady=5)
+        self.remove_btn.config(state="disabled")
 
 
         ''' CLASS DETAILS '''
@@ -167,6 +171,7 @@ class AllClassesView(ttk.Frame):
         teacher_name = all_values[3]
         self.class_list.item(selected, values=(all_details[2], all_details[0], all_details[1], teacher_name, all_details[3]))
         # Update database
+        messagebox.showinfo("Confirmation","Successfully saved class!")
         self.class_control.update_class_info(class_id, all_details[0], all_details[1], all_details[2], all_details[3])
     
     def clear_details(self):
@@ -180,19 +185,25 @@ class AllClassesView(ttk.Frame):
         for each_box in self.list_of_combos:
             class_details.append(each_box.get())
 
-        all_values = self.class_list.item(selected, 'values')
-        teacher_id = class_details[2]
-        name_parts = self.class_control.get_teacher_name(teacher_id)
-        teacher_name = f"{name_parts[0]} {name_parts[1]}"
         # Add class to database
-        # Level, Time, ID, Day
-        attempt = self.class_control.add_class(class_details[0], class_details[1], teacher_id, class_details[3])
+        attempt = self.class_control.add_class(class_details[0], class_details[1], class_details[2], class_details[3])
         if attempt:
             messagebox.showinfo("Confirmation","Successfully added class!")
         else:
             messagebox.showerror("Error","This class already exists!")
-        # Update treeview info 
-        ViewManager.instance.hide_view(self)
-        self.classes_layout()
+
+    def remove_class(self):
+        ''' slight kinks with remove_class'''
+        selected = self.class_list.focus()
+        # Remove class from database
+        class_id = self.class_list.item(selected, 'text')
+        self.class_control.remove_class(class_id)
+        confirm = messagebox.askyesno("Confirmation","Are you sure you want to remove this class?")
+        if confirm:
+            messagebox.showinfo("Confirmation","Successfully removed class!")
+        # Update treeview
+        ViewManager.instance.refresh_view("AllClassesView")
+
+
 
 

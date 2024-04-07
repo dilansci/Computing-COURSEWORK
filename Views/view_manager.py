@@ -35,22 +35,17 @@ class ViewManager:
         else:
             messagebox.showerror("Error","No view to go back to!")
             print("TRYING TO POP WITHOUT VIEW IN STACK!!!")
-            
+    
+    def refresh_view(self, view):
+        if len(self.view_stack) > 1:
+            view = self.view_stack.pop()
+            self.hide_view(view)
+
     def hide_view(self, view):
         # the view parameter is the "self" within the respective view.
-        view.grid_forget()
-    
-    def refresh_view(self): # this will simply register the view again and pop it out of the stack, acting like the view refreshed.
-        # get the key (i.e. 'name') from 'self.views' by using the value from 'self.view_stack[-1]'
-        ''' NOT WORKING!!!'''
-        
-        name = [k for k, value in self.views.items() if value == self.view_stack[-1]][0]
-        view = self.views[name] # this is the 'self'!
-        self.refresh_pop()
-        self.show_view(name)
-        
+        view.grid_forget()     
 
-    def refresh_pop(self):
-        view = self.view_stack.pop()
+    def refresh_pop(self, view):
         self.hide_view(view)
+        self.grid_view(self.view_stack[-1])
         

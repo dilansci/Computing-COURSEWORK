@@ -50,12 +50,18 @@ class ClassService():
     def add_class(self, level, time, teacher_id, day):
         self.control.run_execute(f"INSERT INTO Class (staff_ID, level_num, time) VALUES ('{teacher_id}','{level}', '{time}')")
         new_class_id = self.control.run_execute("SELECT class_ID FROM Class WHERE staff_ID=? AND level_num=? AND time=?", teacher_id, level, time)
+
         if (len(new_class_id)) > 1:
-            for i in range (len(new_class_id)):
-                self.control.run_execute(f"DELETE FROM Class WHERE class_ID={new_class_id[i][0]}")
-                return False
+            for invalid_id in (new_class_id[1:]):
+                print(invalid_id[0])
+                self.control.run_execute(f"DELETE FROM Class WHERE class_ID=?",invalid_id[0])
+            # 'False' means it's invalid
+            return False
         else:
-            print("MAIN SANITY")
             new_class_id = new_class_id[0][0]
             self.control.run_execute(f"INSERT INTO Lessons (class_ID, sow_ID, day) VALUES ('{new_class_id}', '{level}', '{day}')")
+            # 'True' means it's valid
             return True
+    
+    def remove_class(self, class_id):
+        return self.control.run_execute("DELETE FROM Class WHERE class_ID=?", class_id)

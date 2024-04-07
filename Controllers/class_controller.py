@@ -61,3 +61,6 @@ class ClassController():
     
     def add_class(self, level, time, teacher_id, day):
         return self.class_service.add_class(level, time, teacher_id, day)
+    
+    def remove_class(self, class_id):
+        return self.class_service.remove_class(class_id)

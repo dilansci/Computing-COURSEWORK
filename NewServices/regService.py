@@ -6,7 +6,7 @@ class RegisterService():
         self.control = sqlcontroller
         
     def get_class(self, class_id):
-        return self.control.run_execute("SELECT * FROM Class WHERE class_ID=?",class_id)
+        return self.control.run_execute("SELECT * FROM Class WHERE class_ID=?", class_id)
 
     def get_teacher_name(self, teacher_id):
         return self.control.run_execute("SELECT first_name, last_name FROM Staff WHERE staff_ID=?",teacher_id)
