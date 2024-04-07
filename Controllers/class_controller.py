@@ -10,12 +10,15 @@ class ClassController():
     
     def get_swimmers_from_class(self, class_id):
         return self.class_service.get_swimmers_from_class(class_id)
+    
+    def get_teacher_name(self, teacher_id):
+        return self.reg_service.get_teacher_name(teacher_id)
 
-    def get_class(self): # will get all info of a class to edit :)) (!!!NEED TO DO ASAP!!!)
+    def get_class(self):
         return self.reg_service.get_class()
     
-    def get_all_classes(self):
-        return self.class_service.get_all_classes()
+    def get_all_classes_ids(self):
+        return self.class_service.get_all_classes_ids()
 
     def get_all_swimmers(self):
         return self.class_service.get_all_swimmers()
@@ -28,6 +31,9 @@ class ClassController():
 
     def get_all_teachers_id(self):
         return self.class_service.get_all_teachers_id()
+    
+    def get_all_classes(self):
+        return self.class_service.get_all_classes()
 
     def get_sow(self, sow_id):
         return self.sow_service.get_sow(sow_id)
@@ -43,4 +49,7 @@ class ClassController():
     
     def update_swimmer_info(self, swimmer_id, f_name, l_name, email, phone):
         return self.class_service.update_swimmer_info(swimmer_id, f_name, l_name, email, phone)
+    
+    def update_swimmer_class_id(self, class_id, swimmer_id):
+        return self.class_service.update_swimmer_class_id(class_id, swimmer_id)
     

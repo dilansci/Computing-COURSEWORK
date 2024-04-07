@@ -40,7 +40,7 @@ class AssessmentView(ttk.Frame):
         self.columnconfigure(0, weight=1)
 
         self.column_names = ("passed")
-        self.skill_list = ttk.Treeview(self, )
+        self.skill_list = ttk.Treeview(self)
         self.skill_list['columns'] = self.column_names
         self.skill_list.column("#0")
         self.skill_list.column("passed")
@@ -102,7 +102,7 @@ class AssessmentView(ttk.Frame):
             return
         # If no "FAIL" in all_marks. Pass swimmer_ID into 'move_view'
         ViewManager.instance.hide_view(self)
-        self.move_view.moving_layout(self.swimmer_id, self.full_name)
+        self.move_view.moving_layout(self.swimmer_id, self.full_name, self.swimmer_level)
 
     def update_all_marks(self):
         for item_id in self.skill_list.get_children():

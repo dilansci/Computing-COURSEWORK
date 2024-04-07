@@ -11,6 +11,7 @@ class StaffService():
     def get_assistants(self):
         return self.control.run_execute("SELECT * FROM Staff WHERE access_level=2")
     
+
     def get_teacher_info(self, fname, lname):
         return self.control.run_execute("SELECT first_name, last_name, staff_pin, email, phone FROM Staff WHERE first_name=? AND last_name=?",fname, lname)[0]
     

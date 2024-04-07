@@ -5,14 +5,17 @@ class ClassService():
     def __init__(self, sqlcontroller: SQL_controller.SQLController):
         self.control = sqlcontroller
 
-    def get_all_classes(self):
+    def get_all_classes_ids(self):
         return self.control.run_execute("SELECT class_ID FROM Class")
     
     def get_all_teachers(self):
         return self.control.run_execute("SELECT first_name, last_name FROM Staff")
-    
+        
     def get_all_teachers_id(self):
         return self.control.run_execute("SELECT staff_ID FROM Staff")
+    
+    def get_all_classes(self):
+        return self.control.run_execute("SELECT * FROM Class")
     
     def get_swimmers_from_class(self, class_id):
         return self.control.run_execute("SELECT class_ID, swimmer_ID, first_name, last_name, email, phone FROM Swimmers WHERE class_ID=?",class_id)
@@ -32,3 +35,6 @@ class ClassService():
     
     def update_swimmer_info(self, swimmer_id, f_name, l_name, email, phone):
         return self.control.run_execute(f"UPDATE Swimmers SET first_name=?, last_name=?, email=?, phone=? WHERE swimmer_ID={swimmer_id}",f_name, l_name, email, phone)
+    
+    def update_swimmer_class_id(self, class_id, swimmer_id):
+        return self.control.run_execute("UPDATE Swimmers SET class_ID=? WHERE swimmer_ID=?", class_id, swimmer_id)
