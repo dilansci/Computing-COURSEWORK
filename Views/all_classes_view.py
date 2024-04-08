@@ -95,7 +95,7 @@ class AllClassesView(ttk.Frame):
         # REMOVE CLASS
         self.remove_btn = ttk.Button(self.field_set, text="REMOVE", command= lambda: self.remove_class())
         self.remove_btn.grid(row=4, column=0, pady=5)
-        self.remove_btn.config(state="disabled")
+        # self.remove_btn.config(state="disabled")
 
 
         ''' CLASS DETAILS '''
@@ -191,6 +191,11 @@ class AllClassesView(ttk.Frame):
             messagebox.showinfo("Confirmation","Successfully added class!")
         else:
             messagebox.showerror("Error","This class already exists!")
+        # Update treeview
+        ViewManager.instance.refresh_pop()
+        self.classes_layout()
+        self.header.on_exit()
+        self.clear_details()
 
     def remove_class(self):
         ''' slight kinks with remove_class'''
@@ -202,7 +207,10 @@ class AllClassesView(ttk.Frame):
         if confirm:
             messagebox.showinfo("Confirmation","Successfully removed class!")
         # Update treeview
-        ViewManager.instance.refresh_view("AllClassesView")
+        ViewManager.instance.refresh_pop()
+        self.classes_layout()
+        self.header.on_exit()
+        self.clear_details()
 
 
 

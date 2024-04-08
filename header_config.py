@@ -14,11 +14,6 @@ class Header(ttk.Frame):
         self.head_label = ttk.Label(self, text="Lesson Manager")
         self.head_label.grid(row=0, column=0, sticky="NS")
         self.head_list = []
-        ''' REFRESH FUNCTION | NOT WORKING! '''
-        # photo = tk.PhotoImage(file= r"C:\Users\Dylan Branda\OneDrive\Documents\School YR14\Computing\Computing-COURSEWORK\Refresh_icon.png")
-        # photo_resize = photo.subsample(35,35)
-        # self.refresh_btn = tk.Button(self, text="Refresh", command= lambda: ViewManager.instance.refresh_view())
-        # self.refresh_btn.grid(row=0, column=1)
 
     def update_header(self, name):
         self.head_list.append(name)
