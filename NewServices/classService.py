@@ -64,4 +64,6 @@ class ClassService():
             return True
     
     def remove_class(self, class_id):
-        return self.control.run_execute("DELETE FROM Class WHERE class_ID=?", class_id)
+        self.control.run_execute("DELETE FROM Class WHERE class_ID=?", class_id)
+        self.control.run_execute("DELETE FROM Lessons WHERE class_ID=?", class_id)
+    

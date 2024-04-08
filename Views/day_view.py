@@ -38,7 +38,7 @@ class DayView(ttk.Frame):
         self.days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
         self.day_buttons = []
         for i in range (len(self.days)):
-            self.rowconfigure(i, weight=1)
+            self.rowconfigure(0, weight=1)
             self.columnconfigure(i, weight=1)
             # This section assigns each button a 'name' from 'self.days'. The button is then created and gridded.
             self.day_buttons.append(ttk.Button(self, text=self.days[i], command= lambda day=i: self.share_day(self.days[day])))
