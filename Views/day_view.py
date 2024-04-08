@@ -38,7 +38,7 @@ class DayView(ttk.Frame):
         self.days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
         self.day_buttons = []
         for i in range (len(self.days)):
-            self.rowconfigure(0, weight=1)
+            self.rowconfigure(i, weight=1)
             self.columnconfigure(i, weight=1)
             # This section assigns each button a 'name' from 'self.days'. The button is then created and gridded.
             self.day_buttons.append(ttk.Button(self, text=self.days[i], command= lambda day=i: self.share_day(self.days[day])))
@@ -75,11 +75,12 @@ class DayView(ttk.Frame):
 
         self.reg_info = self.control.get_lessons_day(day)
 
-        for count in range (0,len(self.reg_info)):
+        for count in range (len(self.reg_info)):
             r = count + 2   
             # Variables which fetch ALL necessary info
             self.sow_id = self.reg_info[count][2]
             self.sow = self.control.get_sow(self.sow_id)
+            test = self.reg_info[count][1]
             self.class_info = self.control.get_class(self.reg_info[count][1])
 
             # tracking class_ids for each reg_button
