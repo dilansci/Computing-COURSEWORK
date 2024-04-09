@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.constants import * 
 from Views.view_manager import ViewManager
-from Widgets.scroll_widgets import * 
 from tkinter import messagebox
 
 class AllAssistantsView(ttk.Frame):
@@ -21,9 +20,6 @@ class AllAssistantsView(ttk.Frame):
         ViewManager.instance.show_view("AllAssistantsView")
         for widget in self.winfo_children():
             widget.destroy()
-    
-        self.assistant_frame = VerticalScrolledFrame(self)
-        self.assistant_frame.grid(columnspan=5, sticky="NESW")
 
         self.all_assistants = self.control.get_assistants()
 
@@ -31,7 +27,7 @@ class AllAssistantsView(ttk.Frame):
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
 
-        self.assistant_info = ttk.Treeview(self.assistant_frame.interior)
+        self.assistant_info = ttk.Treeview(self)
         self.assistant_info['columns'] = ("f_name","l_name","pin","email","phone","role")
         self.assistant_info.column("#0", width=70)
         self.assistant_info.column("f_name",width=90)
@@ -49,7 +45,7 @@ class AllAssistantsView(ttk.Frame):
         self.assistant_info.heading("phone",text="Phone")
         self.assistant_info.heading("role",text="Role")
 
-        self.assistant_info.grid(row=0, column=0, sticky="NESW")
+        self.assistant_info.grid(row=0, column=0, columnspan=2, sticky="NESW")
         self.assistant_info.bind('<ButtonRelease-1>', self.populate_teacher_info)
 
         for i in range (len(self.all_assistants)):
@@ -85,7 +81,7 @@ class AllAssistantsView(ttk.Frame):
         self.role_select.grid(row=e_row, column=c)
 
         ''' OTHER FUNCTIONS '''
-        self.field_set = ttk.Labelframe(self, text="Function")
+        self.field_set = ttk.Labelframe(self, text="Functions")
         self.field_set.grid(row=1, column=0)
         
         ''' SAVING DETAILS '''

@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.constants import * 
 from Views.view_manager import ViewManager
-from Widgets.scroll_widgets import *
 from tkinter import messagebox
 
 class AllTeachersView(ttk.Frame):
@@ -22,9 +21,6 @@ class AllTeachersView(ttk.Frame):
         ViewManager.instance.show_view("AllTeachersView")
         for widget in self.winfo_children():
             widget.destroy()
-    
-        self.teacher_frame = VerticalScrolledFrame(self)
-        self.teacher_frame.grid(columnspan=5, sticky="NESW")
 
         self.all_teachers = self.control.get_teachers()
 
@@ -33,7 +29,7 @@ class AllTeachersView(ttk.Frame):
         self.columnconfigure(0, weight=1)
 
         self.column_names = ("f_name","l_name","pin","email","phone","role")
-        self.teacher_info = ttk.Treeview(self.teacher_frame.interior)
+        self.teacher_info = ttk.Treeview(self)
         self.teacher_info['columns'] = self.column_names
         self.teacher_info.column("#0", width=70)
         self.teacher_info.column("f_name",width=90)
@@ -51,7 +47,7 @@ class AllTeachersView(ttk.Frame):
         self.teacher_info.heading("phone",text="Phone")
         self.teacher_info.heading("role",text="Role")
 
-        self.teacher_info.grid(row=0, column=0, sticky="NESW")
+        self.teacher_info.grid(row=0, column=0, columnspan=2, sticky="NESW")
         self.teacher_info.bind('<ButtonRelease-1>', self.populate_teacher_info)
 
         for i in range (len(self.all_teachers)):

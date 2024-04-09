@@ -12,17 +12,18 @@ class LoginScreen(ttk.Frame):
         self.control = control
         self.day_view = day_view
         self.header = header
-
-        self.view_name = "Login"
     
     def login_layout(self, access_level):
-        self.header.update_header(self.view_name)
 
         ViewManager.instance.show_view("LoginScreen")
         for widget in self.winfo_children():
             widget.destroy()
 
+        # Displaying Role in Header
+        staff_names = ["Manager","Teacher","Assistant"]
         self.access_level = access_level
+        self.view_name = f"{staff_names[self.access_level]} Login"
+        self.header.update_header(self.view_name)
 
         self.pin_l = ttk.Label(self, text="")
         self.pin_box = ttk.Entry(self, show="*")
@@ -36,7 +37,7 @@ class LoginScreen(ttk.Frame):
         for i in range (len(self.btn_names)):
             self.rowconfigure(i, weight=1)
             self.columnconfigure(i, weight=1)
-            self.pin_button = ttk.Button(self, width=20 ,text=self.btn_names[i], command= lambda btn_id=i: self.get_pin_fnct(self.btn_names[btn_id]))
+            self.pin_button = tk.Button(self, width=15, height=5, text=self.btn_names[i], command= lambda btn_id=i: self.get_pin_fnct(self.btn_names[btn_id]))
             self.pin_button.grid(row=i//3, column=i%3)
 
     def get_pin_fnct(self,btn_id):
