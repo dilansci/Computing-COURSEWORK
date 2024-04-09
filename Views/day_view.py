@@ -61,6 +61,7 @@ class DayView(ttk.Frame):
         # Prohibits Teachers and Assistants from Adding Teachers/Classes
         if self.access_level != 0:
             self.view_staff_btn.config(state="disabled")
+            self.view_classes_btn.config(state="disabled")
 
     def share_day(self, day):
         self.destroy_everything() # call this first to clear widgets
