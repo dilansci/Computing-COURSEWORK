@@ -119,6 +119,7 @@ class AllClassesView(ttk.Frame):
                 c = 1
             detail_l = tk.Label(self.class_details, text=detail_names[i]).grid(row=l_row, column=c)
             self.combo_bx = ttk.Combobox(self.class_details, textvariable=tk.StringVar())
+            self.combo_bx.config(state="readonly")
             self.list_of_combos.append(self.combo_bx)
             self.combo_bx.grid(row=e_row, column=c)
             c += 1
@@ -173,10 +174,12 @@ class AllClassesView(ttk.Frame):
         # Update database
         messagebox.showinfo("Confirmation","Successfully saved class!")
         self.class_control.update_class_info(class_id, all_details[0], all_details[1], all_details[2], all_details[3])
+        self.clear_details()
     
     def clear_details(self):
         for each_detail in self.list_of_combos:
             each_detail.set(value="")
+            self.deselect_item()
         
     def add_class(self):
         class_details = []
@@ -212,6 +215,8 @@ class AllClassesView(ttk.Frame):
         self.header.on_exit()
         self.clear_details()
 
-
+    def deselect_item(self):
+        for i in self.class_list.selection():
+            self.class_list.selection_remove(i)
 
 
