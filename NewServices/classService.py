@@ -33,8 +33,8 @@ class ClassService():
         return self.control.run_execute("UPDATE Class SET level_num=? WHERE class_ID=?",new_level, class_id)
     
     def update_class_sow(self, sow_label, new_data, sow_id):
+        new_data.strip()
         return self.control.run_execute(f"UPDATE SOW SET {sow_label}=? WHERE sow_ID=?",new_data, sow_id)
-        # use new_data.strip() to prevent 'memory leakage'
     
     def update_swimmer_info(self, swimmer_id, f_name, l_name, email, phone):
         return self.control.run_execute(f"UPDATE Swimmers SET first_name=?, last_name=?, email=?, phone=? WHERE swimmer_ID={swimmer_id}",f_name, l_name, email, phone)
