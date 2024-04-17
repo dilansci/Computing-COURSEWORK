@@ -103,6 +103,7 @@ class AllTeachersView(ttk.Frame):
         for each_detail in self.list_of_entries:
             all_details.append(each_detail.get())
         self.control.add_staff(all_details[0], all_details[1], all_details[2], all_details[3], all_details[4], self.role_select.current())
+        messagebox.showinfo("Success!","Teacher successfully added!")
         # Update treeview
         ViewManager.instance.refresh_pop()
         self.populate_teachers()
@@ -120,7 +121,7 @@ class AllTeachersView(ttk.Frame):
         # Update DataBase
         self.control.update_staff_info(self.curr_teacher_id, all_details[0], all_details[1], all_details[2], all_details[3], all_details[4], self.role_select.current())
         self.clear_details()
-        messagebox.showinfo("Save Complete!","Swimmer Info Updated!")
+        messagebox.showinfo("Save Complete!","Teacher Info Updated!")
         self.teacher_info.grid(row=0, column=0, sticky="NESW")
 
     def clear_details(self):

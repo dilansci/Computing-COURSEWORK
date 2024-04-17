@@ -14,7 +14,7 @@ class ClassView(ttk.Frame):
         self.header = header
         self.edit_sow_view = edit_sow_view
 
-        self.view_name = "Classes"
+        self.view_name = "Edit Class"
 
     # use swimmerService like in "day_view"
     def show_classes(self, class_id, sow_id, teacher_id, level):

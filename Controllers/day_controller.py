@@ -6,6 +6,9 @@ class DayController():
         self.day_service = day_service
         self.reg_service = reg_service
 
+    def get_swimmers(self):
+        return self.day_service.get_swimmers()
+    
     def get_class(self, teacher_id):
         return self.reg_service.get_class(teacher_id)
     
@@ -17,3 +20,6 @@ class DayController():
     
     def get_sow(self, sow_id):
         return self.reg_service.get_sow(sow_id)
+    
+    def add_swimmer(self):
+        pass

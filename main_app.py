@@ -33,7 +33,8 @@ from Views.edit_sow_view import EditSowView
 from Views.assessment_view import AssessmentView
 from Views.move_view import MoveView
 from Views.all_classes_view import AllClassesView
-
+from Views.all_swimmers_view import AllSwimmersView
+from Views.swimmer_edit import SwimmerEdit
 # creating a class which acts as a dictionary for all the contents of the registry.
 class Main(tk.Tk):
 
@@ -79,6 +80,8 @@ class Main(tk.Tk):
 
         ## VIEWS
         #  Only VIEWS should have 'self.container' as a parameter!
+        self.swimmer_edit = SwimmerEdit(self.container, self.day_control, self.header)
+        self.all_swimmers_view = AllSwimmersView(self.container, self.day_control, self.swimmer_edit, self.header)
         self.all_classes_view = AllClassesView(self.container, self.class_control, self.header)
         self.move_view = MoveView(self.container, self.class_control, self.header)
         self.assessment_view = AssessmentView(self.container, self.sow_control, self.move_view, self.header)
@@ -89,7 +92,7 @@ class Main(tk.Tk):
         self.staff_select_view = StaffSelectView(self.container, self.all_teachers_view, self.all_assist_view, self.header)
         self.sow_view = SOWView(self.container, self.sow_control, self.header)
         self.r_view = RegisterView(self.container, self.reg_control, self.assessment_view, self.header)
-        self.d_view = DayView(self.container, self.day_control, self.r_view, self.sow_view, self.staff_select_view, self.edit_class_view, self.all_classes_view, self.header)
+        self.d_view = DayView(self.container, self.day_control, self.r_view, self.sow_view, self.staff_select_view, self.edit_class_view, self.all_classes_view, self.all_swimmers_view, self.header)
         self.login_screen = LoginScreen(self.container, self.login_control, self.d_view, self.header)
         self.login_view = LoginView(self.container, self.login_control, self.login_screen, self.header)
         
