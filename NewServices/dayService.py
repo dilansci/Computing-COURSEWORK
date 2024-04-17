@@ -25,23 +25,14 @@ class DayService():
     
     def get_mark(self, swimmer_id):
         return self.control.run_execute("SELECT passed FROM Swimmers WHERE swimmer_ID=?", swimmer_id)[0]
+    
+    def get_send(self, swimmer_id):
+        return self.control.run_execute("SELECT SEND FROM Swimmers WHERE swimmer_ID=?", swimmer_id)
+    
+    def update_send(self, swimmer_id, send):
+        return self.control.run_execute("UPDATE Swimmers SET SEND=? WHERE swimmer_ID=?",send, swimmer_id)
 
-
-'''
-LIST TO DO:
-* Make a service for getting lesson for a day.
-* Get a class from a lesson. (list of lessons)
-* Now with all the classes from that day, get info from classes i.e. Teacher Name, Level etc
-* Display in reg_view
-
-Funtions needed (for services):
-* Get lesson from day (put in a day and get list of lessons)
-* Get a class from a lesson.
-* Get teacher name using teacher_id
-___________________________________
-
-LessonService, ClassService, TeacherService
-
-Controllers needed: ***
-These controller
-'''
+    def update_swimmer_info(self, swimmer_id, f_name, l_name, email, phone):
+        return self.control.run_execute("UPDATE Swimmers SET first_name=?, last_name=?, email=?, phone=? WHERE swimmer_ID=?", 
+                                        f_name, l_name, email, phone, swimmer_id)
+    

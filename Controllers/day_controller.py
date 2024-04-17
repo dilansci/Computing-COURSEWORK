@@ -21,5 +21,14 @@ class DayController():
     def get_sow(self, sow_id):
         return self.reg_service.get_sow(sow_id)
     
+    def get_send(self, swimmer_id):
+        return self.day_service.get_send(swimmer_id)
+    
     def add_swimmer(self, f_name, l_name, email, phone):
         return self.day_service.add_swimmer(f_name, l_name, email, phone)
+    
+    def update_swimmer_info(self, swimmer_id, f_name, l_name, email, phone):
+        return self.day_service.update_swimmer_info(swimmer_id, f_name, l_name, email, phone)
+    
+    def update_send(self, swimmer_id, send):
+        return self.day_service.update_send(swimmer_id, send)

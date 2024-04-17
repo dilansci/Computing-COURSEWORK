@@ -84,10 +84,10 @@ class AllSwimmersView(ttk.Frame):
             c += 1
         
         self.send_content = ttk.Button(self.swimmer_details, text="S.E.N.D.", command= lambda: 
-                                      [ViewManager.instance.hide_view(self), self.swimmer_edit.edit_layout("SEND")]) # swimmer_id, field_name, SEND of swimmer
+                                      [ViewManager.instance.hide_view(self), self.swimmer_edit.edit_layout(self.curr_swimmer_id,"SEND")]) # swimmer_id, field_name, SEND of swimmer
         self.send_content.grid(row=e_row+2, column=0, pady=5)
-        # self.send_content.config(state="disabled") FOR WHENEVER A SWIMMER ISNT SELECTED!
-        # these 2 btns will take you to the same swimmer_edit view, passing either '''SEND or report'''
+        self.send_content.config(state="disabled")
+        # these 2 btns will take you to the same swimmer_edit view, passing parameters as either '''SEND or report'''
         self.report_content = ttk.Button(self.swimmer_details, text="REPORT", command= lambda: messagebox.showinfo("","Not implemented"))
         self.report_content.grid(row=e_row+2, column=1, pady=5)
 
@@ -122,20 +122,21 @@ class AllSwimmersView(ttk.Frame):
         selected = self.swimmer_info.focus()
         for each_detail in self.list_of_entries:
             all_details.append(each_detail.get())
-        # Update treeview info
-        self.swimmer_info.item(selected, values=(all_details[0], all_details[1], all_details[2], all_details[3], all_details[4], self.role_select.get()))
         # Update DataBase
-        self.control.update_swimmer_info(self.curr_swimmer_id, all_details[0], all_details[1], all_details[2], all_details[3], all_details[4], self.role_select.current())
+        self.control.update_swimmer_info(self.curr_swimmer_id, all_details[0], all_details[1], all_details[2], all_details[3])
         self.clear_details()
         messagebox.showinfo("Save Complete!","Teacher Info Updated!")
-        self.swimmer_info.grid(row=0, column=0, sticky="NESW")
+        # Update treeview info
+        self.swimmer_info.item(selected, values=(self.curr_swimmer_id, all_details[0], all_details[1], all_details[2], all_details[3]))
 
     def clear_details(self):
         for each_detail in self.list_of_entries:
             each_detail.delete(0, tk.END)
         self.deselect_item()
+        self.send_content.config(state="disabled")
         
     def populate_swimmer_info(self, event=None):
+        self.send_content.config(state="active")
         # clears contents of each entry widget before adding info
         for each_box in self.list_of_entries:
             each_box.delete(0, tk.END)
