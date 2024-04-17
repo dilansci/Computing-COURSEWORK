@@ -14,8 +14,8 @@ class DayService():
     def get_swimmer_name(self, class_id):
         return self.control.run_execute("SELECT first_name, last_name FROM Swimmers WHERE class_ID =?", class_id)
 
-    def add_swimmer(self): # prob pass in details for adding new swimmer :)
-        pass   
+    def add_swimmer(self, f_name, l_name, email, phone):
+        return self.control.run_execute(f"INSERT INTO Swimmers (first_name, last_name, email, phone) VALUES ('{f_name}','{l_name}','{email}','{phone}')")
     
     def get_swimmers_in_class(self, class_id):
         return self.control.run_execute("SELECT swimmer_ID, first_name, last_name FROM Swimmers WHERE class_ID=?", class_id)

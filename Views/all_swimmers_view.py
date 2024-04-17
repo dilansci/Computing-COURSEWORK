@@ -28,27 +28,23 @@ class AllSwimmersView(ttk.Frame):
         i = 0
         for each_info in self.all_swimmers:
             each_info = list(each_info)
-            del each_info[7]
-            del each_info[7]
+            del each_info[6:]
             self.all_swimmers[i] = each_info
             i += 1
-        print(self.all_swimmers)
 
         ''' EDITING SWIMMERS '''
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
 
-        self.column_names = ("class_id","f_name","l_name","email","phone","send","report")
+        self.column_names = ("class_id","f_name","l_name","email","phone")
         self.swimmer_info = ttk.Treeview(self)
         self.swimmer_info['columns'] = self.column_names
         self.swimmer_info.column("#0", width=70)
-        self.swimmer_info.column("class_id",width=90)
+        self.swimmer_info.column("class_id",width=50)
         self.swimmer_info.column("f_name",width=90)
-        self.swimmer_info.column("l_name",width=40)
-        self.swimmer_info.column("email", width=120)
+        self.swimmer_info.column("l_name",width=90)
+        self.swimmer_info.column("email", width=150)
         self.swimmer_info.column("phone",width=90)
-        self.swimmer_info.column("send",width=80)
-        self.swimmer_info.column("report",width=80)
 
         self.swimmer_info.heading("#0",text="SwimmerID")
         self.swimmer_info.heading("class_id",text="ClassID")
@@ -56,8 +52,6 @@ class AllSwimmersView(ttk.Frame):
         self.swimmer_info.heading("l_name",text="LastName")
         self.swimmer_info.heading("email",text="Email")
         self.swimmer_info.heading("phone",text="Phone")
-        self.swimmer_info.heading("send",text="SEND")
-        self.swimmer_info.heading("report",text="Report")
 
         self.swimmer_info.grid(row=0, column=0, columnspan=2, sticky="NESW")
         self.swimmer_info.bind('<ButtonRelease-1>', self.populate_swimmer_info)
@@ -66,7 +60,6 @@ class AllSwimmersView(ttk.Frame):
             # self.all_swimmers[i][0] is the 'teacher_id' and the "values" are the rest of the teacher info.
             list_of_details = list(self.all_swimmers[i])
             self.all_swimmers[i] = tuple(list_of_details)
-            print("INSERTTING",self.all_swimmers)
             self.swimmer_info.insert("", tk.END, text=self.all_swimmers[i][0], values=self.all_swimmers[i][1:])
 
         ''' SWIMMER DETAILS '''
@@ -90,13 +83,12 @@ class AllSwimmersView(ttk.Frame):
             self.detail_bx.grid(row=e_row, column=c)
             c += 1
         
-        self.send_content = ttk.Button(self.swimmer_details, text="SEND", command= lambda: 
+        self.send_content = ttk.Button(self.swimmer_details, text="S.E.N.D.", command= lambda: 
                                       [ViewManager.instance.hide_view(self), self.swimmer_edit.edit_layout("SEND")]) # swimmer_id, field_name, SEND of swimmer
         self.send_content.grid(row=e_row+2, column=0, pady=5)
         # self.send_content.config(state="disabled") FOR WHENEVER A SWIMMER ISNT SELECTED!
         # these 2 btns will take you to the same swimmer_edit view, passing either '''SEND or report'''
-        self.report_content = ttk.Button(self.swimmer_details, text="REPORT", command= lambda: 
-                                        [ViewManager.instance.hide_view(self), self.swimmer_edit.edit_layout("report")])
+        self.report_content = ttk.Button(self.swimmer_details, text="REPORT", command= lambda: messagebox.showinfo("","Not implemented"))
         self.report_content.grid(row=e_row+2, column=1, pady=5)
 
         ''' OTHER FUNCTIONS '''
@@ -116,11 +108,11 @@ class AllSwimmersView(ttk.Frame):
         all_details = []
         for each_detail in self.list_of_entries:
             all_details.append(each_detail.get())
-        self.control.add_staff(all_details[0], all_details[1], all_details[2], all_details[3], all_details[4], self.role_select.current())
-        messagebox.showinfo("Success!","Teacher successfully added!")
+        self.control.add_swimmer(all_details[0], all_details[1], all_details[2], all_details[3])
+        messagebox.showinfo("Success!","Swimmer successfully added!")
         # Update treeview
         ViewManager.instance.refresh_pop()
-        self.populate_teachers()
+        self.populate_swimmers()
         self.header.on_exit()
         self.clear_details()
 
@@ -133,7 +125,7 @@ class AllSwimmersView(ttk.Frame):
         # Update treeview info
         self.swimmer_info.item(selected, values=(all_details[0], all_details[1], all_details[2], all_details[3], all_details[4], self.role_select.get()))
         # Update DataBase
-        self.control.update_staff_info(self.curr_teacher_id, all_details[0], all_details[1], all_details[2], all_details[3], all_details[4], self.role_select.current())
+        self.control.update_swimmer_info(self.curr_swimmer_id, all_details[0], all_details[1], all_details[2], all_details[3], all_details[4], self.role_select.current())
         self.clear_details()
         messagebox.showinfo("Save Complete!","Teacher Info Updated!")
         self.swimmer_info.grid(row=0, column=0, sticky="NESW")
@@ -141,7 +133,6 @@ class AllSwimmersView(ttk.Frame):
     def clear_details(self):
         for each_detail in self.list_of_entries:
             each_detail.delete(0, tk.END)
-        self.role_select.set(value="")
         self.deselect_item()
         
     def populate_swimmer_info(self, event=None):
@@ -157,11 +148,16 @@ class AllSwimmersView(ttk.Frame):
 
             all_info = self.swimmer_info.item(i, "values")
             all_info = list(all_info)
-            print("ALL INFO", all_info)
-            # the 'text' value in a treeview is my teacher_id
-            self.curr_teacher_id = item_dict["text"]
+            # the 'text' value in a treeview is my swimmer_id
+            self.curr_swimmer_id = item_dict["text"]
+            # remove class_id from all_info
+            del all_info[0]
 
-        
+        curr_entry = 0
+        for each_info in all_info:
+            self.list_of_entries[curr_entry].insert(0, each_info)
+            curr_entry += 1
+
     def deselect_item(self):
         for i in self.swimmer_info.selection():
             self.swimmer_info.selection_remove(i)

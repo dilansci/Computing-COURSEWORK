@@ -61,12 +61,12 @@ class DayView(ttk.Frame):
 
         self.view_classes_btn = ttk.Button(self.more_widgets_frame, text="View Classes", command= lambda: 
                                            [ViewManager.instance.hide_view(self), self.all_classes_view.classes_layout()])
-        self.view_classes_btn.grid(row=0, column=1, padx=5, pady=5)
+        self.view_classes_btn.grid(row=1, column=0, padx=5, pady=5)
         all_fncts.append(self.view_classes_btn)
 
         self.view_swimmers_btn = ttk.Button(self.more_widgets_frame, text="View Swimmers", command= lambda:
                                             [ViewManager.instance.hide_view(self), self.all_swimmers_view.populate_swimmers()])
-        self.view_swimmers_btn.grid(row=0, column=2, padx=5, pady=5)
+        self.view_swimmers_btn.grid(row=2, column=0, padx=5, pady=5)
         all_fncts.append(self.view_swimmers_btn)
         # Prohibits Teachers and Assistants from Adding Teachers/Classes
         if self.access_level != 0:
