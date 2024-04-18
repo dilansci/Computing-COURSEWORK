@@ -108,7 +108,10 @@ class AllSwimmersView(ttk.Frame):
     def add_swimmer(self):
         all_details = []
         for each_detail in self.list_of_entries:
-            all_details.append(each_detail.get())
+            if each_detail.get() == "":
+                return messagebox.showerror("Error","Null data input detected. Please enter a valid input!")
+            else: 
+                all_details.append(each_detail.get())
         self.control.add_swimmer(all_details[0], all_details[1], all_details[2], all_details[3])
         messagebox.showinfo("Success!","Swimmer successfully added!")
         # Getting the new swimmer's swimmer_ID
@@ -127,7 +130,10 @@ class AllSwimmersView(ttk.Frame):
         # Get index of selected teacher in treeview
         selected = self.swimmer_info.focus()
         for each_detail in self.list_of_entries:
-            all_details.append(each_detail.get())
+            if each_detail.get() == "":
+                return messagebox.showerror("Error","Null data input detected. Please enter a valid input!")
+            else: 
+                all_details.append(each_detail.get())
         # Update DataBase
         self.control.update_swimmer_info(self.curr_swimmer_id, all_details[0], all_details[1], all_details[2], all_details[3])
         self.clear_details()

@@ -165,7 +165,10 @@ class AllClassesView(ttk.Frame):
         selected = self.class_list.focus()
         # Store class details in an array
         for each_box in self.list_of_combos:
-            all_details.append(each_box.get())
+            if each_box.get() == "":
+                return messagebox.showerror("Error","Null data input detected. Please enter a valid input!")
+            else:
+                all_details.append(each_box.get())
          # Update treeview info
         class_id = self.class_list.item(selected, 'text')
         all_values = self.class_list.item(selected, 'values')
@@ -186,7 +189,10 @@ class AllClassesView(ttk.Frame):
         selected = self.class_list.focus()
         # Store class details in an array
         for each_box in self.list_of_combos:
-            class_details.append(each_box.get())
+            if each_box.get() == "":
+                return messagebox.showerror("Error","Null data input detected. Please enter a valid input!")
+            else:
+                class_details.append(each_box.get())
 
         # Add class to database
         attempt = self.class_control.add_class(class_details[0], class_details[1], class_details[2], class_details[3])
