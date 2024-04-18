@@ -40,7 +40,7 @@ class Main(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("LMS - v1.0")
-        self.geometry("650x500")
+        self.geometry("660x550")
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
 
