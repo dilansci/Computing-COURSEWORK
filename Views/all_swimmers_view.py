@@ -6,13 +6,14 @@ from tkinter import messagebox
 
 class AllSwimmersView(ttk.Frame):
 
-    def __init__(self, master, control, swimmer_edit, header, **kargs):
+    def __init__(self, master, control, swimmer_edit, move_view, header, **kargs):
         super().__init__(master,**kargs)
         ViewManager.instance.register_view(self, "AllSwimmersView")
         ## USE DAY_CONTROLLER
         self.control = control
         self.header = header
         self.swimmer_edit = swimmer_edit
+        self.move_view = move_view
 
         self.view_name = "All Swimmers"
 
@@ -100,7 +101,7 @@ class AllSwimmersView(ttk.Frame):
         ''' CLEARING DETAILS '''
         self.clear_btn = ttk.Button(self.field_set, text="CLEAR", command= lambda: self.clear_details())
         self.clear_btn.grid(row=2, column=0, pady=5)
-        ''' ADDING TEACHER '''
+        ''' ADDING SWIMMER '''
         self.add_btn = ttk.Button(self.field_set, text="ADD", command= lambda: self.add_swimmer()) # pass teacher_id here
         self.add_btn.grid(row=3, column=0, pady=5)
 
@@ -110,11 +111,16 @@ class AllSwimmersView(ttk.Frame):
             all_details.append(each_detail.get())
         self.control.add_swimmer(all_details[0], all_details[1], all_details[2], all_details[3])
         messagebox.showinfo("Success!","Swimmer successfully added!")
-        # Update treeview
-        ViewManager.instance.refresh_pop()
-        self.populate_swimmers()
-        self.header.on_exit()
-        self.clear_details()
+        # Getting the new swimmer's swimmer_ID
+        self.new_swimmer_id = self.control.get_swimmer_id(all_details[0], all_details[1])[0]
+        full_name = f"{all_details[0]} {all_details[1]}"
+        ViewManager.instance.hide_view(self)
+        self.move_view.moving_layout(self.new_swimmer_id, full_name, "No Level")
+        # Update treeview 
+        # ViewManager.instance.refresh_pop()
+        # self.populate_swimmers()
+        # self.header.on_exit()
+        # self.clear_details()
 
     def save_details(self):
         all_details = []

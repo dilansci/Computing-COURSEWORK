@@ -78,10 +78,10 @@ class Main(tk.Tk):
 
         ## VIEWS
         #  Only VIEWS should have 'self.container' as a parameter!
-        self.swimmer_edit = SwimmerEdit(self.container, self.day_control, self.header)
-        self.all_swimmers_view = AllSwimmersView(self.container, self.day_control, self.swimmer_edit, self.header)
         self.all_classes_view = AllClassesView(self.container, self.class_control, self.header)
         self.move_view = MoveView(self.container, self.class_control, self.header)
+        self.swimmer_edit = SwimmerEdit(self.container, self.day_control, self.header)
+        self.all_swimmers_view = AllSwimmersView(self.container, self.day_control, self.swimmer_edit, self.move_view, self.header)
         self.assessment_view = AssessmentView(self.container, self.sow_control, self.move_view, self.header)
         self.edit_sow_view = EditSowView(self.container, self.class_control, self.header)
         self.edit_class_view = ClassView(self.container, self.class_control, self.edit_sow_view, self.header)

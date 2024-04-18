@@ -23,6 +23,9 @@ class DayService():
     def get_swimmer(self, swimmer_id):
         return self.control.run_execute("SELECT swimmer_ID, first_name, last_name FROM Swimmers WHERE swimmer_ID=?", swimmer_id)
     
+    def get_swimmer_id(self, f_name, l_name):
+        return self.control.run_execute("SELECT swimmer_ID FROM Swimmers WHERE first_name=? AND last_name=?", f_name, l_name)[0]
+    
     def get_mark(self, swimmer_id):
         return self.control.run_execute("SELECT passed FROM Swimmers WHERE swimmer_ID=?", swimmer_id)[0]
     

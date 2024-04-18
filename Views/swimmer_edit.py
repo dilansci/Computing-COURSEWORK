@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter.constants import *
 from Views.view_manager import ViewManager
 
 class SwimmerEdit(ttk.Frame):
@@ -33,4 +34,5 @@ class SwimmerEdit(ttk.Frame):
         self.save_btn.grid()
     
     def save_send(self):
-        self.control.update_send(self.swimmer_id, self.edit_contents.get("1.0", END))
+        new_data = self.edit_contents.get("1.0", END)
+        self.control.update_send(self.swimmer_id, new_data)

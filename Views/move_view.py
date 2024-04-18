@@ -24,6 +24,7 @@ class MoveView(ttk.Frame):
         self.swimmer_id = swimmer_id
         self.swimmer_name = swimmer_name
         self.level = level
+        
         ''' SWIMMER DETAILS '''
         self.swimmer_info = tk.Label(self, text=f"| {self.swimmer_name} | Level {self.level} |").grid(row=0, column=0, sticky="W")
 
@@ -98,13 +99,3 @@ class MoveView(ttk.Frame):
             messagebox.showinfo("Move Confirmation", "Swimmer successfully moved!")
             self.header.on_exit()
             ViewManager.instance.pop()
-
-
-
-        ''' 
-        DO LATER
-        * Make ReportView button in DayView. 
-        * create new field in swimmer table for 'Reports'
-        * MAYBE make note function :)) ADD TO RegisterView
-        
-        '''
