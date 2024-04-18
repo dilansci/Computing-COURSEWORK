@@ -30,7 +30,8 @@ class ClassService():
         return self.control.run_execute("UPDATE Class SET staff_ID=? WHERE class_ID=?",teacher_id, class_id)
 
     def update_class_level(self, new_level, class_id):
-        return self.control.run_execute("UPDATE Class SET level_num=? WHERE class_ID=?",new_level, class_id)
+        self.control.run_execute("UPDATE Class SET level_num=? WHERE class_ID=?",new_level, class_id)
+        return self.control.run_execute("UPDATE Lessons SET sow_ID=? WHERE class_ID=?", new_level, class_id)
     
     def update_class_sow(self, sow_label, new_data, sow_id):
         new_data.strip()

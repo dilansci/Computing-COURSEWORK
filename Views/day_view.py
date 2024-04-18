@@ -89,6 +89,7 @@ class DayView(ttk.Frame):
         for count in range (len(self.reg_info)):
             r = count + 2   
             # Variables which fetch ALL necessary info
+            print("REG INFO", self.reg_info)
             self.sow_id = self.reg_info[count][2]
             self.sow = self.control.get_sow(self.sow_id)
             test = self.reg_info[count][1]
@@ -103,9 +104,10 @@ class DayView(ttk.Frame):
             self.full_name = self.teacher_name[0][0] + " " + self.teacher_name[0][1]
             self.level_num = self.class_info[0][2]
             self.time = self.class_info[0][3]
+            print(self.sow_id)
             # Register Buttons
             self.registers.append(ttk.Button(self.reg_frame.interior, text=f"Register {count+1}", command= lambda count_id = count: 
-                                             [ViewManager.instance.hide_view(self), self.reg_view.reg_layout(count_id, self.class_ids)]))
+                                             [ViewManager.instance.hide_view(self), self.reg_view.reg_layout(count_id, self.class_ids, self.access_level)]))
             self.registers[count].grid(row=r, column=0, sticky="EW")
             # Class Info
             self.class_contents.append(ttk.Label(self.reg_frame.interior, text=f"Teacher: {self.full_name}\t Level: {self.level_num}\t Time: {self.time}"))

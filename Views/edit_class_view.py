@@ -37,7 +37,7 @@ class ClassView(ttk.Frame):
         self.sow_info = self.control.get_sow(sow_id)
         c = 0
         w = 30
-        self.column_names = ("Intro", "Main", "Contrast", "Depth") 
+        self.column_names = ("Intro", "Main", "Contrast", "Depth")
         for i in range (0, len(self.column_names)):
              self.column_l = tk.Label(self.edit_frame.interior, text=self.column_names[i]).grid(row=0, column=i)
         # length check for each SOW
@@ -186,28 +186,3 @@ class ClassView(ttk.Frame):
         new_level = self.level_select.get()
         self.control.update_class_level(new_level, self.class_id)
         messagebox.showinfo("UPDATED INFO!",f"Updated Level to '{new_level}'.")
-
-        '''
-        HERE WE USE A SLQ QUERY TO UPDATE THE DB FOR THE TEACHER OF THIS CLASS
-        e.g.
-        UPDATE Class SET staff_ID=?, time=?, level_num=? WHERE class_ID=?, {values}  
-
-        To Update SOW:
-        get_lesson = UPDATE SOW SET intro=?, main=?, contrast=?, depth=? WHERE sow_ID=?, {values}
-
-
-        Adding a class goes as follow:
-        ------------------------------
-        - CREATE the class in 'Classes' table. ASSIGN 'staff_ID', 'level' and 'time' for class.
-
-        - ADD the 'new_class' into 'Lessons' table. ASSIGN 'sow_ID' and 'day' to Lesson.
-        (IN ORDER TO GET 'sow_ID' you need to know the current 'week' and the 'level' for that week. FROM THAT YOU CAN FETCH THE 'SOW')
-        
-        Editing a class goes as follows:
-        --------------------------------
-        - Listbox for storing each Swimmer. On_Click of swimmer, make 'REMOVE' button state = "active".
-          ADD button which will open either:
-          1. A new view with new_swimmers_to_add
-          2. Have a seperate listbox with swimmers not in the class.
-          There will also be a seperate function that will "ADD NEW SWIMMER"
-        '''
