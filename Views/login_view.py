@@ -13,9 +13,6 @@ class LoginView(ttk.Frame):
         self.login_screen = login_screen
         self.header = header
 
-        # self.view_name = "Login"
-        # self.header.update_header(self.view_name)
-
         self.login_choice = ["Manager","Teacher","Assistant"]
 
         for i in range (len(self.login_choice)):

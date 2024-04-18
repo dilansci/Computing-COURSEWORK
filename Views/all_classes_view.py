@@ -201,7 +201,6 @@ class AllClassesView(ttk.Frame):
         self.clear_details()
 
     def remove_class(self):
-        ''' slight kinks with remove_class'''
         selected = self.class_list.focus()
         # Remove class from database
         class_id = self.class_list.item(selected, 'text')
