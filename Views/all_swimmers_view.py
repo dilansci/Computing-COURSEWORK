@@ -126,6 +126,8 @@ class AllSwimmersView(ttk.Frame):
         # self.clear_details()
 
     def save_details(self):
+        item = self.swimmer_info.selection()
+
         all_details = []
         # Get index of selected teacher in treeview
         selected = self.swimmer_info.focus()
@@ -139,7 +141,14 @@ class AllSwimmersView(ttk.Frame):
         self.clear_details()
         messagebox.showinfo("Save Complete!","Teacher Info Updated!")
         # Update treeview info
-        self.swimmer_info.item(selected, values=(self.curr_swimmer_id, all_details[0], all_details[1], all_details[2], all_details[3]))
+        print(item)
+        for i in item:
+            curr_item = self.swimmer_info.focus()
+            item_dict = self.swimmer_info.item(curr_item)
+            all_info = self.swimmer_info.item(i, "values")
+            self.curr_class_id = all_info[0]
+        # self.curr_class_id = 
+        self.swimmer_info.item(selected, values=(self.curr_class_id, all_details[0], all_details[1], all_details[2], all_details[3]))
 
     def clear_details(self):
         for each_detail in self.list_of_entries:
