@@ -116,7 +116,7 @@ class AllSwimmersView(ttk.Frame):
         full_name = f"{all_details[0]} {all_details[1]}"
         ViewManager.instance.hide_view(self)
         self.move_view.moving_layout(self.new_swimmer_id, full_name, "No Level")
-        # Update treeview 
+        # Update treeview
         # ViewManager.instance.refresh_pop()
         # self.populate_swimmers()
         # self.header.on_exit()

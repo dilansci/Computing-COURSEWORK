@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.constants import *
 from Views.view_manager import ViewManager
+from tkinter import messagebox
 
 class SwimmerEdit(ttk.Frame):
     
@@ -26,7 +27,8 @@ class SwimmerEdit(ttk.Frame):
 
         self.swimmer_send = self.control.get_send(self.swimmer_id)
 
-        self.edit_contents = tk.Text(self, width=77)
+        self.edit_contents = tk.Text(self, width=77, highlightthickness=2)
+        self.edit_contents.config(highlightbackground="gray")
         self.edit_contents.grid(sticky="NESW")
         self.edit_contents.insert(tk.END, self.swimmer_send)
 
@@ -35,4 +37,8 @@ class SwimmerEdit(ttk.Frame):
     
     def save_send(self):
         new_data = self.edit_contents.get("1.0", END)
-        self.control.update_send(self.swimmer_id, new_data)
+        if new_data == "":
+            messagebox.showerror("Error","No input detected! Please enter a valid input!")
+        else:
+            self.control.update_send(self.swimmer_id, new_data)
+            messagebox.showinfo("Success","SEND successfully updated!")

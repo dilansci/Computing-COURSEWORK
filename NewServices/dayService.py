@@ -30,7 +30,7 @@ class DayService():
         return self.control.run_execute("SELECT passed FROM Swimmers WHERE swimmer_ID=?", swimmer_id)[0]
     
     def get_send(self, swimmer_id):
-        return self.control.run_execute("SELECT SEND FROM Swimmers WHERE swimmer_ID=?", swimmer_id)
+        return self.control.run_execute("SELECT SEND FROM Swimmers WHERE swimmer_ID=?", swimmer_id)[0][0]
     
     def update_send(self, swimmer_id, send):
         return self.control.run_execute("UPDATE Swimmers SET SEND=? WHERE swimmer_ID=?",send, swimmer_id)
