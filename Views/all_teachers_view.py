@@ -101,6 +101,8 @@ class AllTeachersView(ttk.Frame):
     def add_teacher(self):
         all_details = []
         for each_detail in self.list_of_entries:
+            if each_detail.get() == "" or self.role_select.get() == "":
+                return messagebox.showerror("Error","Null data input detected. Please enter a valid input!")
             all_details.append(each_detail.get())
         self.control.add_staff(all_details[0], all_details[1], all_details[2], all_details[3], all_details[4], self.role_select.current())
         messagebox.showinfo("Success!","Teacher successfully added!")
@@ -115,7 +117,10 @@ class AllTeachersView(ttk.Frame):
         # Get index of selected teacher in treeview
         selected = self.teacher_info.focus()
         for each_detail in self.list_of_entries:
-            all_details.append(each_detail.get())
+            if each_detail.get() == "" or self.role_select.get() == "":
+                return messagebox.showerror("Error","Null data input detected. Please enter a valid input!")
+            else:
+                all_details.append(each_detail.get())
         # Update treeview info
         self.teacher_info.item(selected, values=(all_details[0], all_details[1], all_details[2], all_details[3], all_details[4], self.role_select.get()))
         # Update DataBase

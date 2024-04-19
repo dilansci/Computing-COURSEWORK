@@ -37,7 +37,7 @@ class ClassView(ttk.Frame):
         self.sow_info = self.control.get_sow(sow_id)
         c = 0
         w = 30
-        self.column_names = ("Intro", "Main", "Contrast", "Depth") 
+        self.column_names = ("Intro", "Main", "Contrast", "Depth")
         for i in range (0, len(self.column_names)):
              self.column_l = tk.Label(self.edit_frame.interior, text=self.column_names[i]).grid(row=0, column=i)
         # length check for each SOW
@@ -75,23 +75,26 @@ class ClassView(ttk.Frame):
         self.curr_fname = self.curr_teacher_name[0]
         self.curr_lname = self.curr_teacher_name[1]
 
-        teacher_l = tk.Label(self, text="Teacher").grid(row=5, column=0)
-        self.teacher_select = ttk.Combobox(self, textvariable=tk.StringVar())
+        self.class_details = ttk.Labelframe(self, text="Class Details")
+        self.class_details.grid(sticky="W")
+        ''' CHANGING TEACHER '''
+        teacher_l = tk.Label(self.class_details, text="Teacher").grid(row=0, column=0)
+        self.teacher_select = ttk.Combobox(self.class_details, textvariable=tk.StringVar())
         self.teacher_select['state'] = 'readonly'
         self.teacher_select['values'] = (self.all_names)
         self.teacher_select.set(self.curr_teacher_name)
-        self.teacher_select.grid(row=6, column=0)
+        self.teacher_select.grid(row=1, column=0, pady=5)
 
         self.teacher_select.bind('<<ComboboxSelected>>', self.teacher_changed)
 
         ''' CHANGING LEVEL '''
-        level_l = tk.Label(self, text="Level").grid(row=5, column=1)
+        level_l = tk.Label(self.class_details, text="Level").grid(row=0, column=1)
         self.all_levels = [1,2,3,4,5,6,7]
-        self.level_select = ttk.Combobox(self, textvariable=tk.StringVar())
+        self.level_select = ttk.Combobox(self.class_details, textvariable=tk.StringVar())
         self.level_select['state'] = 'readonly'
         self.level_select['values'] = (self.all_levels)
         self.level_select.set(self.curr_level)
-        self.level_select.grid(row=6, column=1)
+        self.level_select.grid(row=1, column=1, pady=5)
 
         self.level_select.bind('<<ComboboxSelected>>', self.level_changed)
 
@@ -122,16 +125,18 @@ class ClassView(ttk.Frame):
             self.swimmer_info.insert("", tk.END, text=self.all_swimmers[i][0], values=self.all_swimmers[i][1:])
 
         ''' SWIMMER DETAILS '''
+        self.swimmer_details = ttk.Labelframe(self, text="Swimmer Details")
+        self.swimmer_details.grid()
         detail_names = ["First Name","Last Name","Email","Phone"]
         self.list_of_entries = []
         for i in range (len(detail_names)):
-            detail_l = tk.Label(self, text=detail_names[i]).grid(row=3, column=i)
-            self.detail_bx = tk.Entry(self, width=25)
+            detail_l = tk.Label(self.swimmer_details, text=detail_names[i]).grid(row=3, column=i)
+            self.detail_bx = tk.Entry(self.swimmer_details, width=25)
             self.list_of_entries.append(self.detail_bx)
             self.detail_bx.grid(row=4, column=i)
-         
+        
         ''' SAVING DETAILS '''
-        self.save_btn = ttk.Button(self, text="SAVE", command= lambda: self.save_details())
+        self.save_btn = ttk.Button(self.swimmer_details, text="SAVE", command= lambda: self.save_details())
         self.save_btn.grid(row=7, pady=10)
     
     def save_details(self):
@@ -186,28 +191,3 @@ class ClassView(ttk.Frame):
         new_level = self.level_select.get()
         self.control.update_class_level(new_level, self.class_id)
         messagebox.showinfo("UPDATED INFO!",f"Updated Level to '{new_level}'.")
-
-        '''
-        HERE WE USE A SLQ QUERY TO UPDATE THE DB FOR THE TEACHER OF THIS CLASS
-        e.g.
-        UPDATE Class SET staff_ID=?, time=?, level_num=? WHERE class_ID=?, {values}  
-
-        To Update SOW:
-        get_lesson = UPDATE SOW SET intro=?, main=?, contrast=?, depth=? WHERE sow_ID=?, {values}
-
-
-        Adding a class goes as follow:
-        ------------------------------
-        - CREATE the class in 'Classes' table. ASSIGN 'staff_ID', 'level' and 'time' for class.
-
-        - ADD the 'new_class' into 'Lessons' table. ASSIGN 'sow_ID' and 'day' to Lesson.
-        (IN ORDER TO GET 'sow_ID' you need to know the current 'week' and the 'level' for that week. FROM THAT YOU CAN FETCH THE 'SOW')
-        
-        Editing a class goes as follows:
-        --------------------------------
-        - Listbox for storing each Swimmer. On_Click of swimmer, make 'REMOVE' button state = "active".
-          ADD button which will open either:
-          1. A new view with new_swimmers_to_add
-          2. Have a seperate listbox with swimmers not in the class.
-          There will also be a seperate function that will "ADD NEW SWIMMER"
-        '''

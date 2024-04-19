@@ -105,7 +105,7 @@ class DayView(ttk.Frame):
             self.time = self.class_info[0][3]
             # Register Buttons
             self.registers.append(ttk.Button(self.reg_frame.interior, text=f"Register {count+1}", command= lambda count_id = count: 
-                                             [ViewManager.instance.hide_view(self), self.reg_view.reg_layout(count_id, self.class_ids)]))
+                                             [ViewManager.instance.hide_view(self), self.reg_view.reg_layout(count_id, self.class_ids, self.access_level)]))
             self.registers[count].grid(row=r, column=0, sticky="EW")
             # Class Info
             self.class_contents.append(ttk.Label(self.reg_frame.interior, text=f"Teacher: {self.full_name}\t Level: {self.level_num}\t Time: {self.time}"))

@@ -18,7 +18,7 @@ class RegisterView(ttk.Frame):
 
         self.attendance_buttons = []
 
-    def reg_layout(self, reg_pos, list_of_ids):
+    def reg_layout(self, reg_pos, list_of_ids, access_level):
         self.view_name = "Register"
         self.header.update_header(self.view_name)
 
@@ -27,7 +27,9 @@ class RegisterView(ttk.Frame):
         ViewManager.instance.show_view("RegisterView")
         for widget in self.winfo_children():
             widget.destroy()
-            
+        
+        self.access_level = access_level
+
         self.curr_class_id = list_of_ids[reg_pos]
         self.swimmers_in_class = self.reg_control.get_swimmers_in_class(self.curr_class_id)
         self.swim_attendance = self.reg_control.get_attendance(self.curr_class_id)
@@ -38,7 +40,7 @@ class RegisterView(ttk.Frame):
             curr_swimmer_id = self.swimmers_in_class[i][0]
             self.swim_name = tk.Label(self, text= full_name).grid(row=i, column=0)
             # changing the attributes of the button
-            if self.swim_attendance[i]== 0:
+            if self.swim_attendance[i][0]== 0:
                 state = "Absent"
                 pres_colour = "red"
             else:
@@ -47,17 +49,20 @@ class RegisterView(ttk.Frame):
             self.attendance_buttons.append(tk.Button(self, text=state, background=pres_colour, command= lambda index = i:
                                               self.attendance(index)))
             self.attendance_buttons[i].grid(row=i, column=5, sticky="E")
-            # Give each "MARK" button a 'swimmer_id'
+
             self.mark_swimmer = ttk.Button(self, text="MARK", command= lambda swimmer_id = curr_swimmer_id:
                                            [ViewManager.instance.hide_view(self), self.assessment_view.assessment_layout(swimmer_id, self.curr_class_id)])
             self.mark_swimmer.grid(row=i, column=6, sticky="E")
+            if self.access_level != 2:
+                pass
+            else:
+                self.mark_swimmer.config(state="disabled")
 
     def attendance(self, index):
         self.swim_attendance = self.reg_control.get_attendance(self.curr_class_id)
         # here the current "presence" of each swimmer should be updated. Each swimmer will start off as '0' (Absent). At the beginning of the week.
         self.curr_attendance = self.swim_attendance[index]
         self.curr_swimmer = self.swimmers_in_class[index][0]
-        print("SWIMMER ID", self.curr_swimmer)
         
         self.curr_btn = self.attendance_buttons[index]
         if self.curr_btn["text"] == "Absent":
