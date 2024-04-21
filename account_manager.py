@@ -1,5 +1,4 @@
 # Views/view_manager.py
-import tkinter as tk
 
 class AccountManager():
 
@@ -14,6 +13,5 @@ class AccountManager():
         cls.control = control
         return cls.control.get_login(pin, access_level)
         # Example:
-        # name = "Jimmy"
         # pin = "1234"
         # access_level = 1

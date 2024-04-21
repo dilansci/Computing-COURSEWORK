@@ -18,7 +18,6 @@ class ViewManager:
 
     def show_view(self, name):
         view = self.views.get(name)
-        print("SHOW",view)
         if view:
             self.view_stack.append(view)
             self.grid_view(view)

@@ -1,11 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
-from Views.view_manager import ViewManager
-# this class which eventually be able to change the header shown depending on what functionality is being used i.e
-# if in register section it will display "Lesson Manager - Register".
+
 class Header(ttk.Frame):
     # header is a labelframe
     # 'header' class will constantly update the location in which the user is accessing.
+    # if in register section it will display "Lesson Manager - Register".
     def __init__(self, master, **kargs):
         super().__init__(master, **kargs)
         self.rowconfigure(0, weight=1)

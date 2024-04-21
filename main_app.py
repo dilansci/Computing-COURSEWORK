@@ -5,12 +5,12 @@ import SQL_controller
 
 from Views.view_manager import ViewManager
 # Service imports
-from NewServices.dayService import *
-from NewServices.regService import *
-from NewServices.sowService import *
-from NewServices.loginService import *
-from NewServices.staffService import *
-from NewServices.classService import *
+from Services.dayService import *
+from Services.regService import *
+from Services.sowService import *
+from Services.loginService import *
+from Services.staffService import *
+from Services.classService import *
 # Controller imports
 from Controllers.day_controller import *
 from Controllers.reg_controller import *
@@ -34,7 +34,7 @@ from Views.move_view import MoveView
 from Views.all_classes_view import AllClassesView
 from Views.all_swimmers_view import AllSwimmersView
 from Views.swimmer_edit import SwimmerEdit
-# creating a class which acts as a dictionary for all the contents of the registry.
+
 class Main(tk.Tk):
 
     def __init__(self):
@@ -44,10 +44,10 @@ class Main(tk.Tk):
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
 
-        # SINGLETON
+        # SINGLETON 
         view_manager = ViewManager()
 
-        ## SQL_CONTROLLER
+        ## SQL_CONTROLLER (logic for running SQL queries)
         self.sql_control = SQL_controller.SQLController()
 
         ## SERVICES
